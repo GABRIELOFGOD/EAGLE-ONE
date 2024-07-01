@@ -26,7 +26,7 @@ class CustomTextField extends StatelessWidget {
         child: TextField(
           controller: textController,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+            contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
             hintText: placeholder,
             border: InputBorder.none,
             hintStyle: TextStyle(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/Color_extention.dart';
 import 'package:youdoc/common/anchor_click.dart';
-import 'package:youdoc/common/customButton.dart';
+import 'package:youdoc/common/custom_button.dart';
 import 'package:youdoc/view/login/login_view.dart';
 import 'package:youdoc/view/register/register_view.dart';
 

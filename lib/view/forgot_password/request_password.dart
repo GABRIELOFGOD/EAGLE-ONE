@@ -24,11 +24,11 @@ class _RequestForgetPasswordLinkState extends State<RequestForgetPasswordLink> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       textTitle,
                       style: TextStyle(
                         color: Colors.white,
@@ -48,7 +48,7 @@ class _RequestForgetPasswordLinkState extends State<RequestForgetPasswordLink> {
                 )
               ),
               const SizedBox(height: 30),
-              ForgotFormForEmail(),
+              const ForgotFormForEmail(),
               Expanded(child: Container()), // This expands to fill the available space
               Container(
                 alignment: Alignment.center,

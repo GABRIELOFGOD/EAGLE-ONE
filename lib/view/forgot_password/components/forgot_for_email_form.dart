@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:youdoc/common/customButton.dart';
-import 'package:youdoc/common/lineTextField.dart';
+import 'package:youdoc/common/custom_button.dart';
+import 'package:youdoc/common/line_text_field.dart';
 import 'package:youdoc/view/forgot_password/reset_password.dart';
 
 class ForgotFormForEmail extends StatefulWidget {
@@ -24,7 +24,7 @@ class _ForgotFormForEmailState extends State<ForgotFormForEmail> {
               onChanged: (value) {
                 setState(() {});
               }),
-          SizedBox(
+          const SizedBox(
             height: 35,
           ),
           CustomButton(

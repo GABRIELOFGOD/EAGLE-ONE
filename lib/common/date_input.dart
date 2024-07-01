@@ -24,9 +24,9 @@ class DateOfBirthInput extends StatelessWidget {
           controller: dateController,
           readOnly: true,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+            contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             hintText: 'Date of Birth',
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               color: Colors.white70,
               fontSize: 12.0,
             ),
@@ -38,13 +38,13 @@ class DateOfBirthInput extends StatelessWidget {
             filled: true,
             suffixIcon: GestureDetector(
               onTap: onTap,
-              child: Icon(
+              child: const Icon(
                 Icons.calendar_today,
                 color: Colors.white70,
               ),
             ),
           ),
-          style: TextStyle(color: Colors.white70),
+          style: const TextStyle(color: Colors.white70),
           onTap: onTap,
         ),
       ),

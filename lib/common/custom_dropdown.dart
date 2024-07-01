@@ -29,7 +29,7 @@ class _DropDownInputState extends State<DropDownInput> {
 
   void _showDropDown(BuildContext context) {
     _overlayEntry = _createOverlayEntry(context);
-    Overlay.of(context)!.insert(_overlayEntry!);
+    Overlay.of(context).insert(_overlayEntry!);
   }
 
   void _hideDropDown() {
@@ -55,7 +55,7 @@ class _DropDownInputState extends State<DropDownInput> {
               decoration: BoxDecoration(
                 color: Colors.grey[850],
                 borderRadius: BorderRadius.circular(8.0),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black26,
                     blurRadius: 5.0,

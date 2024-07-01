@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/Color_extention.dart';
 import 'package:youdoc/common/anchor_click.dart';
-import 'package:youdoc/common/customButton.dart';
-import 'package:youdoc/common/lineTextField.dart';
+import 'package:youdoc/common/custom_button.dart';
+import 'package:youdoc/common/line_text_field.dart';
 import 'package:youdoc/view/forgot_password/request_password.dart';
 import 'package:youdoc/view/register/register_password_view.dart';
 
@@ -31,7 +31,7 @@ class _LoginFormState extends State<LoginForm> {
           placeholder: 'Enter email',
           onChanged: (value) => setState(() {}),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         Container(
           height: 43.0,
           decoration: BoxDecoration(
@@ -44,7 +44,7 @@ class _LoginFormState extends State<LoginForm> {
               controller: password,
               obscureText: !passwordVisible,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+                contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
                 hintText: 'Enter password',
                 border: InputBorder.none,
                 hintStyle: TextStyle(
@@ -71,7 +71,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
         ),
-        SizedBox(height: 15,),
+        const SizedBox(height: 15,),
         Container(
           alignment: Alignment.centerLeft,
           child: CustomAnchor(text: "Forgot password?", clicked: (){

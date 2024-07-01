@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:youdoc/common/Color_extention.dart';
-import 'package:youdoc/common/customButton.dart';
+import 'package:youdoc/common/color_extention.dart';
+import 'package:youdoc/common/custom_button.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/components/user.dart';
 
@@ -80,7 +80,7 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
                     children: [
                       Text(
                         btn == "" ? "SUCCESS" : "ERROR",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -117,7 +117,7 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
                           ),
                           child: Text(
                             btn != "" ? "Close" : "Open mail box",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
+                            style: const TextStyle(color: Colors.white, fontSize: 14),
                           ),
                         ),
                       ),
@@ -195,7 +195,7 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
           controller: controller,
           obscureText: !isVisible,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+            contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
             hintText: placeholder,
             border: InputBorder.none,
             hintStyle: TextStyle(
@@ -229,7 +229,7 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
           color: isValid ? Colors.greenAccent : Colors.grey,
           size: 14,
         ),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Text(
           text,
           style: TextStyle(
@@ -258,19 +258,19 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
             passwordVisible = !passwordVisible;
           });
         }),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         buildPasswordField(
             confirmPassword, 'Confirm password', confirmPasswordVisible, () {
           setState(() {
             confirmPasswordVisible = !confirmPasswordVisible;
           });
         }),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 25.0),
           child: CustomButton(
             loader: isLoading
-                ? SizedBox(
+                ? const SizedBox(
                     width: 25.0,
                     height: 25.0,
                     child: CircularProgressIndicator(
@@ -278,7 +278,7 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
                       strokeWidth: 4.0,
                     ),
                   )
-                : Text(
+                : const Text(
                     "Continue",
                     style: TextStyle(
                       color: Colors.white,
@@ -291,7 +291,7 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
             enabled: isFormValid,
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         Container(
           alignment: Alignment.centerLeft,
           child: Text(
@@ -303,15 +303,15 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
             ),
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         buildPasswordValidationCheck("At least one uppercase letter", hasUppercase),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         buildPasswordValidationCheck("At least one lowercase letter", hasLowercase),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         buildPasswordValidationCheck("At least one digit (0-9)", hasDigits),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         buildPasswordValidationCheck("At least one special character (*&%#)", hasSpecialCharacters),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         buildPasswordValidationCheck("8-24 characters in total", hasMinLength),
       ],
     );

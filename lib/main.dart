@@ -40,14 +40,8 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:uni_links/uni_links.dart';
-import 'package:youdoc/view/forgot_password/request_password.dart';
-import 'package:youdoc/view/forgot_password/reset_password.dart';
-import 'package:youdoc/view/login/login_view.dart';
-import 'dart:async';
+import 'package:youdoc/view/dashboard/dashboard_view.dart';
 import 'package:youdoc/view/on_boarding/on_boarding_view.dart';
-import 'package:youdoc/view/register/register_password_view.dart';
-import 'package:youdoc/view/splash/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -71,7 +65,7 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: OnBoardingView(),
+      home: const DashboardView(),
     );
   }
 }

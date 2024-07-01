@@ -76,9 +76,7 @@ class UserRegistrationResponse {
         message:
             json['message'].runtimeType != String && json['message'] != null
                 ? json['message'][0]
-                : json['message'] != null
-                    ? json['message']
-                    : '',
-        error: json['error'] != null ? json['error'] : "");
+                : json['message'] ?? '',
+        error: json['error'] ?? "");
   }
 }

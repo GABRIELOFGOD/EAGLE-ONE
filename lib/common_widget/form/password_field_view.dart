@@ -7,7 +7,7 @@ class PasswordFieldWithValidation extends StatelessWidget {
   final void Function() toggleVisibility;
   final bool Function(String)? validationCheck; // Optional validation check function
 
-  PasswordFieldWithValidation({
+  const PasswordFieldWithValidation({super.key, 
     required this.controller,
     required this.placeholder,
     required this.isVisible,
@@ -34,10 +34,10 @@ class PasswordFieldWithValidation extends StatelessWidget {
               controller: controller,
               obscureText: !isVisible,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+                contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
                 hintText: placeholder,
                 border: InputBorder.none,
-                hintStyle: TextStyle(
+                hintStyle: const TextStyle(
                   color: Colors.grey, // Change to your hint color
                   fontSize: 12,
                 ),
@@ -58,7 +58,7 @@ class PasswordFieldWithValidation extends StatelessWidget {
           ),
         ),
         if (validationCheck != null) ...[
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Row(
             children: [
               Icon(
@@ -66,10 +66,10 @@ class PasswordFieldWithValidation extends StatelessWidget {
                 color: isValid ? Colors.green : Colors.grey,
                 size: 20,
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Text(
                 isValid ? "Password is valid" : "Password is invalid",
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
                 ),

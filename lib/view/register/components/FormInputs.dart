@@ -437,18 +437,15 @@
 //   }
 // }
 
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/Color_extention.dart';
-import 'package:youdoc/common/customButton.dart';
+import 'package:youdoc/common/custom_button.dart';
 import 'package:youdoc/common/custom_dropdown.dart';
 import 'package:youdoc/common/date_input.dart';
-import 'package:youdoc/common/lineTextField.dart';
+import 'package:youdoc/common/line_text_field.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/components/user.dart';
-import 'dart:convert';
 
-import 'package:youdoc/view/register/register_password_view.dart';
 
 class RegisterFormInputs extends StatefulWidget {
   const RegisterFormInputs({super.key});
@@ -507,7 +504,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
       isLoading = true;
     });
     try {
-      BaseRequest baseRequest = new BaseRequest();
+      BaseRequest baseRequest = BaseRequest();
       var response = await baseRequest.register(userRegister);
       String message = response.message;
       String btn = response.error;
@@ -536,7 +533,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
                     children: [
                       Text(
                         btn == "" ? "SUCCESS" : "ERROR",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -573,7 +570,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
                           ),
                           child: Text(
                             btn != "" ? "Close" : "Open mail box",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
+                            style: const TextStyle(color: Colors.white, fontSize: 14),
                           ),
                         ),
                       ),
@@ -589,7 +586,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
       showDialog(
         context: context,
         barrierColor:
-            Colors.black.withOpacity(0.5), // Dark overlay with 50% opacity
+            Colors.black.withOpacity(0.5),
         builder: (context) {
           return Align(
             alignment: Alignment.bottomCenter,
@@ -608,7 +605,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
+                      const Text(
                         "ERROR",
                         style: TextStyle(
                           color: Colors.white,
@@ -677,7 +674,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
             userRegister.firstName = value;
           }),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         CustomTextField(
           textController: lastName,
           placeholder: 'Enter last name',
@@ -685,7 +682,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
             userRegister.lastName = value;
           }),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         CustomTextField(
           textController: email,
           placeholder: 'Enter email',
@@ -693,7 +690,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
             userRegister.email = value;
           }),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -724,7 +721,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
           padding: const EdgeInsets.symmetric(vertical: 25.0),
           child: CustomButton(
             loader: isLoading
-                ? SizedBox(
+                ? const SizedBox(
                     width: 25.0,
                     height: 25.0,
                     child: CircularProgressIndicator(
@@ -732,7 +729,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
                       strokeWidth: 4.0,
                     ),
                   )
-                : Text(
+                : const Text(
                     "Continue",
                     style: TextStyle(
                       color: Colors.white,
