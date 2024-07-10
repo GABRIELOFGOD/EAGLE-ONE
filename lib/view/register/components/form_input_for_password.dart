@@ -4,6 +4,8 @@ import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/common/custom_button.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/components/user.dart';
+import 'package:youdoc/view/home/home_navigator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PasswordRegisterForm extends StatefulWidget {
   final String token;
@@ -27,7 +29,21 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
         _isPasswordValid();
   }
 
+  late SharedPreferences prefs;
+
   bool isLoading = false;
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    iniPreferences();
+  }
+  
+  void iniPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
 
   UserRegistrationComplete userRegistrationComplete =
       UserRegistrationComplete(password: "", confirmPassword: "", token: '');
@@ -39,7 +55,11 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
     bool hasDigits = p.contains(RegExp(r'\d'));
     bool hasSpecialCharacters = p.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
     bool hasMinLength = p.length >= 8 && p.length <= 24;
-    return hasUppercase && hasLowercase && hasDigits && hasSpecialCharacters && hasMinLength;
+    return hasUppercase &&
+        hasLowercase &&
+        hasDigits &&
+        hasSpecialCharacters &&
+        hasMinLength;
   }
 
   Future<void> _submitForm() async {
@@ -55,80 +75,93 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
       var response = await baseRequest.complete(userRegistrationComplete);
       String message = response.message;
       String btn = response.error;
-      print(response);
-      showDialog(
-        context: context,
-        barrierColor:
-            Colors.black.withOpacity(0.5), // Dark overlay with 50% opacity
-        builder: (context) {
-          return Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  bottom: 50), // Adjust the padding as needed
-              child: Material(
-                color: Colors.transparent,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: TColor.primaryBg.withOpacity(0.9),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.all(20),
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        btn == "" ? "SUCCESS" : "ERROR",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+      String token = response.token;
+
+      if(btn == ""){
+        prefs.setString("token", token);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomeNavigator(),
+              ),
+            );
+       }else {
+        showDialog(
+              context: context,
+              barrierColor: Colors.black.withOpacity(0.5),
+              builder: (context) {
+                return Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 50),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: TColor.primaryBg.withOpacity(0.9),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        message,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      SizedBox(
-                        width: double.infinity,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                TColor.primary),
-                            foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            textStyle: MaterialStateProperty.all<TextStyle>(
-                                const TextStyle(fontSize: 14)),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        padding: const EdgeInsets.all(20),
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              "ERROR",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                          ),
-                          child: Text(
-                            btn != "" ? "Close" : "Open mail box",
-                            style: const TextStyle(color: Colors.white, fontSize: 14),
-                          ),
+                            const SizedBox(height: 10),
+                            Text(
+                              message,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            SizedBox(
+                              width: double.infinity,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.red),
+                                  foregroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.white),
+                                  textStyle:
+                                      MaterialStateProperty.all<TextStyle>(
+                                          const TextStyle(fontSize: 14)),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                  ),
+                                ),
+                                child: const Text(
+                                  "Close",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ),
-          );
-        },
-      );
+                );
+              },
+            );
+       };
     } catch (e) {
       // Handle error...
       showDialog(
@@ -233,10 +266,9 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
         Text(
           text,
           style: TextStyle(
-            color: TColor.inputGray,
-            fontSize: 14,
-            fontWeight: FontWeight.w400
-          ),
+              color: TColor.inputGray,
+              fontSize: 14,
+              fontWeight: FontWeight.w400),
         ),
       ],
     );
@@ -295,22 +327,24 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
         Container(
           alignment: Alignment.centerLeft,
           child: Text(
-          "Password must have",
+            "Password must have",
             style: TextStyle(
-              color: TColor.inputGray,
-              fontSize: 16,
-              fontWeight: FontWeight.w500
-            ),
+                color: TColor.inputGray,
+                fontSize: 16,
+                fontWeight: FontWeight.w500),
           ),
         ),
         const SizedBox(height: 15),
-        buildPasswordValidationCheck("At least one uppercase letter", hasUppercase),
+        buildPasswordValidationCheck(
+            "At least one uppercase letter", hasUppercase),
         const SizedBox(height: 10),
-        buildPasswordValidationCheck("At least one lowercase letter", hasLowercase),
+        buildPasswordValidationCheck(
+            "At least one lowercase letter", hasLowercase),
         const SizedBox(height: 10),
         buildPasswordValidationCheck("At least one digit (0-9)", hasDigits),
         const SizedBox(height: 10),
-        buildPasswordValidationCheck("At least one special character (*&%#)", hasSpecialCharacters),
+        buildPasswordValidationCheck(
+            "At least one special character (*&%#)", hasSpecialCharacters),
         const SizedBox(height: 10),
         buildPasswordValidationCheck("8-24 characters in total", hasMinLength),
       ],

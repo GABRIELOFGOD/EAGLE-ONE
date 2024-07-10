@@ -8,11 +8,12 @@ class BaseRequest {
   var client = http.Client();
 
   Future<UserRegistrationResponse> register(UserRegister userRegister) async {
-    Uri url = Uri.parse("http://192.168.0.104:3000/user");
+    Uri url = Uri.parse("$baseUrl/user");
     final response = await http.post(url, body: userRegister.toJson());
     if (response.statusCode == 200 ||
         response.statusCode == 201 ||
         response.statusCode == 400 ||
+        response.statusCode == 401 ||
         response.statusCode == 409) {
       return UserRegistrationResponse.fromJson(json.decode(response.body));
     } else {
@@ -20,40 +21,63 @@ class BaseRequest {
     }
   }
 
-  Future<UserRegistrationResponse> complete(
+  Future<LoginResponse> complete(
       UserRegistrationComplete userRegistrationComplete) async {
-    print("got here");
     var token = userRegistrationComplete.token;
-    Uri url = Uri.parse("http://192.168.0.104:3000/user/confirm-email?$token");
-    final response =
-        await http.post(url, body: userRegistrationComplete.password);
+    Uri url = Uri.parse("$baseUrl/user/confirm-email?token=$token");
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: userRegistrationComplete.password,
+    );
     if (response.statusCode == 200 ||
         response.statusCode == 201 ||
         response.statusCode == 400 ||
+        response.statusCode == 401 ||
         response.statusCode == 409) {
-      return UserRegistrationResponse.fromJson(json.decode(response.body));
+      return LoginResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception("Request Failed");
+    }
+  }
+
+  Future<LoginResponse> login(UserLogin userLogin) async {
+    Uri url = Uri.parse("$baseUrl/user/login");
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(userLogin.toJson()),
+    );
+
+    if (response.statusCode == 200 ||
+        response.statusCode == 201 ||
+        response.statusCode == 400 ||
+        response.statusCode == 401 ||
+        response.statusCode == 409) {
+      return LoginResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception("Request Failed");
+    }
+  }
+
+  Future<ProfileResponse> profile(String token) async {
+    Uri url = Uri.parse("$baseUrl/user/profile?token=$token");
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200 ||
+        response.statusCode == 201 ||
+        response.statusCode == 400 ||
+        response.statusCode == 401 ||
+        response.statusCode == 409) {
+      return ProfileResponse.fromJson(json.decode(response.body));
     } else {
       throw Exception("Request Failed");
     }
   }
 }
-
-// try {
-//       var payload = json.encode(object);
-//       var url = Uri.parse(baseUrl + path);
-//       var response = await client.post(
-//         url,
-//         headers: {"Content-Type": "application/json"},
-//         body: payload,
-//       );
-
-//       if (response.statusCode == 201 || response.statusCode == 200) {
-//         // Successful registration
-//         return json.decode(response.body)["message"]; // Parse JSON response
-//       } else {
-        
-//         throw Exception(response.body);
-//       }
-//     } catch (error, stackTrace) {
-//       throw Exception('Failed to register user: $error');
-//     }

@@ -30,14 +30,7 @@ class _ForgotFormForEmailState extends State<ForgotFormForEmail> {
           CustomButton(
             title: "Request link",
             enabled: true,
-            onpress: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ResetPassword(),
-                ),
-              );
-            },
+            onpress: () {},
           )
         ],
       ),

@@ -22,15 +22,16 @@ class CustomAnchor extends StatelessWidget {
       onTap: clicked,
       child: Text(
         text,
-        style: textStyle ?? TextStyle(
-          color: textColor ?? Colors.white,
-          decoration: TextDecoration.underline,
-          decorationColor: textColor ?? Colors.white,
-          decorationThickness: 3,
-          decorationStyle: TextDecorationStyle.solid,
-          fontSize: myFontSize ?? 16,
-          fontWeight: FontWeight.w600,
-        ),
+        style: textStyle ??
+            TextStyle(
+              color: textColor ?? Colors.white,
+              decoration: TextDecoration.underline,
+              decorationColor: textColor ?? Colors.white,
+              decorationThickness: 3,
+              decorationStyle: TextDecorationStyle.solid,
+              fontSize: myFontSize ?? 16,
+              fontWeight: FontWeight.w600,
+            ),
       ),
     );
   }

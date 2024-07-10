@@ -53,14 +53,27 @@ class UserRegistrationComplete {
   String confirmPassword;
   String token;
 
-  UserRegistrationComplete({
-    required this.password,
-    required this.confirmPassword,
-    required this.token
-  });
+  UserRegistrationComplete(
+      {required this.password,
+      required this.confirmPassword,
+      required this.token});
 
   Map<String, dynamic> toJson() {
     return {"password": password.trim()};
+  }
+}
+
+class UserLogin {
+  String email;
+  String password;
+
+  UserLogin({required this.email, required this.password});
+
+  Map<String, dynamic> toJson() {
+    return {
+      "email": email.trim(),
+      "password": password.trim(),
+    };
   }
 }
 
@@ -78,5 +91,51 @@ class UserRegistrationResponse {
                 ? json['message'][0]
                 : json['message'] ?? '',
         error: json['error'] ?? "");
+  }
+}
+
+class LoginResponse {
+  final String message;
+  final String error;
+  final String token;
+
+  LoginResponse({
+    required this.message,
+    required this.error,
+    required this.token,
+  });
+
+  factory LoginResponse.fromJson(Map<String, dynamic> json) {
+
+    return LoginResponse(
+        message:
+            json['message'].runtimeType != String && json['message'] != null
+                ? json['message'][0]
+                : json['message'] ?? '',
+        error: json['error'] ?? "",
+        token: json['token'] ?? "");
+  }
+}
+
+class ProfileResponse {
+  final String message;
+  final String error;
+  final dynamic data;
+
+  ProfileResponse({
+    required this.message,
+    required this.error,
+    required this.data,
+  });
+
+  factory ProfileResponse.fromJson(Map<String, dynamic> json) {
+
+    return ProfileResponse(
+        message:
+            json['message'].runtimeType != String && json['message'] != null
+                ? json['message'][0]
+                : json['message'] ?? '',
+        error: json['error'] ?? "",
+        data: json['data'] ?? "");
   }
 }

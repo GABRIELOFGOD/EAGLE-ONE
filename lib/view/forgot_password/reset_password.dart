@@ -4,7 +4,9 @@ import 'package:youdoc/common/anchor_click.dart';
 import 'package:youdoc/view/forgot_password/components/new_password_form.dart';
 
 class ResetPassword extends StatefulWidget {
-  const ResetPassword({super.key});
+  const ResetPassword({super.key, required this.token});
+
+  final String token;
 
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
@@ -24,32 +26,33 @@ class _ResetPasswordState extends State<ResetPassword> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      textTitle,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        textTitle,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                    Text(
-                      "Enter your new password",
-                      style: TextStyle(
-                        color: TColor.inputGray,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                      Text(
+                        "Enter your new password",
+                        style: TextStyle(
+                          color: TColor.inputGray,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              ),
+                    ],
+                  )),
               const SizedBox(height: 30),
               const NewPasswordForm(),
-              Expanded(child: Container()), // This expands to fill the available space
+              Expanded(
+                  child:
+                      Container()), // This expands to fill the available space
               Container(
                 alignment: Alignment.center,
                 child: Wrap(

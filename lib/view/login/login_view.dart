@@ -94,7 +94,9 @@ class LoginView extends StatelessWidget {
                   )
                 ],
               ),
-              Expanded(child: Container()), // This expands to fill the available space
+              Expanded(
+                  child:
+                      Container()), // This expands to fill the available space
               Container(
                 alignment: Alignment.center,
                 child: Wrap(

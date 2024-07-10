@@ -512,13 +512,13 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
       showDialog(
         context: context,
         barrierColor:
-            Colors.black.withOpacity(0.5), // Dark overlay with 50% opacity
+            Colors.black.withOpacity(0.5),
         builder: (context) {
           return Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.only(
-                  bottom: 50), // Adjust the padding as needed
+                  bottom: 50),
               child: Material(
                 color: Colors.transparent,
                 child: Container(
