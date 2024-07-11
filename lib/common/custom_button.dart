@@ -20,8 +20,8 @@ class CustomButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15.0),
       child: MaterialButton(
-        onPressed: enabled ? onpress : null,
-        color: enabled ? TColor.primary : Colors.white,
+        onPressed: enabled ? onpress : () {},
+        color: enabled ? TColor.primary : TColor.inactiveBtn,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         minWidth: double.infinity,
         height: 45.0,
@@ -29,7 +29,7 @@ class CustomButton extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                color: enabled ? Colors.white : TColor.inputBg,
+                color: enabled ? Colors.white : TColor.bottomBar,
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
               ),

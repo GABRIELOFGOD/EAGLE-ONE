@@ -1,27 +1,3 @@
-// class UserRegister {
-//   final String firstName;
-//   final String lastName;
-//   final String email;
-//   final String sex;
-//   final String dob;
-
-//   UserRegister({
-//     required this.firstName,
-//     required this.lastName,
-//     required this.email,
-//     required this.sex,
-//     required this.dob,
-//   });
-
-//   Map<String, dynamic> toJson() => {
-//         'first_name': firstName,
-//         'last_name': lastName,
-//         'email': email,
-//         'sex': sex,
-//         'dob': dob,
-//       };
-// }
-
 class UserRegister {
   String firstName;
   String lastName;
@@ -51,15 +27,15 @@ class UserRegister {
 class UserRegistrationComplete {
   String password;
   String confirmPassword;
-  String token;
+  String email;
 
   UserRegistrationComplete(
       {required this.password,
       required this.confirmPassword,
-      required this.token});
+      required this.email});
 
   Map<String, dynamic> toJson() {
-    return {"password": password.trim()};
+    return {"password": password.trim(),};
   }
 }
 
@@ -80,19 +56,59 @@ class UserLogin {
 class UserRegistrationResponse {
   final String message;
   final String error;
+  final String email;
 
-  UserRegistrationResponse({required this.message, required this.error});
+  UserRegistrationResponse(
+      {required this.message, required this.error, required this.email});
 
   factory UserRegistrationResponse.fromJson(Map<String, dynamic> json) {
-    print(json);
+    // print(json);
     return UserRegistrationResponse(
-        message:
-            json['message'].runtimeType != String && json['message'] != null
-                ? json['message'][0]
-                : json['message'] ?? '',
-        error: json['error'] ?? "");
+      message: json['message'].runtimeType != String && json['message'] != null
+          ? json['message'][0]
+          : json['message'] ?? '',
+      error: json['error'] ?? "",
+      email: json['email'] ?? "",
+    );
   }
 }
+
+class UserRegistrationCompleteResponse {
+  final String message;
+  final String error;
+
+  UserRegistrationCompleteResponse({
+    required this.message,
+    required this.error,
+  });
+
+  factory UserRegistrationCompleteResponse.fromJson(Map<String, dynamic> json) {
+    // print(json);
+    return UserRegistrationCompleteResponse(
+      message: json['message'].runtimeType != String && json['message'] != null
+          ? json['message'][0]
+          : json['message'] ?? '',
+      error: json['error'] ?? "",
+    );
+  }
+}
+
+// class UserRegistrationResponse {
+//   final String message;
+//   final String error;
+
+//   UserRegistrationResponse({required this.message, required this.error});
+
+//   factory UserRegistrationResponse.fromJson(Map<String, dynamic> json) {
+//     print(json);
+//     return UserRegistrationResponse(
+//         message:
+//             json['message'].runtimeType != String && json['message'] != null
+//                 ? json['message'][0]
+//                 : json['message'] ?? '',
+//         error: json['error'] ?? "");
+//   }
+// }
 
 class LoginResponse {
   final String message;
@@ -106,7 +122,6 @@ class LoginResponse {
   });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
-
     return LoginResponse(
         message:
             json['message'].runtimeType != String && json['message'] != null
@@ -129,7 +144,6 @@ class ProfileResponse {
   });
 
   factory ProfileResponse.fromJson(Map<String, dynamic> json) {
-
     return ProfileResponse(
         message:
             json['message'].runtimeType != String && json['message'] != null

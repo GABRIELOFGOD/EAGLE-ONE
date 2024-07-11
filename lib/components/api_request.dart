@@ -21,25 +21,25 @@ class BaseRequest {
     }
   }
 
-  Future<LoginResponse> complete(
-      UserRegistrationComplete userRegistrationComplete) async {
-    var token = userRegistrationComplete.token;
-    Uri url = Uri.parse("$baseUrl/user/confirm-email?token=$token");
+  Future<UserRegistrationCompleteResponse> complete(UserRegistrationComplete userRegistrationComplete) async {
+    var email = userRegistrationComplete.email;
+    Uri url = Uri.parse('$baseUrl/user/confirm-email?email=$email');
     final response = await http.post(
       url,
       headers: {
         'Content-Type': 'application/json',
       },
-      body: userRegistrationComplete.password,
+      body: json.encode({'password': userRegistrationComplete.password}),
     );
+
     if (response.statusCode == 200 ||
         response.statusCode == 201 ||
         response.statusCode == 400 ||
         response.statusCode == 401 ||
         response.statusCode == 409) {
-      return LoginResponse.fromJson(json.decode(response.body));
+      return UserRegistrationCompleteResponse.fromJson(json.decode(response.body));
     } else {
-      throw Exception("Request Failed");
+      throw Exception('Request Failed');
     }
   }
 

@@ -2,15 +2,18 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/common/custom_button.dart';
+import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/components/user.dart';
-import 'package:youdoc/view/home/home_navigator.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PasswordRegisterForm extends StatefulWidget {
-  final String token;
-
-  const PasswordRegisterForm({super.key, required this.token});
+  const PasswordRegisterForm({
+    super.key,
+    required this.email,
+  });
+  final String email;
 
   @override
   State<PasswordRegisterForm> createState() => _PasswordRegisterFormState();
@@ -33,20 +36,19 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
 
   bool isLoading = false;
 
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     iniPreferences();
   }
-  
+
   void iniPreferences() async {
     prefs = await SharedPreferences.getInstance();
   }
 
-
   UserRegistrationComplete userRegistrationComplete =
-      UserRegistrationComplete(password: "", confirmPassword: "", token: '');
+      UserRegistrationComplete(password: "", confirmPassword: "", email: '');
 
   bool _isPasswordValid() {
     String p = password.text;
@@ -62,6 +64,17 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
         hasMinLength;
   }
 
+  void _openEmailApp() async {
+    final Uri params = Uri(
+      scheme: 'mailto',
+    );
+    if (await canLaunchUrl(params)) {
+      await launchUrl(params);
+    } else {
+      throw 'Could not launch email app';
+    }
+  }
+
   Future<void> _submitForm() async {
     setState(() {
       isLoading = true;
@@ -70,148 +83,75 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
       BaseRequest baseRequest = BaseRequest();
       userRegistrationComplete.password = password.text;
       userRegistrationComplete.confirmPassword = confirmPassword.text;
-      userRegistrationComplete.token = widget.token;
+      userRegistrationComplete.email = widget.email;
 
       var response = await baseRequest.complete(userRegistrationComplete);
       String message = response.message;
       String btn = response.error;
-      String token = response.token;
 
-      if(btn == ""){
-        prefs.setString("token", token);
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const HomeNavigator(),
-              ),
-            );
-       }else {
-        showDialog(
-              context: context,
-              barrierColor: Colors.black.withOpacity(0.5),
-              builder: (context) {
-                return Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 50),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: TColor.primaryBg.withOpacity(0.9),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding: const EdgeInsets.all(20),
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Text(
-                              "ERROR",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              message,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            SizedBox(
-                              width: double.infinity,
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.red),
-                                  foregroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.white),
-                                  textStyle:
-                                      MaterialStateProperty.all<TextStyle>(
-                                          const TextStyle(fontSize: 14)),
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                  ),
-                                ),
-                                child: const Text(
-                                  "Close",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 14),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            );
-       };
+      if (btn == "") {
+        password.text = "";
+        confirmPassword.text = "";
+        _showMessageDialog(
+          message,
+          _openEmailApp,
+          "Sign in link",
+          "Use a unique link to gain access",
+          "Open email app",
+          TColor.primary,
+        );
+      } else {
+        _showMessageDialog(
+          message,
+          () {
+            Navigator.of(context).pop();
+          },
+          "Error",
+          "Check your inputs",
+          "Retry",
+          Colors.red,
+        );
+      }
     } catch (e) {
-      // Handle error...
-      showDialog(
-        context: context,
-        barrierColor: Colors.transparent,
-        builder: (context) {
-          return BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-            child: AlertDialog(
-              backgroundColor: TColor.primaryBg.withOpacity(0.9),
-              content: Text(
-                '$e',
-                style: const TextStyle(color: Colors.white, fontSize: 14),
-              ),
-              actions: [
-                SizedBox(
-                  width: double.infinity,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(TColor.primary),
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      textStyle: MaterialStateProperty.all<TextStyle>(
-                          const TextStyle(fontSize: 14)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                    ),
-                    child: const Text(
-                      "Close",
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
+      _showMessageDialog(
+        e.toString(),
+        () {
+          Navigator.of(context).pop();
         },
+        "Error",
+        "Something went wrong",
+        "Close",
+        Colors.red,
       );
     } finally {
       setState(() {
         isLoading = false;
       });
     }
+  }
+
+  void _showMessageDialog(
+    String message,
+    VoidCallback closeFunction,
+    String title,
+    String sub,
+    String closeText,
+    Color btnColor,
+  ) {
+    showDialog(
+      context: context,
+      barrierColor: Colors.black.withOpacity(0.5),
+      builder: (context) {
+        return CustomDialog(
+          message: message,
+          onClose: closeFunction,
+          title: title,
+          sub: sub,
+          closeText: closeText,
+          btnColor: btnColor,
+        );
+      },
+    );
   }
 
   Widget buildPasswordField(TextEditingController controller,
@@ -310,10 +250,10 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
                       strokeWidth: 4.0,
                     ),
                   )
-                : const Text(
+                : Text(
                     "Continue",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: isFormValid ? Colors.white : TColor.bottomBar,
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                     ),
