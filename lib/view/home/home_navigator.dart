@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/common/loader_overlay.dart';
+import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/view/dashboard/dashboard_view.dart';
+import 'package:youdoc/view/on_boarding/on_boarding_view.dart';
 import 'package:youdoc/view/login/login_view.dart';
 import 'package:youdoc/view/login/logout_screen.dart';
 
@@ -18,11 +20,12 @@ class _HomeNavigatorState extends State<HomeNavigator> {
   int _selectedIndex = 0;
   bool _isLoading = false;
   bool isAddress = false;
+  String username = "";
 
   @override
   void initState() {
     super.initState();
-    _homePageLoad(); // Start loading data on init
+    _homePageLoad();
   }
 
   Future<void> _homePageLoad() async {
@@ -32,38 +35,58 @@ class _HomeNavigatorState extends State<HomeNavigator> {
 
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var _token = prefs.getString('token');
+      String? _token = prefs.getString('token');
 
       if (_token == null) {
-        throw Exception('Token not found');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => OnBoardingView()),
+        );
+        return;
       }
 
-      String token = _token;
-
       BaseRequest baseRequest = BaseRequest();
-      var response = await baseRequest.profile(token);
+      var response = await baseRequest.profile(_token);
 
       String message = response.message;
       String error = response.error;
       dynamic data = response.data;
 
-      if (error == "") {
+      if (error.isEmpty) {
+        setState(() {
+          username = data["firstName"];
+        });
         if (data is Map<String, dynamic> &&
-            data.containsKey("address") &&
-            data.containsKey("ZIP") &&
-            data.containsKey("state") &&
-            data.containsKey("city")) {
+            data["address"] != null &&
+            data["ZIP"] != null &&
+            data["state"] != null &&
+            data["city"] != null) {
           setState(() {
             isAddress = true;
           });
         } else {
-          throw Exception('Data format not as expected');
+          setState(() {
+            isAddress = false;
+          });
         }
       } else {
-        _showErrorDialog(context, message);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginView()),
+        );
       }
     } catch (e) {
-      _showErrorDialog(context, '$e');
+      _showMessageDialog(
+        e.toString(),
+        () {
+          Navigator.of(context).pop();
+          _homePageLoad();
+        },
+        "Error",
+        "Something went wrong",
+        "Retry",
+        Colors.red,
+      );
     } finally {
       setState(() {
         _isLoading = false;
@@ -71,22 +94,25 @@ class _HomeNavigatorState extends State<HomeNavigator> {
     }
   }
 
-  void _showErrorDialog(BuildContext context, String message) {
+  void _showMessageDialog(
+    String message,
+    VoidCallback closeFunction,
+    String title,
+    String sub,
+    String closeText,
+    Color btnColor,
+  ) {
     showDialog(
       context: context,
       barrierColor: Colors.black.withOpacity(0.5),
       builder: (context) {
-        return AlertDialog(
-          title: const Text('Error'),
-          content: Text(message),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Close'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+        return CustomDialog(
+          message: message,
+          onClose: closeFunction,
+          title: title,
+          sub: sub,
+          closeText: closeText,
+          btnColor: btnColor,
         );
       },
     );
@@ -101,15 +127,15 @@ class _HomeNavigatorState extends State<HomeNavigator> {
   Widget _buildCurrentWidget() {
     switch (_selectedIndex) {
       case 0:
-        return DashboardView(noAddress: isAddress);
+        return DashboardView(noAddress: isAddress, name: username);
       case 1:
-        return DashboardView(noAddress: isAddress);
+        return DashboardView(noAddress: isAddress, name: username);
       case 2:
-        return DashboardView(noAddress: isAddress);
+        return DashboardView(noAddress: isAddress, name: username);
       case 3:
-        return DashboardView(noAddress: isAddress);
+        return DashboardView(noAddress: isAddress, name: username);
       case 4:
-        return LogoutScreen();
+        return const LogoutScreen();
       default:
         return Container();
     }

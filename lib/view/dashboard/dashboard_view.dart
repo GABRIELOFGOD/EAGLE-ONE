@@ -3,10 +3,16 @@ import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/common/custom_dashboard_card.dart';
 import 'package:youdoc/view/dashboard/components/appointment.dart';
 import 'package:youdoc/view/dashboard/components/no_address_overlay.dart';
+import 'package:youdoc/view/search_screen/search_screen.dart';
 
 class DashboardView extends StatefulWidget {
-  const DashboardView({super.key, required this.noAddress});
+  const DashboardView({
+    super.key,
+    required this.noAddress,
+    required this.name,
+  });
   final bool noAddress;
+  final String name;
 
   @override
   State<DashboardView> createState() => _DashboardViewState();
@@ -14,7 +20,7 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardViewState extends State<DashboardView> {
   final TextEditingController search = TextEditingController();
-  // bool _noAddress = false;
+  bool showSearch = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,22 +31,28 @@ class _DashboardViewState extends State<DashboardView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 42,
-                child: TextField(
-                  controller: search,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                  ),
-                  decoration: InputDecoration(
-                    hintText: "Search for a practice or service",
-                    prefixIcon: Image.asset(
-                      "assets/icons/search_icon.png",
-                      width: 10,
+              GestureDetector(
+                onTap: () {
+                  // Perform your desired action here
+                  print('TextField tapped');
+                },
+                child: SizedBox(
+                  height: 42,
+                  child: TextField(
+                    controller: search,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
                     ),
-                    hintStyle: const TextStyle(color: Colors.white),
-                    border: InputBorder.none,
+                    decoration: InputDecoration(
+                      hintText: "Search for a practice or service",
+                      prefixIcon: Image.asset(
+                        "assets/icons/search_icon.png",
+                        width: 10,
+                      ),
+                      hintStyle: const TextStyle(color: Colors.white),
+                      border: InputBorder.none,
+                    ),
                   ),
                 ),
               ),
@@ -59,16 +71,39 @@ class _DashboardViewState extends State<DashboardView> {
                 height: 36,
               ),
               Container(
-                alignment: Alignment.topLeft,
-                child: const Text(
-                  "Health hub",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
+                  alignment: Alignment.topLeft,
+                  child: widget.name == ""
+                      ? const SizedBox(
+                          width: 25.0,
+                          height: 25.0,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 4.0,
+                          ),
+                        )
+                      : Row(
+                          children: [
+                            const Text(
+                              "Hello",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              widget.name,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        )),
               const SizedBox(
                 height: 18,
               ),
@@ -98,6 +133,7 @@ class _DashboardViewState extends State<DashboardView> {
           ),
         ),
         if (!widget.noAddress) const NoAddressOverlay(),
+        if (showSearch) const SearchScreen(),
       ],
     );
   }

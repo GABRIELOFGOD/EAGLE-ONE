@@ -3,7 +3,9 @@ import 'package:youdoc/common/Color_extention.dart';
 import 'package:youdoc/common/custom_button.dart';
 
 class NewPasswordForm extends StatefulWidget {
-  const NewPasswordForm({super.key});
+  const NewPasswordForm({super.key, required this.email});
+
+  final String email;
 
   @override
   State<NewPasswordForm> createState() => _NewPasswordFormState();

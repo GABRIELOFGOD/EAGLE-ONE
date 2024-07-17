@@ -65,7 +65,9 @@ class CustomDialog extends StatelessWidget {
                       ],
                     ),
                     GestureDetector(
-                      onTap: onClose,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
@@ -96,8 +98,10 @@ class CustomDialog extends StatelessWidget {
                   child: TextButton(
                     onPressed: onClose,
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(btnColor),
-                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(btnColor),
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
                       textStyle: MaterialStateProperty.all<TextStyle>(
                         const TextStyle(fontSize: 14),
                       ),

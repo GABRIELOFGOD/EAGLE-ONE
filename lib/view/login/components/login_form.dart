@@ -63,24 +63,27 @@ class _LoginFormState extends State<LoginForm> {
       String token = response.token;
 
       if (btn == "") {
-        prefs.setString("token", token);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomeNavigator(),
-          ),
-        );
-      } else {
         _showMessageDialog(
           message,
-          btn == "Conflict"
-              ? MaterialPageRoute(
-                  builder: (context) => const LoginView(),
-                )
-              : Navigator.of(context).pop(),
-          btn == "Conflict" ? "Uh-oh!" : "Error",
-          btn == "Conflict"
-              ? "Unable to proceed with account registration"
+          () {
+            Navigator.of(context).pop();
+          },
+          "Success",
+          "Login success",
+          "Open mail app",
+          TColor.primary,
+        );
+        email.text = "";
+        password.text = "";
+      } else {
+        _showMessageDialog(
+          message == "Invalid credentials"
+              ? "Check your email and password as the information entered is not correct"
+              : message,
+          () => Navigator.of(context).pop(),
+          "Error",
+          message == "Invalid credentials"
+              ? "Invalid credentials"
               : "Something went wrong",
           btn == "Conflict" ? "Login" : "Close",
           btn == "Conflict" ? TColor.warning : Colors.red,

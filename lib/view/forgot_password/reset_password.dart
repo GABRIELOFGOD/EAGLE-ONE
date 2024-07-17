@@ -4,9 +4,9 @@ import 'package:youdoc/common/anchor_click.dart';
 import 'package:youdoc/view/forgot_password/components/new_password_form.dart';
 
 class ResetPassword extends StatefulWidget {
-  const ResetPassword({super.key, required this.token});
+  const ResetPassword({super.key, required this.email});
 
-  final String token;
+  final String email;
 
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
@@ -49,10 +49,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                     ],
                   )),
               const SizedBox(height: 30),
-              const NewPasswordForm(),
+              NewPasswordForm(email: widget.email,),
               Expanded(
-                  child:
-                      Container()), // This expands to fill the available space
+                  child: Container()),
               Container(
                 alignment: Alignment.center,
                 child: Wrap(
