@@ -91,7 +91,7 @@ class OnBoardingView extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const LoginView()));
+                                  builder: (context) => const LoginView(token: "confirm",)));
                         },
                       ),
                     ),

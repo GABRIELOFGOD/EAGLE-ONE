@@ -6,14 +6,28 @@ import 'package:youdoc/view/register/components/form_input_for_password.dart';
 
 class RegisterPasswordView extends StatefulWidget {
   final String email;
+  final String token;
 
-  const RegisterPasswordView({super.key, required this.email});
+  const RegisterPasswordView({super.key, required this.email, required this.token,});
 
   @override
   State<RegisterPasswordView> createState() => _RegisterPasswordViewState();
 }
 
 class _RegisterPasswordViewState extends State<RegisterPasswordView> {
+  void checkConfirm() {
+    if (widget.email == "confirm") {
+      // TODO: confirm token function
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkConfirm();
+  }
+
   @override
   Widget build(BuildContext context) {
     const textTitle = 'Create an account';
@@ -30,7 +44,8 @@ class _RegisterPasswordViewState extends State<RegisterPasswordView> {
                 ),
                 child: IntrinsicHeight(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 30.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -67,7 +82,9 @@ class _RegisterPasswordViewState extends State<RegisterPasswordView> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const LoginView(),
+                                        builder: (context) => LoginView(
+                                          token: "confirm",
+                                        ),
                                       ),
                                     );
                                   },
@@ -142,4 +159,3 @@ class _RegisterPasswordViewState extends State<RegisterPasswordView> {
     );
   }
 }
-

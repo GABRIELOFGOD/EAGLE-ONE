@@ -49,7 +49,7 @@ class _RequestForgetPasswordLinkState extends State<RequestForgetPasswordLink> {
               ),
               const SizedBox(height: 30),
               const ForgotFormForEmail(),
-              Expanded(child: Container()), // This expands to fill the available space
+              Expanded(child: Container()),
               Container(
                 alignment: Alignment.center,
                 child: Wrap(

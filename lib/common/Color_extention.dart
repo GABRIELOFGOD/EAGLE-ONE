@@ -14,5 +14,3 @@ class TColor {
   static Color get warning => const Color(0xFFEED202);
   static Color get inactiveBtn => const Color(0xFF454545);
 }
-
-// 

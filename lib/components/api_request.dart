@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:youdoc/components/practices.dart';
 import 'package:youdoc/components/user.dart';
 
-// const String baseUrl = 'http://localhost:3002';
-const String baseUrl = 'http://lambda.youdoc.co';
+const String baseUrl = 'http://192.168.0.104:3002';
+// const String baseUrl = 'http://lambda.youdoc.co';
+const String webUrl = "http://api.youdoc.co/api";
 
 class BaseRequest {
   var client = http.Client();
@@ -113,6 +115,30 @@ class BaseRequest {
       return FindEmailResponse.fromJson(json.decode(response.body));
     } else {
       throw Exception("Request Failed");
+    }
+  }
+
+  Future<List<Practice>> getAllPractices() async {
+    Uri url = Uri.parse("$webUrl/users");
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      List<dynamic> body = json.decode(response.body);
+      return Practice.fromJsonList(body);
+    } else {
+      throw Exception("Request Failed with status: ${response.statusCode}");
+    }
+  }
+
+  Future<Practice> getPractice(int id) async {
+    final response = await http.get(Uri.parse('$webUrl/users/$id'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> json = jsonDecode(response.body);
+      return Practice.fromJson(json);
+    } else {
+      throw Exception('Failed to load practice');
     }
   }
 }

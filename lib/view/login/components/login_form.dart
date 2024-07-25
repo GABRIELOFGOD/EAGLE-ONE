@@ -68,9 +68,14 @@ class _LoginFormState extends State<LoginForm> {
           () {
             Navigator.of(context).pop();
           },
-          "Success",
-          "Login success",
-          "Open mail app",
+          // () {
+          //   Navigator.of(context).push(
+          //     MaterialPageRoute(builder: (context) => OnBoardingView())
+          //   );
+          // },
+          "Link Sent",
+          "Your Youdoc sign-in link has been sent ",
+          "Got it!",
           TColor.primary,
         );
         email.text = "";

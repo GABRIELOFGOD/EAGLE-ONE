@@ -60,8 +60,7 @@ class UserRegistrationResponse {
   final String error;
   final String email;
 
-  UserRegistrationResponse(
-      {required this.message, required this.error, required this.email});
+  UserRegistrationResponse({required this.message, required this.error, required this.email,});
 
   factory UserRegistrationResponse.fromJson(Map<String, dynamic> json) {
     // print(json);

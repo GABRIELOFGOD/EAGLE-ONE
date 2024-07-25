@@ -19,8 +19,14 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-  final TextEditingController search = TextEditingController();
+  // final TextEditingController search = TextEditingController();
   bool showSearch = false;
+
+  void closeSearch() {
+    setState(() {
+      showSearch = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,25 +39,32 @@ class _DashboardViewState extends State<DashboardView> {
             children: [
               GestureDetector(
                 onTap: () {
-                  // Perform your desired action here
-                  print('TextField tapped');
+                  setState(() {
+                    showSearch = true;
+                  });
+                  // print('TextField tapped');
                 },
                 child: SizedBox(
                   height: 42,
-                  child: TextField(
-                    controller: search,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.transparent),
                     ),
-                    decoration: InputDecoration(
-                      hintText: "Search for a practice or service",
-                      prefixIcon: Image.asset(
-                        "assets/icons/search_icon.png",
-                        width: 10,
-                      ),
-                      hintStyle: const TextStyle(color: Colors.white),
-                      border: InputBorder.none,
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          "assets/icons/search_icon.png",
+                          width: 10,
+                        ),
+                        const SizedBox(width: 8),
+                        const Text(
+                          "Search for a practice or service",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -61,6 +74,7 @@ class _DashboardViewState extends State<DashboardView> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
+                      // Replace TColor.textGrad and TColor.primary with your actual colors
                       TColor.textGrad,
                       TColor.primary,
                     ],
@@ -132,8 +146,8 @@ class _DashboardViewState extends State<DashboardView> {
             ],
           ),
         ),
-        if (!widget.noAddress) const NoAddressOverlay(),
-        if (showSearch) const SearchScreen(),
+        // if (!widget.noAddress) const NoAddressOverlay(),
+        if (showSearch) SearchScreen(closeSearch: closeSearch),
       ],
     );
   }

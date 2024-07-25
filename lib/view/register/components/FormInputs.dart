@@ -95,6 +95,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
           MaterialPageRoute(
             builder: (context) => RegisterPasswordView(
               email: email,
+              token: "confirm",
             ),
           ),
         );
@@ -106,7 +107,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const LoginView(),
+                  builder: (context) => LoginView(token: "confirm",),
                 ),
               );
             } else {
