@@ -37,11 +37,31 @@ class _ForgotFormForEmailState extends State<ForgotFormForEmail> {
       bool existed = response.existed;
 
       if (btn == "") {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ResetPassword(email: email.text, token: "confirm"),
+          ),
+        );
       } else {
-        setState(() {
-          isError = true;
-          errorMessage = message;
-        });
+        _showMessageDialog(
+          message,
+          Navigator.of(context).pop(),
+          // () {
+          //   Navigator.of(context).push(
+          //     MaterialPageRoute(builder: (context) => OnBoardingView())
+          //   );
+          // },
+          "Error",
+          "Something went wrong! ",
+          "Back",
+          Colors.red,
+        );
+        // setState(() {
+        //   isError = true;
+        //   errorMessage = message;
+        // });
       }
     } catch (e) {
       _showMessageDialog(

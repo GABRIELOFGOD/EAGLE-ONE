@@ -37,6 +37,8 @@ class _HomeNavigatorState extends State<HomeNavigator> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? _token = prefs.getString('token');
 
+      print("Token, $_token");
+
       if (_token == null) {
         Navigator.pushReplacement(
           context,
@@ -70,11 +72,23 @@ class _HomeNavigatorState extends State<HomeNavigator> {
           });
         }
       } else {
-        SnackBar(content: Text(message));
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => LoginView(token: "token",)),
-        );
+        _showMessageDialog(
+            message,
+            () {
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginView(token: "confirm")), (route) => false,);
+              // Navigator.of(context).pop();
+              // message == "Sign-in links are only valid for 5 mins. After a link expires, you'll need to request a new one to be sent to your email." ? Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => RegisterView()), (route) => false,) : Navigator,
+            },
+            "Error",
+            "Something went wrong",
+            "Close",
+            TColor.primary,
+          );
+        // SnackBar(content: Text(message));
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => const LoginView(token: "confirm",)),
+        // );
       }
     } catch (e) {
       _showMessageDialog(

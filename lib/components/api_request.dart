@@ -70,6 +70,27 @@ class BaseRequest {
     }
   }
 
+  Future<ConfirmTokenResponse> confirmToken(String token) async {
+    Uri url = Uri.parse("$baseUrl/patient/token?token=$token");
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200 ||
+        response.statusCode == 201 ||
+        response.statusCode == 400 ||
+        response.statusCode == 401 ||
+        response.statusCode == 409) {
+      return ConfirmTokenResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception("Request Failed");
+    }
+  }
+
   Future<ProfileResponse> profile(String token) async {
     Uri url = Uri.parse("$baseUrl/patient/profile?token=$token");
 

@@ -87,8 +87,6 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
       String btn = response.error;
       String email = response.email;
 
-      print("email from resgisterView $email");
-
       if (btn == "") {
         Navigator.push(
           context,

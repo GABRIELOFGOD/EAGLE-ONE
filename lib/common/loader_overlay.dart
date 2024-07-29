@@ -4,7 +4,7 @@ import 'package:youdoc/common/color_extention.dart';
 class LoadingOverlay extends StatelessWidget {
   final bool isLoading;
 
-  const LoadingOverlay({Key? key, required this.isLoading}) : super(key: key);
+  const LoadingOverlay({super.key, required this.isLoading});
 
   @override
   Widget build(BuildContext context) {
@@ -26,3 +26,4 @@ class LoadingOverlay extends StatelessWidget {
     );
   }
 }
+

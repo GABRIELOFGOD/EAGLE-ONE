@@ -94,10 +94,12 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
         confirmPassword.text = "";
         _showMessageDialog(
           message,
-          _openEmailApp,
-          "Sign in link",
-          "Use a unique link to gain access",
-          "Open email app",
+          () {
+            Navigator.of(context).pop();
+          },
+          "Link Sent",
+          "Your Youdoc sign-in link has been sent",
+          "Got it!",
           TColor.primary,
         );
       } else {

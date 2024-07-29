@@ -60,7 +60,11 @@ class UserRegistrationResponse {
   final String error;
   final String email;
 
-  UserRegistrationResponse({required this.message, required this.error, required this.email,});
+  UserRegistrationResponse({
+    required this.message,
+    required this.error,
+    required this.email,
+  });
 
   factory UserRegistrationResponse.fromJson(Map<String, dynamic> json) {
     // print(json);
@@ -90,6 +94,29 @@ class UserRegistrationCompleteResponse {
           ? json['message'][0]
           : json['message'] ?? '',
       error: json['error'] ?? "",
+    );
+  }
+}
+
+class ConfirmTokenResponse {
+  final String message;
+  final String error;
+  final String token;
+
+  ConfirmTokenResponse({
+    required this.message,
+    required this.error,
+    required this.token,
+  });
+
+  factory ConfirmTokenResponse.fromJson(Map<String, dynamic> json) {
+    // print(json);
+    return ConfirmTokenResponse(
+      message: json['message'].runtimeType != String && json['message'] != null
+          ? json['message'][0]
+          : json['message'] ?? '',
+      error: json['error'] ?? "",
+      token: json['token'] ?? "",
     );
   }
 }
