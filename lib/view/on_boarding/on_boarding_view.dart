@@ -78,6 +78,7 @@ class OnBoardingView extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => const RegisterView()));
                         },
+                        // fontSize: 20,
                       ),
                     ),
                     ShaderMask(

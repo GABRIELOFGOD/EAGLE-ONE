@@ -7,6 +7,7 @@ class CustomDialog extends StatelessWidget {
   final String sub;
   final String closeText;
   final Color btnColor;
+  final Color? btnTextColor;
   final VoidCallback onClose;
 
   const CustomDialog({
@@ -17,6 +18,7 @@ class CustomDialog extends StatelessWidget {
     required this.sub,
     required this.closeText,
     required this.btnColor,
+    this.btnTextColor,
   });
 
   @override
@@ -103,7 +105,7 @@ class CustomDialog extends StatelessWidget {
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.white),
                       textStyle: MaterialStateProperty.all<TextStyle>(
-                        const TextStyle(fontSize: 14),
+                        const TextStyle(fontSize: 16),
                       ),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
@@ -113,9 +115,9 @@ class CustomDialog extends StatelessWidget {
                     ),
                     child: Text(
                       closeText,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
+                      style: TextStyle(
+                        color: btnTextColor ?? Colors.white,
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

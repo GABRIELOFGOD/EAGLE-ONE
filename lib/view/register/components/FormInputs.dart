@@ -105,7 +105,9 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LoginView(token: "confirm",),
+                  builder: (context) => LoginView(
+                    token: "confirm",
+                  ),
                 ),
               );
             } else {
@@ -118,6 +120,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
               : "Something went wrong",
           btn == "Conflict" ? "Login" : "Close",
           btn == "Conflict" ? TColor.warning : Colors.red,
+          btn == "Conflict" ? Colors.black : Colors.white,
         );
       }
     } catch (e) {
@@ -131,6 +134,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
         "Something went wrong",
         "Retry",
         Colors.red,
+        Colors.white,
       );
     } finally {
       setState(() {
@@ -140,13 +144,13 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
   }
 
   void _showMessageDialog(
-    String message,
-    VoidCallback closeFunction,
-    String title,
-    String sub,
-    String closeText,
-    Color btnColor,
-  ) {
+      String message,
+      VoidCallback closeFunction,
+      String title,
+      String sub,
+      String closeText,
+      Color btnColor,
+      Color? textColor) {
     showDialog(
       context: context,
       barrierColor: Colors.black.withOpacity(0.5),
@@ -158,6 +162,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
           sub: sub,
           closeText: closeText,
           btnColor: btnColor,
+          btnTextColor: textColor,
         );
       },
     );
@@ -233,7 +238,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
                     "Continue",
                     style: TextStyle(
                       color: isFormValid ? Colors.white : TColor.bottomBar,
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

@@ -60,6 +60,7 @@ class Practice {
   String practiceAboutText;
   String practiceAddress;
   String specialty;
+  String city;
   List<Service> services;
   List<UserOpeningTimes> userOpeningTimes;
 
@@ -73,6 +74,7 @@ class Practice {
     required this.specialty,
     required this.services,
     required this.userOpeningTimes,
+    required this.city,
   });
 
   factory Practice.fromJson(Map<String, dynamic> json) {
@@ -91,6 +93,7 @@ class Practice {
       practiceAddress: json['practiceAddress'] ?? "",
       practiceImage: json['practiceImage'] ?? "",
       specialty: json['specialty']?['name'] ?? "",
+      city: json['city'] ?? "",
       services: servicesList,
       userOpeningTimes: openingTime,
     );

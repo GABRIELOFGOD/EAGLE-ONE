@@ -256,7 +256,7 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
                     "Continue",
                     style: TextStyle(
                       color: isFormValid ? Colors.white : TColor.bottomBar,
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

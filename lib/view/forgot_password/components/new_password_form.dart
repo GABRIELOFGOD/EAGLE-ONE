@@ -144,7 +144,7 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
                     "Reset password",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

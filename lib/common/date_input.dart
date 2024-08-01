@@ -28,7 +28,7 @@ class DateOfBirthInput extends StatelessWidget {
             hintText: 'Date of Birth',
             hintStyle: const TextStyle(
               color: Colors.white70,
-              fontSize: 12.0,
+              fontSize: 14.0,
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: TColor.inputBg),

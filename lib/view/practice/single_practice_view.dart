@@ -1,10 +1,14 @@
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter/widgets.dart';
 import 'package:youdoc/common/anchor_click.dart';
 import 'package:youdoc/common/color_extention.dart';
+// import 'package:youdoc/common/custom_button.dart';
 import 'package:youdoc/common/loader_overlay.dart';
 import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/components/practices.dart';
+import 'package:youdoc/view/appointment_view/appointment_view.dart';
 
 class SinglePracticeView extends StatefulWidget {
   const SinglePracticeView({
@@ -238,100 +242,41 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                   const SizedBox(
                     height: 36,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "About practice",
-                        style: TextStyle(
-                            color: TColor.textGray,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14),
-                      ),
-                      const SizedBox(
-                        height: 14,
-                      ),
-                      Text(
-                        practice!.practiceAboutText,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 36,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Image.asset(
-                            "assets/icons/bank.png",
-                            width: 18,
-                            color: TColor.inputGray,
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "About practice",
+                                style: TextStyle(
+                                    color: TColor.textGray,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14),
+                              ),
+                              const SizedBox(
+                                height: 14,
+                              ),
+                              Text(
+                                practice!.practiceAboutText,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              )
+                            ],
                           ),
                           const SizedBox(
-                            width: 8,
+                            height: 36,
                           ),
-                          Text(
-                            "Services offered",
-                            style: TextStyle(
-                              color: TColor.inputGray,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 14,
-                      ),
-                      // Wrap(
-                      //   children: [],
-                      // )
-                      Wrap(
-                        children: practice == null
-                            ? [
-                                Center(
-                                  child: CircularProgressIndicator(
-                                    color: TColor.primary,
-                                  ),
-                                )
-                              ]
-                            : practice!.services.map((service) {
-                                return Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: TColor.btnBg,
-                                  ),
-                                  child: Text(
-                                    service.serviceName,
-                                    style: TextStyle(
-                                      color: TColor.btnText,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                      ),
-                      const SizedBox(
-                        height: 36,
-                      ),
-                      Column(
-                        children: [
                           Row(
                             children: [
                               Image.asset(
-                                "assets/icons/location.png",
+                                "assets/icons/bank.png",
                                 width: 18,
                                 color: TColor.inputGray,
                               ),
@@ -339,7 +284,7 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                                 width: 8,
                               ),
                               Text(
-                                "Location",
+                                "Services offered",
                                 style: TextStyle(
                                   color: TColor.inputGray,
                                   fontSize: 12,
@@ -351,79 +296,159 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                           const SizedBox(
                             height: 14,
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                practice!.practiceAddress,
-                                style: TextStyle(
-                                  color: TColor.btnText,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              CustomAnchor(
-                                text: "Open in Google Map",
-                                clicked: () {},
-                                myFontSize: 14.0,
-                                textColor: TColor.primary,
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 36,
-                      ),
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              Image.asset(
-                                "assets/icons/location.png",
-                                width: 18,
-                                color: TColor.inputGray,
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                "Operation hours",
-                                style: TextStyle(
-                                  color: TColor.inputGray,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
-                            ],
+                          // Wrap(
+                          //   children: [],
+                          // )
+                          Wrap(
+                            spacing: 10,
+                            children: practice == null
+                                ? [
+                                    Center(
+                                      child: CircularProgressIndicator(
+                                        color: TColor.primary,
+                                      ),
+                                    )
+                                  ]
+                                : practice!.services.map(
+                                    (service) {
+                                      return Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 4,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: TColor.btnBg,
+                                        ),
+                                        child: Text(
+                                          service.serviceName,
+                                          style: TextStyle(
+                                            color: TColor.btnText,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ).toList(),
                           ),
                           const SizedBox(
-                            height: 14,
+                            height: 36,
                           ),
-                          Row(
+                          Column(
                             children: [
                               Row(
                                 children: [
+                                  Image.asset(
+                                    "assets/icons/location.png",
+                                    width: 18,
+                                    color: TColor.inputGray,
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
                                   Text(
-                                    practice!.userOpeningTimes[0].openingTime,
+                                    "Location",
+                                    style: TextStyle(
+                                      color: TColor.inputGray,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 14,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "${practice!.city}, ${practice!.practiceAddress}",
                                     style: TextStyle(
                                       color: TColor.btnText,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  Text(
-                                    " - ",
-                                    style: TextStyle(
-                                      color: TColor.btnText,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  CustomAnchor(
+                                    text: "Open in Google Map",
+                                    clicked: () {},
+                                    myFontSize: 14.0,
+                                    textColor: TColor.primary,
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 36,
+                          ),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/icons/location.png",
+                                    width: 18,
+                                    color: TColor.inputGray,
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
                                   ),
                                   Text(
-                                    practice!.userOpeningTimes[0].closingTime,
+                                    "Operation hours",
+                                    style: TextStyle(
+                                      color: TColor.inputGray,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 14,
+                              ),
+                              Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        practice!
+                                            .userOpeningTimes[0].openingTime,
+                                        style: TextStyle(
+                                          color: TColor.btnText,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Text(
+                                        " - ",
+                                        style: TextStyle(
+                                          color: TColor.btnText,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Text(
+                                        practice!
+                                            .userOpeningTimes[0].closingTime,
+                                        style: TextStyle(
+                                          color: TColor.btnText,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "Mon-Sun",
                                     style: TextStyle(
                                       color: TColor.btnText,
                                       fontSize: 14,
@@ -432,73 +457,161 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "Mon-Sun",
-                                style: TextStyle(
-                                  color: TColor.btnText,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 36,
-                      ),
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              Image.asset(
-                                "assets/icons/user.png",
-                                width: 18,
-                                color: TColor.inputGray,
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                "Lead physician",
-                                style: TextStyle(
-                                  color: TColor.inputGray,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
                             ],
                           ),
                           const SizedBox(
-                            height: 14,
+                            height: 36,
                           ),
-                          Row(
+                          Column(
                             children: [
-                              Text(
-                                practice!.practiceAddress,
-                                style: TextStyle(
-                                  color: TColor.btnText,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/icons/user.png",
+                                    width: 18,
+                                    color: TColor.inputGray,
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    "Lead physician",
+                                    style: TextStyle(
+                                      color: TColor.inputGray,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  )
+                                ],
                               ),
                               const SizedBox(
-                                width: 5,
+                                height: 14,
                               ),
-                              CustomAnchor(
-                                text: "Open in Google Map",
-                                clicked: () {},
-                                myFontSize: 14.0,
-                                textColor: TColor.primary,
-                              )
+                              Row(
+                                children: [
+                                  Text(
+                                    practice!.practiceAddress,
+                                    style: TextStyle(
+                                      color: TColor.btnText,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  CustomAnchor(
+                                    text: "Open in Google Map",
+                                    clicked: () {},
+                                    myFontSize: 14.0,
+                                    textColor: TColor.primary,
+                                  )
+                                ],
+                              ),
                             ],
+                          ),
+                          const SizedBox(
+                            height: 36,
+                          ),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/icons/icon_smile.png",
+                                    width: 18,
+                                    color: TColor.inputGray,
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    "User ratings",
+                                    style: TextStyle(
+                                      color: TColor.inputGray,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 14,
+                              ),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.star,
+                                    size: 16,
+                                    color: TColor.rating,
+                                  ),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  Icon(
+                                    Icons.star,
+                                    size: 16,
+                                    color: TColor.rating,
+                                  ),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  Icon(
+                                    Icons.star,
+                                    size: 16,
+                                    color: TColor.rating,
+                                  ),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  Icon(
+                                    Icons.star,
+                                    size: 16,
+                                    color: TColor.rating,
+                                  ),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 36,
+                          ),
+                          MaterialButton(
+                            onPressed: () {
+                              if (practice != null) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AppointmentView(
+                                      practice: practice!,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return;
+                              }
+                              ;
+                            },
+                            color: TColor.primary,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5)),
+                            minWidth: double.infinity,
+                            height: 45.0,
+                            child: const Text(
+                              "Book appointment",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                   LoadingOverlay(isLoading: isLoading),
                 ],

@@ -6,6 +6,7 @@ class CustomButton extends StatelessWidget {
   final VoidCallback? onpress;
   final bool enabled;
   final Widget? loader;
+  final double? fontSize;
 
   const CustomButton({
     super.key,
@@ -13,6 +14,7 @@ class CustomButton extends StatelessWidget {
     this.onpress,
     this.enabled = true,
     this.loader,
+    this.fontSize,
   });
 
   @override
@@ -30,7 +32,7 @@ class CustomButton extends StatelessWidget {
               title,
               style: TextStyle(
                 color: enabled ? Colors.white : TColor.bottomBar,
-                fontSize: 20,
+                fontSize: fontSize ?? 16,
                 fontWeight: FontWeight.w600,
               ),
             ),

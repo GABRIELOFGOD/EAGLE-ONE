@@ -12,5 +12,6 @@ class TColor {
   static Color get btnBg => const Color(0xFF343434);
   static Color get btnText => const Color(0xFFF4F4F4);
   static Color get warning => const Color(0xFFEED202);
+  static Color get rating => const Color(0xFFE2E71A);
   static Color get inactiveBtn => const Color(0xFF454545);
 }

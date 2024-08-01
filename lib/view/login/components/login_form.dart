@@ -85,7 +85,9 @@ class _LoginFormState extends State<LoginForm> {
           message == "Invalid credentials"
               ? "Check your email and password as the information entered is not correct"
               : message,
-          () => Navigator.of(context).pop(),
+          () {
+            Navigator.of(context).pop();
+          },
           "Error",
           message == "Invalid credentials"
               ? "Invalid credentials"
@@ -222,7 +224,7 @@ class _LoginFormState extends State<LoginForm> {
                       "Login",
                       style: TextStyle(
                         color: isFormValid ? Colors.white : TColor.bottomBar,
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

@@ -31,13 +31,13 @@ class CustomTextField extends StatelessWidget {
             border: InputBorder.none,
             hintStyle: TextStyle(
               color: TColor.inputGray,
-              fontSize: 12,
+              fontSize: 14,
             ),
           ),
           style: const TextStyle(
             color: Colors.white70,
             fontWeight: FontWeight.w500,
-            fontSize: 12,
+            fontSize: 14,
           ),
           onChanged: onChanged,
         ),

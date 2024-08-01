@@ -3,8 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:youdoc/components/practices.dart';
 import 'package:youdoc/components/user.dart';
 
-const String baseUrl = 'http://192.168.0.104:3002';
-// const String baseUrl = 'http://lambda.youdoc.co';
+// const String baseUrl = 'http://192.168.0.104:3002';
+const String baseUrl = 'http://lambda.youdoc.co';
 const String webUrl = "http://api.youdoc.co/api";
 
 class BaseRequest {
