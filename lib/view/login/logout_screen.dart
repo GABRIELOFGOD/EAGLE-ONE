@@ -66,14 +66,14 @@ class LogoutScreen extends StatelessWidget {
               );
             }
           },
-          child: Text(
+          color: Colors.blue,
+          child: const Text(
             "Logout",
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,
             ),
           ),
-          color: Colors.blue,
         ),
       ),
     );

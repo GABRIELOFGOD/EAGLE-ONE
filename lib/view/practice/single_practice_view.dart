@@ -593,7 +593,6 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                               } else {
                                 return;
                               }
-                              ;
                             },
                             color: TColor.primary,
                             shape: RoundedRectangleBorder(

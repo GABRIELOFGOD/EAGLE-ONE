@@ -8,7 +8,6 @@ import 'package:youdoc/view/home/home_navigator.dart';
 import 'package:youdoc/view/login/login_view.dart';
 import 'package:youdoc/view/on_boarding/on_boarding_view.dart';
 import 'package:youdoc/view/register/register_password_view.dart';
-import 'package:youdoc/view/splash/splash_screen.dart';
 
 // void main() {
 //   runApp(const MyApp());

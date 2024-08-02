@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/custom_button.dart';
 import 'package:youdoc/common/color_extention.dart';
-import 'package:youdoc/common/line_text_field.dart';
 import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/view/forgot_password/reset_password.dart';

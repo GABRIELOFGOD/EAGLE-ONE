@@ -105,7 +105,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LoginView(
+                  builder: (context) => const LoginView(
                     token: "confirm",
                   ),
                 ),

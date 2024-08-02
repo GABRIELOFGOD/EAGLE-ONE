@@ -158,18 +158,14 @@
 //   }
 // }
 
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
-import "package:flutter/widgets.dart";
 import "package:youdoc/common/color_extention.dart";
 import "package:youdoc/common/loader_overlay.dart";
 import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import "package:youdoc/common/custom_checkbox.dart";
 import "package:youdoc/components/api_request.dart";
 import "package:youdoc/components/practices.dart";
-import "package:youdoc/view/search_screen/components/dummy_clinics.dart";
 import "package:youdoc/view/search_screen/components/single_clinic_list.dart";
-import 'package:flutter/src/material/slider.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key, required this.closeSearch});
@@ -300,7 +296,7 @@ class _SearchScreenState extends State<SearchScreen> {
         if (sexual == true) {
           tempResult.addAll(clinicResult
               .where((clinic) => clinic.services
-                  .any((service) => service.serviceName == "Sexual"))
+                  .any((service) => service.serviceName == "Sexual health"))
               .toList());
         }
 

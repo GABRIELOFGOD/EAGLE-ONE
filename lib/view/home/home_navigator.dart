@@ -35,11 +35,11 @@ class _HomeNavigatorState extends State<HomeNavigator> {
 
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? _token = prefs.getString('token');
+      String? token = prefs.getString('token');
 
-      print("Token, $_token");
+      print("Token, $token");
 
-      if (_token == null) {
+      if (token == null) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => OnBoardingView()),
@@ -48,7 +48,7 @@ class _HomeNavigatorState extends State<HomeNavigator> {
       }
 
       BaseRequest baseRequest = BaseRequest();
-      var response = await baseRequest.profile(_token);
+      var response = await baseRequest.profile(token);
 
       String message = response.message;
       String error = response.error;
@@ -75,7 +75,7 @@ class _HomeNavigatorState extends State<HomeNavigator> {
         _showMessageDialog(
             message,
             () {
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginView(token: "confirm")), (route) => false,);
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginView(token: "confirm")), (route) => false,);
               // Navigator.of(context).pop();
               // message == "Sign-in links are only valid for 5 mins. After a link expires, you'll need to request a new one to be sent to your email." ? Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => RegisterView()), (route) => false,) : Navigator,
             },

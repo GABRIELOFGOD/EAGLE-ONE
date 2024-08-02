@@ -8,8 +8,6 @@ import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/components/user.dart';
 import 'package:youdoc/view/forgot_password/request_password.dart';
-import 'package:youdoc/view/home/home_navigator.dart';
-import 'package:youdoc/view/login/login_view.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});

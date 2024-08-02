@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/components/practices.dart';
@@ -16,17 +15,6 @@ class _AppointmentViewState extends State<AppointmentView> {
   // List<Service> availableServices = [];
 
   Service? selectedService;
-
-  final textStyle = const TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w600,
-    color: Colors.white,
-    decoration: TextDecoration.underline,
-    decorationColor: Colors.white,
-    decorationThickness: 2,
-    letterSpacing: 0.3,
-    decorationStyle: TextDecorationStyle.solid,
-  );
 
   void _openDateSelector() {
     final now = DateTime.now();

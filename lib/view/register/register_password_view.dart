@@ -7,8 +7,6 @@ import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/view/home/home_navigator.dart';
 import 'package:youdoc/view/login/login_view.dart';
-import 'package:youdoc/view/register/register_view.dart';
-import 'package:youdoc/view/on_boarding/on_boarding_view.dart';
 import 'package:youdoc/view/register/components/form_input_for_password.dart';
 
 class RegisterPasswordView extends StatefulWidget {
@@ -187,7 +185,7 @@ class _RegisterPasswordViewState extends State<RegisterPasswordView> {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => LoginView(
+                                              builder: (context) => const LoginView(
                                                 token: "confirm",
                                               ),
                                             ),

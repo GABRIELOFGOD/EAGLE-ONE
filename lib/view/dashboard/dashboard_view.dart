@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/common/custom_dashboard_card.dart';
 import 'package:youdoc/view/dashboard/components/appointment.dart';
-import 'package:youdoc/view/dashboard/components/no_address_overlay.dart';
 import 'package:youdoc/view/search_screen/search_screen.dart';
 
 class DashboardView extends StatefulWidget {
