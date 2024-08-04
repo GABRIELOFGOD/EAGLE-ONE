@@ -28,6 +28,66 @@ class Service {
   }
 }
 
+class DaysOfTheWeekForAppointMent {
+  String day;
+  bool isActive;
+  bool isSelected;
+  int id;
+
+  DaysOfTheWeekForAppointMent({
+    required this.id,
+    required this.day,
+    required this.isActive,
+    required this.isSelected,
+  });
+}
+
+class PhysicianRole {
+  int id;
+  String name;
+
+  PhysicianRole({
+    required this.id,
+    required this.name,
+  });
+}
+
+class Physician {
+  int id;
+  String physicianPhoto;
+  String firstName;
+  String lastName;
+  String middleName;
+  bool leadPhysician;
+  PhysicianRole role;
+
+  Physician({
+    required this.id,
+    required this.physicianPhoto,
+    required this.firstName,
+    required this.lastName,
+    required this.leadPhysician,
+    required this.middleName,
+    required this.role,
+  });
+
+  factory Physician.fromJson(Map<String, dynamic> json) {
+    return Physician(
+      id: json["id"] ?? 0,
+      physicianPhoto: json["physicianPhoto"] ?? "",
+      firstName: json["firstName"] ?? "",
+      lastName: json["lastName"] ?? "",
+      leadPhysician: json["leadPhysician"] ?? "",
+      middleName: json["middleName"] ?? "",
+      role: json["role"] ?? "",
+    );
+  }
+
+  static List<Physician> fromJsonList(List<dynamic> jsonList) {
+    return jsonList.map((json) => Physician.fromJson(json)).toList();
+  }
+}
+
 class UserOpeningTimes {
   int id;
   String openingTime;
@@ -52,6 +112,33 @@ class UserOpeningTimes {
   }
 }
 
+class PracticeOpening {
+  int id;
+  int day;
+  String openingTime;
+  String closingTime;
+
+  PracticeOpening({
+    required this.id,
+    required this.day,
+    required this.openingTime,
+    required this.closingTime,
+  });
+
+  factory PracticeOpening.fromJson(Map<String, dynamic> json) {
+    return PracticeOpening(
+      id: json["id"] ?? 0,
+      day: json["day"] ?? 0,
+      openingTime: json["opening_time"] ?? "",
+      closingTime: json["closing_time"] ?? "",
+    );
+  }
+
+  static List<PracticeOpening> fromJsonList(List<dynamic> jsonList) {
+    return jsonList.map((json) => PracticeOpening.fromJson(json)).toList();
+  }
+}
+
 class Practice {
   int id;
   String practiceName;
@@ -63,6 +150,7 @@ class Practice {
   String city;
   List<Service> services;
   List<UserOpeningTimes> userOpeningTimes;
+  List<PracticeOpening> openingHours;
 
   Practice({
     required this.id,
@@ -75,6 +163,7 @@ class Practice {
     required this.services,
     required this.userOpeningTimes,
     required this.city,
+    required this.openingHours,
   });
 
   factory Practice.fromJson(Map<String, dynamic> json) {
@@ -84,6 +173,10 @@ class Practice {
     var userOpeningFromJson = json["UserOpeningTimes"] as List<dynamic>? ?? [];
     List<UserOpeningTimes> openingTime =
         UserOpeningTimes.fromJsonList(userOpeningFromJson);
+
+    var practiceOpeningFromJson = json["openingHours"] as List<dynamic>? ?? [];
+    List<PracticeOpening> practiceOpeningTime =
+        PracticeOpening.fromJsonList(practiceOpeningFromJson);
 
     return Practice(
       id: json["id"] ?? 0,
@@ -96,6 +189,7 @@ class Practice {
       city: json['city'] ?? "",
       services: servicesList,
       userOpeningTimes: openingTime,
+      openingHours: practiceOpeningTime,
     );
   }
 
@@ -103,3 +197,7 @@ class Practice {
     return jsonList.map((json) => Practice.fromJson(json)).toList();
   }
 }
+
+// class DayConverted {
+//   final 
+// }

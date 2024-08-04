@@ -459,57 +459,57 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height: 36,
-                          ),
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/icons/user.png",
-                                    width: 18,
-                                    color: TColor.inputGray,
-                                  ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    "Lead physician",
-                                    style: TextStyle(
-                                      color: TColor.inputGray,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 14,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    practice!.practiceAddress,
-                                    style: TextStyle(
-                                      color: TColor.btnText,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  CustomAnchor(
-                                    text: "Open in Google Map",
-                                    clicked: () {},
-                                    myFontSize: 14.0,
-                                    textColor: TColor.primary,
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
+                          // const SizedBox(
+                          //   height: 36,
+                          // ),
+                          // Column(
+                          //   children: [
+                          //     Row(
+                          //       children: [
+                          //         Image.asset(
+                          //           "assets/icons/user.png",
+                          //           width: 18,
+                          //           color: TColor.inputGray,
+                          //         ),
+                          //         const SizedBox(
+                          //           width: 8,
+                          //         ),
+                          //         Text(
+                          //           "Lead physician",
+                          //           style: TextStyle(
+                          //             color: TColor.inputGray,
+                          //             fontSize: 12,
+                          //             fontWeight: FontWeight.w500,
+                          //           ),
+                          //         )
+                          //       ],
+                          //     ),
+                          //     const SizedBox(
+                          //       height: 14,
+                          //     ),
+                          //     Row(
+                          //       children: [
+                          //         Text(
+                          //           practice!.practiceAddress,
+                          //           style: TextStyle(
+                          //             color: TColor.btnText,
+                          //             fontSize: 14,
+                          //             fontWeight: FontWeight.w500,
+                          //           ),
+                          //         ),
+                          //         const SizedBox(
+                          //           width: 5,
+                          //         ),
+                          //         CustomAnchor(
+                          //           text: "Open in Google Map",
+                          //           clicked: () {},
+                          //           myFontSize: 14.0,
+                          //           textColor: TColor.primary,
+                          //         )
+                          //       ],
+                          //     ),
+                          //   ],
+                          // ),
                           const SizedBox(
                             height: 36,
                           ),

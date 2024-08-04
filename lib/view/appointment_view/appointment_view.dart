@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/components/practices.dart';
+import 'package:youdoc/view/appointment_view/components/appointment_day_ball.dart';
 
 class AppointmentView extends StatefulWidget {
   const AppointmentView({super.key, required this.practice});
@@ -15,6 +16,7 @@ class _AppointmentViewState extends State<AppointmentView> {
   // List<Service> availableServices = [];
 
   Service? selectedService;
+  DaysOfTheWeekForAppointMent? selectedDay;
 
   void _openDateSelector() {
     final now = DateTime.now();
@@ -30,14 +32,74 @@ class _AppointmentViewState extends State<AppointmentView> {
     );
   }
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   setState(() {
-  //     availableServices = widget.practice.services;
-  //   });
-  // }
+  List<PracticeOpening> openingDays = [];
+
+  final List<DaysOfTheWeekForAppointMent> appointmentData = [
+    DaysOfTheWeekForAppointMent(
+      id: 0,
+      day: "Sun",
+      isActive: false,
+      isSelected: false,
+    ),
+    DaysOfTheWeekForAppointMent(
+      id: 1,
+      day: "Mon",
+      isActive: false,
+      isSelected: false,
+    ),
+    DaysOfTheWeekForAppointMent(
+      id: 2,
+      day: "Tue",
+      isActive: false,
+      isSelected: false,
+    ),
+    DaysOfTheWeekForAppointMent(
+      id: 3,
+      day: "Wed",
+      isActive: false,
+      isSelected: false,
+    ),
+    DaysOfTheWeekForAppointMent(
+      id: 4,
+      day: "Thu",
+      isActive: false,
+      isSelected: false,
+    ),
+    DaysOfTheWeekForAppointMent(
+      id: 5,
+      day: "Fri",
+      isActive: false,
+      isSelected: false,
+    ),
+    DaysOfTheWeekForAppointMent(
+      id: 6,
+      day: "Sat",
+      isActive: false,
+      isSelected: false,
+    ),
+  ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    openingDays = widget.practice.openingHours;
+    setAppointmentDayBalls();
+  }
+
+  void setAppointmentDayBalls() {
+    setState(() {
+      for (var opened in openingDays) {
+        for (var data in appointmentData) {
+          if (opened.day == data.id) {
+            data.isActive = true;
+          }
+        }
+      }
+    });
+  }
+
+  // void setSelectedDay(DaysOfTheWeekForAppointMent day) {}
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +168,7 @@ class _AppointmentViewState extends State<AppointmentView> {
               horizontal: 20,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -288,30 +351,87 @@ class _AppointmentViewState extends State<AppointmentView> {
                             ).createShader(bounds);
                           },
                           child: GestureDetector(
-                              onTap: _openDateSelector,
-                              child: const Row(
-                                children: [
-                                  Icon(
-                                    Icons.calendar_month,
-                                    size: 12,
+                            onTap: _openDateSelector,
+                            child: const Row(
+                              children: [
+                                Icon(
+                                  Icons.calendar_month,
+                                  size: 12,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  "Pick a custom date",
+                                  style: TextStyle(
                                     color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                  SizedBox(
-                                    width: 4,
-                                  ),
-                                  Text(
-                                    "Pick a custom date",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  )
-                                ],
-                              )),
+                                )
+                              ],
+                            ),
+                          ),
                         )
                       ],
-                    )
+                    ),
+                    const SizedBox(
+                      height: 18,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: appointmentData
+                          .map(
+                            (data) => GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  for (var item in appointmentData) {
+                                    item.isSelected = false;
+                                  }
+                                  if (!data.isActive) {
+                                    // selectedDay = selectedDay;
+                                    data.isSelected = false;
+                                  } else {
+                                    data.isSelected = true;
+                                  }
+                                  selectedDay = data;
+                                });
+                              },
+                              child: SizedBox(
+                                width: 36,
+                                child: AppointmentBall(
+                                  day: data.day,
+                                  isActive: data.isActive,
+                                  isSelected: data.isSelected,
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+
+                    // const AppointmentBall(
+                    //   day: "Mon",
+                    //   isActive: true,
+                    //   isSelected: true,
+                    // ),
+                  ],
+                ),
+                // ======== AVAILABLE HOURS BALL HERE ======================= //
+                const SizedBox(height: 36),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Available physician",
+                      style: TextStyle(
+                        color: TColor.inputGray,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ],
                 )
               ],
