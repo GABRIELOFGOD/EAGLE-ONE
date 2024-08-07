@@ -24,6 +24,22 @@ class UserRegister {
   }
 }
 
+class Patient {
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String sex;
+  final String dob;
+
+  Patient({
+    required this.dob,
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.sex
+  });
+}
+
 class UserRegistrationComplete {
   String password;
   String confirmPassword;

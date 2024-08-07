@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/components/practices.dart';
 import 'package:youdoc/view/appointment_view/components/appointment_day_ball.dart';
+import 'package:youdoc/view/appointment_view/components/physician.dart';
 
 class AppointmentView extends StatefulWidget {
   const AppointmentView({super.key, required this.practice});
@@ -14,6 +15,19 @@ class AppointmentView extends StatefulWidget {
 
 class _AppointmentViewState extends State<AppointmentView> {
   // List<Service> availableServices = [];
+
+  Physician? selectedPhysician;
+
+  bool isLoading = false;
+  bool get isFormValid {
+    bool isValid = false;
+    if (selectedDay != null &&
+        selectedPhysician != null &&
+        selectedService != null) {
+      isValid = true;
+    }
+    return isValid;
+  }
 
   Service? selectedService;
   DaysOfTheWeekForAppointMent? selectedDay;
@@ -99,6 +113,8 @@ class _AppointmentViewState extends State<AppointmentView> {
     });
   }
 
+  void _submitForm() {}
+
   // void setSelectedDay(DaysOfTheWeekForAppointMent day) {}
 
   @override
@@ -131,33 +147,48 @@ class _AppointmentViewState extends State<AppointmentView> {
             height: 54,
             child: Container(
               color: TColor.btnBg,
-              child: const Padding(
-                padding: EdgeInsets.symmetric(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
                   vertical: 12,
                   horizontal: 24,
                 ),
-                child: SingleChildScrollView(
-                  // controller: ScrollContr,
-                  child: Column(
-                    children: [
-                      Text(
-                        "For a full refund, change or cancel this appointment at least 48hrs prior.",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.warning,
+                      color: TColor.warning,
+                      size: 18,
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    const Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        // controller: ScrollContr,
+                        child: Column(
+                          children: [
+                            Text(
+                              "For a full refund, change or cancel this appointment at least 48hrs prior.",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Text(
+                              "Any change or cancellation made within 48hrs of an appointment will result in a 50% refund",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Text(
-                        "Any change or cancellation made within 48hrs of an appointment will result in a 50% refund",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -189,7 +220,7 @@ class _AppointmentViewState extends State<AppointmentView> {
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
-                            color: TColor.btnText,
+                            color: TColor.textGray,
                           ),
                         ),
                         underline: Container(),
@@ -418,6 +449,69 @@ class _AppointmentViewState extends State<AppointmentView> {
                     // ),
                   ],
                 ),
+                const SizedBox(height: 36),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Available hours",
+                      style: TextStyle(
+                        color: TColor.inputGray,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 18,
+                    ),
+                    selectedDay == null
+                        ? Text(
+                            "Select a date to reveal",
+                            style: TextStyle(
+                              color: TColor.textGray,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          )
+                        : const Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // children: appointmentData
+                            //     .map(
+                            //       (data) => GestureDetector(
+                            //         onTap: () {
+                            //           setState(() {
+                            //             for (var item in appointmentData) {
+                            //               item.isSelected = false;
+                            //             }
+                            //             if (!data.isActive) {
+                            //               // selectedDay = selectedDay;
+                            //               data.isSelected = false;
+                            //             } else {
+                            //               data.isSelected = true;
+                            //             }
+                            //             selectedDay = data;
+                            //           });
+                            //         },
+                            //         child: SizedBox(
+                            //           width: 36,
+                            //           child: AppointmentBall(
+                            //             day: data.day,
+                            //             isActive: data.isActive,
+                            //             isSelected: data.isSelected,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     )
+                            //     .toList(),
+                            ),
+
+                    // const AppointmentBall(
+                    //   day: "Mon",
+                    //   isActive: true,
+                    //   isSelected: true,
+                    // ),
+                  ],
+                ),
                 // ======== AVAILABLE HOURS BALL HERE ======================= //
                 const SizedBox(height: 36),
                 Column(
@@ -432,11 +526,90 @@ class _AppointmentViewState extends State<AppointmentView> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
+                    const SizedBox(
+                      height: 14,
+                    ),
+                    selectedDay == null || selectedService == null
+                        ? Text(
+                            "Select a service and date to reveal",
+                            style: TextStyle(
+                              color: TColor.textGray,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          )
+                        : Column(
+                            children: widget.practice.physicians
+                                .map(
+                                  (physician) => GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedPhysician = physician;
+                                      });
+                                    },
+                                    child: PhysicianCard(
+                                        image: physician.physicianPhoto,
+                                        name:
+                                            "${physician.firstName} ${physician.lastName} ${physician.middleName}",
+                                        practice: widget.practice.practiceName,
+                                        role: physician.role.name,
+                                        isSelected: selectedPhysician != null &&
+                                            selectedPhysician!.id ==
+                                                physician.id),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                    const SizedBox(
+                      height: 36,
+                    ),
+                    MaterialButton(
+                      onPressed: isLoading || !isFormValid
+                          ? () {}
+                          : () {
+                              // if (practice != null) {
+                              //   Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (context) => AppointmentView(
+                              //         practice: practice!,
+                              //       ),
+                              //     ),
+                              //   );
+                              // } else {
+                              //   return;
+                              // }
+                            },
+                      color: isFormValid ? TColor.primary : TColor.inactiveBtn,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      minWidth: double.infinity,
+                      height: 45.0,
+                      child: isLoading
+                          ? const SizedBox(
+                              width: 25.0,
+                              height: 25.0,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 4.0,
+                              ),
+                            )
+                          : Text(
+                              "Pay for appointment",
+                              style: TextStyle(
+                                color: isFormValid
+                                    ? Colors.white
+                                    : TColor.bottomBar,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                    ),
                   ],
                 )
               ],
             ),
-          )
+          ),
         ],
       ),
     );

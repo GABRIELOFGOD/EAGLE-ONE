@@ -5,6 +5,7 @@ import 'package:youdoc/common/loader_overlay.dart';
 import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/view/dashboard/dashboard_view.dart';
+import 'package:youdoc/view/message/message_view.dart';
 import 'package:youdoc/view/on_boarding/on_boarding_view.dart';
 import 'package:youdoc/view/login/login_view.dart';
 import 'package:youdoc/view/login/logout_screen.dart';
@@ -73,17 +74,22 @@ class _HomeNavigatorState extends State<HomeNavigator> {
         }
       } else {
         _showMessageDialog(
-            message,
-            () {
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginView(token: "confirm")), (route) => false,);
-              // Navigator.of(context).pop();
-              // message == "Sign-in links are only valid for 5 mins. After a link expires, you'll need to request a new one to be sent to your email." ? Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => RegisterView()), (route) => false,) : Navigator,
-            },
-            "Error",
-            "Something went wrong",
-            "Close",
-            TColor.primary,
-          );
+          message,
+          () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const LoginView(token: "confirm")),
+              (route) => false,
+            );
+            // Navigator.of(context).pop();
+            // message == "Sign-in links are only valid for 5 mins. After a link expires, you'll need to request a new one to be sent to your email." ? Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => RegisterView()), (route) => false,) : Navigator,
+          },
+          "Error",
+          "Something went wrong",
+          "Close",
+          TColor.primary,
+        );
         // SnackBar(content: Text(message));
         // Navigator.pushReplacement(
         //   context,
@@ -146,7 +152,7 @@ class _HomeNavigatorState extends State<HomeNavigator> {
       case 1:
         return DashboardView(noAddress: isAddress, name: username);
       case 2:
-        return DashboardView(noAddress: isAddress, name: username);
+        return const MessageView();
       case 3:
         return DashboardView(noAddress: isAddress, name: username);
       case 4:
@@ -203,4 +209,3 @@ class _HomeNavigatorState extends State<HomeNavigator> {
     );
   }
 }
-

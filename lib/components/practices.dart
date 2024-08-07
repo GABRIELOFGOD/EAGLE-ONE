@@ -50,6 +50,13 @@ class PhysicianRole {
     required this.id,
     required this.name,
   });
+
+  factory PhysicianRole.fromJson(Map<String, dynamic> json) {
+    return PhysicianRole(
+      id: json["id"] ?? 0,
+      name: json["name"] ?? "",
+    );
+  }
 }
 
 class Physician {
@@ -72,6 +79,9 @@ class Physician {
   });
 
   factory Physician.fromJson(Map<String, dynamic> json) {
+    var roleFromJson = json["role"] as dynamic ?? "";
+    PhysicianRole physicianRole = PhysicianRole.fromJson(roleFromJson);
+
     return Physician(
       id: json["id"] ?? 0,
       physicianPhoto: json["physicianPhoto"] ?? "",
@@ -79,7 +89,7 @@ class Physician {
       lastName: json["lastName"] ?? "",
       leadPhysician: json["leadPhysician"] ?? "",
       middleName: json["middleName"] ?? "",
-      role: json["role"] ?? "",
+      role: physicianRole,
     );
   }
 
@@ -151,6 +161,7 @@ class Practice {
   List<Service> services;
   List<UserOpeningTimes> userOpeningTimes;
   List<PracticeOpening> openingHours;
+  List<Physician> physicians;
 
   Practice({
     required this.id,
@@ -164,6 +175,7 @@ class Practice {
     required this.userOpeningTimes,
     required this.city,
     required this.openingHours,
+    required this.physicians,
   });
 
   factory Practice.fromJson(Map<String, dynamic> json) {
@@ -178,6 +190,9 @@ class Practice {
     List<PracticeOpening> practiceOpeningTime =
         PracticeOpening.fromJsonList(practiceOpeningFromJson);
 
+    var physicianFromJson = json["physicians"] as List<dynamic>? ?? [];
+    List<Physician> physician = Physician.fromJsonList(physicianFromJson);
+
     return Practice(
       id: json["id"] ?? 0,
       practiceAboutText: json['practiceAboutText'] ?? "",
@@ -190,6 +205,7 @@ class Practice {
       services: servicesList,
       userOpeningTimes: openingTime,
       openingHours: practiceOpeningTime,
+      physicians: physician,
     );
   }
 

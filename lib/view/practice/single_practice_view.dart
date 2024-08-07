@@ -173,7 +173,7 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                           Row(
                             children: [
                               Container(
-                                padding: const EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(6),
                                 decoration: BoxDecoration(
                                   color: TColor.btnBg,
                                   border: Border.all(
@@ -205,7 +205,7 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                                 width: 12,
                               ),
                               Container(
-                                padding: const EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(6),
                                 decoration: BoxDecoration(
                                   color: TColor.btnBg,
                                   border: Border.all(
