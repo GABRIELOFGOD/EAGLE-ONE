@@ -28,6 +28,35 @@ class Service {
   }
 }
 
+class PracticeHourlySlots {
+  int id;
+  int day;
+  String startTime;
+  String endTime;
+  String physicianAvailability;
+
+  PracticeHourlySlots({
+    required this.day,
+    required this.endTime,
+    required this.startTime,
+    required this.id,
+    required this.physicianAvailability,
+  });
+
+  factory PracticeHourlySlots.fromJson(Map<String, dynamic> json) {
+    return PracticeHourlySlots(
+        id: json["id"] ?? 0,
+        day: json["day"] ?? 0,
+        startTime: json["start_time"] ?? "",
+        endTime: json["end_time"] ?? "",
+        physicianAvailability: json["physicianAvailability"] ?? "");
+  }
+
+  static List<PracticeHourlySlots> fromJsonList(List<dynamic> jsonList) {
+    return jsonList.map((json) => PracticeHourlySlots.fromJson(json)).toList();
+  }
+}
+
 class DaysOfTheWeekForAppointMent {
   String day;
   bool isActive;
@@ -162,6 +191,7 @@ class Practice {
   List<UserOpeningTimes> userOpeningTimes;
   List<PracticeOpening> openingHours;
   List<Physician> physicians;
+  List<PracticeHourlySlots> hourlySlots;
 
   Practice({
     required this.id,
@@ -176,6 +206,7 @@ class Practice {
     required this.city,
     required this.openingHours,
     required this.physicians,
+    required this.hourlySlots,
   });
 
   factory Practice.fromJson(Map<String, dynamic> json) {
@@ -193,6 +224,10 @@ class Practice {
     var physicianFromJson = json["physicians"] as List<dynamic>? ?? [];
     List<Physician> physician = Physician.fromJsonList(physicianFromJson);
 
+    var hourlySlotsFromJson = json["hourlySlots"] as List<dynamic>? ?? [];
+    List<PracticeHourlySlots> hourlySlots =
+        PracticeHourlySlots.fromJsonList(hourlySlotsFromJson);
+
     return Practice(
       id: json["id"] ?? 0,
       practiceAboutText: json['practiceAboutText'] ?? "",
@@ -206,6 +241,7 @@ class Practice {
       userOpeningTimes: openingTime,
       openingHours: practiceOpeningTime,
       physicians: physician,
+      hourlySlots: hourlySlots,
     );
   }
 

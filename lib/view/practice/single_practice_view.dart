@@ -392,7 +392,7 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                               Row(
                                 children: [
                                   Image.asset(
-                                    "assets/icons/location.png",
+                                    "assets/icons/time_icon.png",
                                     width: 18,
                                     color: TColor.inputGray,
                                   ),
@@ -513,72 +513,72 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                           const SizedBox(
                             height: 36,
                           ),
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/icons/icon_smile.png",
-                                    width: 18,
-                                    color: TColor.inputGray,
-                                  ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    "User ratings",
-                                    style: TextStyle(
-                                      color: TColor.inputGray,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 14,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    size: 16,
-                                    color: TColor.rating,
-                                  ),
-                                  const SizedBox(
-                                    width: 3,
-                                  ),
-                                  Icon(
-                                    Icons.star,
-                                    size: 16,
-                                    color: TColor.rating,
-                                  ),
-                                  const SizedBox(
-                                    width: 3,
-                                  ),
-                                  Icon(
-                                    Icons.star,
-                                    size: 16,
-                                    color: TColor.rating,
-                                  ),
-                                  const SizedBox(
-                                    width: 3,
-                                  ),
-                                  Icon(
-                                    Icons.star,
-                                    size: 16,
-                                    color: TColor.rating,
-                                  ),
-                                  const SizedBox(
-                                    width: 3,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 36,
-                          ),
+                          // Column(
+                          //   children: [
+                          //     Row(
+                          //       children: [
+                          //         Image.asset(
+                          //           "assets/icons/icon_smile.png",
+                          //           width: 18,
+                          //           color: TColor.inputGray,
+                          //         ),
+                          //         const SizedBox(
+                          //           width: 8,
+                          //         ),
+                          //         Text(
+                          //           "User ratings",
+                          //           style: TextStyle(
+                          //             color: TColor.inputGray,
+                          //             fontSize: 12,
+                          //             fontWeight: FontWeight.w500,
+                          //           ),
+                          //         )
+                          //       ],
+                          //     ),
+                          //     const SizedBox(
+                          //       height: 14,
+                          //     ),
+                          //     Row(
+                          //       children: [
+                          //         Icon(
+                          //           Icons.star,
+                          //           size: 16,
+                          //           color: TColor.rating,
+                          //         ),
+                          //         const SizedBox(
+                          //           width: 3,
+                          //         ),
+                          //         Icon(
+                          //           Icons.star,
+                          //           size: 16,
+                          //           color: TColor.rating,
+                          //         ),
+                          //         const SizedBox(
+                          //           width: 3,
+                          //         ),
+                          //         Icon(
+                          //           Icons.star,
+                          //           size: 16,
+                          //           color: TColor.rating,
+                          //         ),
+                          //         const SizedBox(
+                          //           width: 3,
+                          //         ),
+                          //         Icon(
+                          //           Icons.star,
+                          //           size: 16,
+                          //           color: TColor.rating,
+                          //         ),
+                          //         const SizedBox(
+                          //           width: 3,
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ],
+                          // ),
+                          // const SizedBox(
+                          //   height: 36,
+                          // ),
                           MaterialButton(
                             onPressed: () {
                               if (practice != null) {

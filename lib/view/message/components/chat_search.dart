@@ -14,7 +14,10 @@ class _ChatSearchModalState extends State<ChatSearchModal> {
     TextEditingController search = TextEditingController();
 
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.symmetric(
+        vertical: 10,
+        horizontal: 24,
+      ),
       color: TColor.primaryBg,
       child: Column(
         children: [
@@ -33,7 +36,7 @@ class _ChatSearchModalState extends State<ChatSearchModal> {
                     fontSize: 14,
                   ),
                   decoration: InputDecoration(
-                    hintText: "Search for a practice or service",
+                    hintText: "Search for a message",
                     prefixIcon: GestureDetector(
                       onTap: () {
                         if (search.text.isNotEmpty) {

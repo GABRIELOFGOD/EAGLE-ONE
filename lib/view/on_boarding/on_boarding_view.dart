@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:youdoc/common/Color_extention.dart';
 import 'package:youdoc/common/anchor_click.dart';
 import 'package:youdoc/common/custom_button.dart';
-import 'package:youdoc/view/login/login_view.dart';
-import 'package:youdoc/view/register/register_view.dart';
+import 'package:youdoc/view/home/home_navigator.dart';
 
 class OnBoardingView extends StatelessWidget {
   OnBoardingView({super.key});
@@ -76,8 +75,13 @@ class OnBoardingView extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const RegisterView()));
+                                  builder: (context) => const HomeNavigator()));
                         },
+                        //   Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //           builder: (context) => const RegisterView()));
+                        // },
                         // fontSize: 20,
                       ),
                     ),
@@ -92,7 +96,11 @@ class OnBoardingView extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const LoginView(token: "confirm",)));
+                                  builder: (context) => const HomeNavigator(),));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => const LoginView(token: "confirm",)));
                         },
                       ),
                     ),

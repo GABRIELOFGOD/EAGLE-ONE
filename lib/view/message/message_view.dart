@@ -43,6 +43,7 @@ class _MessageViewState extends State<MessageView> {
 
   void _openSearchBottomSheet() {
     showModalBottomSheet(
+      useSafeArea: true,
       context: context,
       builder: (ctx) => const ChatSearchModal(),
       isScrollControlled: true,
@@ -111,6 +112,9 @@ class _MessageViewState extends State<MessageView> {
                   )
                 ],
               ),
+              const SizedBox(
+                height: 36,
+              ),
               Expanded(
                 child: Center(
                   child: chats.isEmpty
@@ -151,7 +155,13 @@ class _MessageViewState extends State<MessageView> {
                       : Column(
                           children: chats
                               .map(
-                                  (Chat chat) => const ChatCardForMessageView())
+                                (Chat chat) => ChatCardForMessageView(
+                                  lastMessage: chat.messages[0].message,
+                                  practiceName: chat.practiceName,
+                                  time: "2",
+                                  practiceImage: "",
+                                ),
+                              )
                               .toList(),
                         ),
                 ),
