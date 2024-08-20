@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:youdoc/common/color_extention.dart';
 
 class AppointmentCard extends StatelessWidget {
-  const AppointmentCard({super.key});
+  AppointmentCard({super.key, required this.mainLabel, required this.rightLabel, required this.subLabel, this.status, this.viewController,});
+
+  final String mainLabel;
+  final String subLabel;
+  final String rightLabel;
+  Widget? status;
+  void Function()? viewController;
 
   @override
   Widget build(BuildContext context) {
@@ -18,20 +24,20 @@ class AppointmentCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Eve/Vision",
-                style: TextStyle(
+                mainLabel,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Text(
-                "AID -S437",
-                style: TextStyle(
+                rightLabel,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -46,7 +52,7 @@ class AppointmentCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "AID -S437",
+                subLabel,
                 style: TextStyle(
                   color: TColor.textGray,
                   fontSize: 14,
@@ -83,7 +89,7 @@ class AppointmentCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: viewController,
                   child: Text(
                     "View",
                     style: TextStyle(

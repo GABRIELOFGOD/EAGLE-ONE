@@ -164,7 +164,7 @@ import "package:youdoc/common/loader_overlay.dart";
 import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import "package:youdoc/common/custom_checkbox.dart";
 import "package:youdoc/components/api_request.dart";
-import "package:youdoc/components/practices.dart";
+import "package:youdoc/model/practices.dart";
 import "package:youdoc/view/search_screen/components/single_clinic_list.dart";
 
 class SearchScreen extends StatefulWidget {

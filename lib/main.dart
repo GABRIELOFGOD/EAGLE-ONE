@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uni_links/uni_links.dart';
+// import 'package:app';
 import 'dart:async';
-import 'package:flutter/services.dart';
 import 'package:youdoc/view/forgot_password/reset_password.dart';
 import 'package:youdoc/view/home/home_navigator.dart';
 import 'package:youdoc/view/login/login_view.dart';
@@ -304,22 +303,22 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initUniLinks() async {
-    try {
-      Uri? initialUri = await getInitialUri();
-      _handleIncomingUri(initialUri);
+    // try {
+    //   Uri? initialUri = await getInitialUri();
+    //   _handleIncomingUri(initialUri);
 
-      _sub = uriLinkStream.listen((Uri? uri) {
-        if (uri != null) {
-          _handleIncomingUri(uri);
-        }
-      }, onError: (err) {
-        // Handle errors
-      });
-    } on PlatformException {
-      // Handle error
-    } on FormatException {
-      // Handle error
-    }
+    //   _sub = uriLinkStream.listen((Uri? uri) {
+    //     if (uri != null) {
+    //       _handleIncomingUri(uri);
+    //     }
+    //   }, onError: (err) {
+    //     // Handle errors
+    //   });
+    // } on PlatformException {
+    //   // Handle error
+    // } on FormatException {
+    //   // Handle error
+    // }
   }
 
   void _handleIncomingUri(Uri? uri) async {

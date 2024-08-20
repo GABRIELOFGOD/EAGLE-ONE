@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/color_extention.dart';
-import 'package:youdoc/components/chat.dart';
-import 'package:youdoc/components/message.dart';
-import 'package:youdoc/components/user.dart';
+import 'package:youdoc/model/chat.dart';
+import 'package:youdoc/model/message.dart';
+import 'package:youdoc/model/user.dart';
 import 'package:youdoc/view/message/components/chat_card.dart';
 import 'package:youdoc/view/message/components/chat_search.dart';
 

@@ -4,6 +4,7 @@ import 'package:youdoc/common/loader_overlay.dart';
 import 'package:youdoc/view/dashboard/dashboard_view.dart';
 import 'package:youdoc/view/message/message_view.dart';
 import 'package:youdoc/view/login/logout_screen.dart';
+import 'package:youdoc/view/payment/payment_view.dart';
 
 class HomeNavigator extends StatefulWidget {
   const HomeNavigator({super.key});
@@ -147,11 +148,11 @@ class _HomeNavigatorState extends State<HomeNavigator> {
       case 1:
         return DashboardView(noAddress: isAddress, name: "username");
       case 2:
-        return const MessageView();
-      case 3:
-        return DashboardView(noAddress: isAddress, name: "username");
-      case 4:
         return const LogoutScreen();
+      case 3:
+        return const MessageView();
+      case 4:
+        return PaymentView();
       default:
         return Container();
     }

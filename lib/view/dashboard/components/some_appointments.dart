@@ -13,12 +13,12 @@ class _SomeAppointmentViewState extends State<SomeAppointmentView> {
   Widget build(BuildContext context) {
     return const Column(
       children: [
-        AppointmentCard(),
-        AppointmentCard(),
-        AppointmentCard(),
-        AppointmentCard(),
-        AppointmentCard(),
-        AppointmentCard(),
+        // AppointmentCard(),
+        // AppointmentCard(),
+        // AppointmentCard(),
+        // AppointmentCard(),
+        // AppointmentCard(),
+        // AppointmentCard(),
       ],
     );
   }

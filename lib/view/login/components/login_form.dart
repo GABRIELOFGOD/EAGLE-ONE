@@ -6,7 +6,7 @@ import 'package:youdoc/common/custom_button.dart';
 import 'package:youdoc/common/line_text_field.dart';
 import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
-import 'package:youdoc/components/user.dart';
+import 'package:youdoc/model/user.dart';
 import 'package:youdoc/view/forgot_password/request_password.dart';
 
 class LoginForm extends StatefulWidget {

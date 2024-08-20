@@ -1,5 +1,5 @@
-import 'package:youdoc/components/message.dart';
-import 'package:youdoc/components/user.dart';
+import 'package:youdoc/model/message.dart';
+import 'package:youdoc/model/user.dart';
 
 class Chat {
   // Practice practice;

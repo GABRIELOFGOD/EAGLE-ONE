@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:youdoc/components/practices.dart';
-import 'package:youdoc/components/user.dart';
+import 'package:youdoc/model/practices.dart';
+import 'package:youdoc/model/user.dart';
 
 // const String baseUrl = 'http://192.168.0.104:3002';
 const String baseUrl = 'http://lambda.youdoc.co';

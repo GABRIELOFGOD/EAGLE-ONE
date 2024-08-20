@@ -101,13 +101,13 @@ class CustomDialog extends StatelessWidget {
                     onPressed: onClose,
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(btnColor),
+                          WidgetStateProperty.all<Color>(btnColor),
                       foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      textStyle: MaterialStateProperty.all<TextStyle>(
+                          WidgetStateProperty.all<Color>(Colors.white),
+                      textStyle: WidgetStateProperty.all<TextStyle>(
                         const TextStyle(fontSize: 16),
                       ),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),

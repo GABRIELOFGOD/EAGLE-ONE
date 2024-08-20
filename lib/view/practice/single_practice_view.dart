@@ -7,7 +7,7 @@ import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/common/loader_overlay.dart';
 import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
-import 'package:youdoc/components/practices.dart';
+import 'package:youdoc/model/practices.dart';
 import 'package:youdoc/view/appointment_view/appointment_view.dart';
 
 class SinglePracticeView extends StatefulWidget {
@@ -363,19 +363,19 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                               ),
                               Row(
                                 children: [
-                                  Text(
-                                    "${practice!.city}, ${practice!.practiceAddress}",
-                                    style: TextStyle(
-                                      color: TColor.btnText,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
+                                  // Text(
+                                  //   "${practice!.city}, ${practice!.practiceAddress}",
+                                  //   style: TextStyle(
+                                  //     color: TColor.btnText,
+                                  //     fontSize: 14,
+                                  //     fontWeight: FontWeight.w500,
+                                  //   ),
+                                  // ),
+                                  // const SizedBox(
+                                  //   width: 5,
+                                  // ),
                                   CustomAnchor(
-                                    text: "Open in Google Map",
+                                    text: "${practice!.city}, ${practice!.practiceAddress}",
                                     clicked: () {},
                                     myFontSize: 14.0,
                                     textColor: TColor.primary,
@@ -414,41 +414,82 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                               ),
                               Row(
                                 children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        practice!
-                                            .userOpeningTimes[0].openingTime,
-                                        style: TextStyle(
-                                          color: TColor.btnText,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      Text(
-                                        " - ",
-                                        style: TextStyle(
-                                          color: TColor.btnText,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      Text(
-                                        practice!
-                                            .userOpeningTimes[0].closingTime,
-                                        style: TextStyle(
-                                          color: TColor.btnText,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
+                                  Text(
+                                    practice!
+                                        .userOpeningTimes[0].openingTime,
+                                    style: TextStyle(
+                                      color: TColor.btnText,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                   Text(
-                                    "Mon-Sun",
+                                    " - ",
+                                    style: TextStyle(
+                                      color: TColor.btnText,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    practice!
+                                        .userOpeningTimes[0].closingTime,
+                                    style: TextStyle(
+                                      color: TColor.btnText,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 36,
+                          ),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/icons/time_icon.png",
+                                    width: 18,
+                                    color: TColor.inputGray,
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    "Operation days",
+                                    style: TextStyle(
+                                      color: TColor.inputGray,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 14,
+                              ),
+                              Row(
+                                children: [
+                                  Text("Mondays",
+                                    style: TextStyle(
+                                      color: TColor.btnText,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    " - ",
+                                    style: TextStyle(
+                                      color: TColor.btnText,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text("Fridays",
                                     style: TextStyle(
                                       color: TColor.btnText,
                                       fontSize: 14,

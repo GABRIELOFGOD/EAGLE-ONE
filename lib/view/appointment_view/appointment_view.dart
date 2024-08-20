@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/color_extention.dart';
-import 'package:youdoc/components/practices.dart';
+import 'package:youdoc/model/practices.dart';
 import 'package:youdoc/view/appointment_view/components/appointment_day_ball.dart';
 import 'package:youdoc/view/appointment_view/components/physician.dart';
 

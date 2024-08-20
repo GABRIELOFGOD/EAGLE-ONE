@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:youdoc/view/dashboard/components/no_appointment.dart";
+import "package:youdoc/view/dashboard/components/some_appointments.dart";
 
 class AppointmentView extends StatefulWidget {
   const AppointmentView({super.key, required this.appointments});
@@ -29,7 +30,7 @@ class _AppointmentViewState extends State<AppointmentView> {
             SizedBox(
               height: 18.0,
             ),
-            NoAppointmentCard()
+            SomeAppointmentView()
           ],
         ),
       ],

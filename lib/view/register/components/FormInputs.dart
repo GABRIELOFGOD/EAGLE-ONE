@@ -7,7 +7,7 @@ import 'package:youdoc/common/date_input.dart';
 import 'package:youdoc/common/line_text_field.dart';
 import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
-import 'package:youdoc/components/user.dart';
+import 'package:youdoc/model/user.dart';
 import 'package:youdoc/view/login/login_view.dart';
 import 'package:youdoc/view/register/register_password_view.dart';
 

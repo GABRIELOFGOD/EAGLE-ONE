@@ -27,7 +27,7 @@ class _CustomCardState extends State<CustomCard> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.5, vertical: 12),
         child: SizedBox(
-          height: 98,
+          height: 90,
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
