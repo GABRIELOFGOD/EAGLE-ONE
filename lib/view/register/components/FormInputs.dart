@@ -177,7 +177,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
           placeholder: 'Enter first name',
           onChanged: (value) => setState(() {
             userRegister.firstName = value;
-          }),
+        }),
         ),
         const SizedBox(height: 15),
         CustomTextField(

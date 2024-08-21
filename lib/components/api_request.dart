@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:youdoc/components/static.dart';
+import 'package:youdoc/model/payment.dart';
 import 'package:youdoc/model/practices.dart';
 import 'package:youdoc/model/user.dart';
 
-// const String baseUrl = 'http://192.168.0.104:3002';
-const String baseUrl = 'http://lambda.youdoc.co';
+const String baseUrl = 'http://192.168.0.104:3002';
+// const String baseUrl = 'http://lambda.youdoc.co';
 const String webUrl = "http://api.youdoc.co/api";
 
 class BaseRequest {
@@ -160,6 +162,30 @@ class BaseRequest {
       return Practice.fromJson(json);
     } else {
       throw Exception('Failed to load practice');
+    }
+  }
+
+  Future<DepositInitResponse> initDeposit(double amount) async {
+    Uri url = Uri.parse("$baseUrl/patient/login");
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer $userToken'
+      },
+      body: json.encode({'amount': amount}),
+    );
+
+    if (response.statusCode == 200 ||
+        response.statusCode == 201 ||
+        response.statusCode == 400 ||
+        response.statusCode == 401 ||
+        response.statusCode == 409) {
+      print(response.body);
+      return DepositInitResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Request Failed');
     }
   }
 }

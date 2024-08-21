@@ -3,6 +3,7 @@ import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/common/custom_dashboard_card.dart';
 import 'package:youdoc/model/transaction.dart';
 import 'package:youdoc/view/dashboard/components/appointment_card.dart';
+import 'package:youdoc/view/payment/components/payment_page.dart';
 
 class PaymentView extends StatefulWidget {
   const PaymentView({super.key});
@@ -120,6 +121,14 @@ class _PaymentViewState extends State<PaymentView> {
     );
   }
 
+  void _openDepositBottomSheet() {
+    showModalBottomSheet(
+      useSafeArea: true,
+      context: context,
+      builder: (ctx) => PaymentPage(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -158,7 +167,7 @@ class _PaymentViewState extends State<PaymentView> {
                     ],
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: _openDepositBottomSheet,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
