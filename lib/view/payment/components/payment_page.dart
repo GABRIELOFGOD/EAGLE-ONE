@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
+import 'package:youdoc/view/payment/components/payment_webview.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
@@ -66,10 +67,15 @@ class _PaymentPageState extends State<PaymentPage> {
           await baseRequest.initDeposit(double.parse(_amountController.text));
       String message = response.message;
       String error = response.error;
-      
+      String link = response.link;
 
       if (error == "") {
-        
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (ctx) => PaymentWebview(link: link),
+          ),
+        );
       } else {
         _showMessageDialog(
           message,
@@ -155,8 +161,8 @@ class _PaymentPageState extends State<PaymentPage> {
             height: 45.0,
             child: Center(
                 child: isLoading
-                    ? CircularProgressIndicator(
-                        color: TColor.primary,
+                    ? const CircularProgressIndicator(
+                        color: Colors.white,
                         strokeWidth: 4,
                       )
                     : Text(

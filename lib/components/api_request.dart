@@ -166,7 +166,7 @@ class BaseRequest {
   }
 
   Future<DepositInitResponse> initDeposit(double amount) async {
-    Uri url = Uri.parse("$baseUrl/patient/login");
+    Uri url = Uri.parse("$baseUrl/payment/deposit");
 
     final response = await http.post(
       url,
@@ -182,7 +182,6 @@ class BaseRequest {
         response.statusCode == 400 ||
         response.statusCode == 401 ||
         response.statusCode == 409) {
-      print(response.body);
       return DepositInitResponse.fromJson(json.decode(response.body));
     } else {
       throw Exception('Request Failed');

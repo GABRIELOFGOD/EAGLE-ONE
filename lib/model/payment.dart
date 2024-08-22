@@ -11,12 +11,12 @@ class Deposit {
 }
 
 class DepositInitResponse {
-  final dynamic accessCode;
+  final String link;
   final String message;
   final String error;
 
   DepositInitResponse({
-    required this.accessCode,
+    required this.link,
     required this.error,
     required this.message,
   });
@@ -28,7 +28,7 @@ class DepositInitResponse {
               ? json['message'][0]
               : json['message'] ?? '',
       error: json['error'] ?? "",
-      accessCode: json['access_code'] ?? ''
+      link: json['link'] ?? ''
     );
   }
 }
