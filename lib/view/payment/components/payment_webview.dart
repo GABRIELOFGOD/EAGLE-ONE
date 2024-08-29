@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:youdoc/common/color_extention.dart';
+import 'package:youdoc/view/payment/components/payment_confirmation.dart';
 
 class PaymentWebview extends StatefulWidget {
   const PaymentWebview({
     super.key,
     required this.link,
+    required this.reference,
   });
   final String link;
+  final String reference;
 
   @override
   State<PaymentWebview> createState() => _PaymentWebviewState();
@@ -29,17 +32,32 @@ class _PaymentWebviewState extends State<PaymentWebview> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Payment'),
+        title: const Text('Payment', style: TextStyle(color: Colors.white,),),
+        backgroundColor: TColor.primaryBg,
         leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () async {
-              if (await controller.canGoBack()) {
-                controller.goBack();
-              } else {
-                Navigator.pop(context); // Navigate back to the previous page
-              }
-            },
-          ),
+          icon: const Icon(Icons.arrow_back, color: Colors.white,),
+          onPressed: () async {
+            if (await controller.canGoBack()) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (ctx) =>
+                      PaymentConfirmation(reference: widget.reference),
+                ),
+                (route) => false,
+              );
+            } else {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (ctx) =>
+                      PaymentConfirmation(reference: widget.reference),
+                ),
+                (route) => false,
+              );
+            }
+          },
+        ),
       ),
       backgroundColor: TColor.primaryBg,
       body: WebViewWidget(

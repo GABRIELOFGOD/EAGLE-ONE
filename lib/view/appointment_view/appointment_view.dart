@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/model/practices.dart';
+import 'package:youdoc/model/transaction.dart';
 import 'package:youdoc/view/appointment_view/components/appointment_day_ball.dart';
+import 'package:youdoc/view/appointment_view/components/payment_for_appointment_dialog.dart';
 import 'package:youdoc/view/appointment_view/components/physician.dart';
 
 class AppointmentView extends StatefulWidget {
@@ -21,15 +23,12 @@ class _AppointmentViewState extends State<AppointmentView> {
   PracticeHourlySlots? selectedTime;
 
   bool isLoading = false;
+
   bool get isFormValid {
-    bool isValid = false;
-    if (selectedDay != null &&
+    return selectedDay != null &&
         selectedPhysician != null &&
         selectedTime != null &&
-        selectedService != null) {
-      isValid = true;
-    }
-    return isValid;
+        selectedService != null;
   }
 
   String convertTo12HourFormat(String time24) {
@@ -46,11 +45,8 @@ class _AppointmentViewState extends State<AppointmentView> {
 
   void _openDateSelector() {
     final now = DateTime.now();
-    final lastDate = DateTime(
-      now.year,
-      now.month + 2,
-      now.day,
-    );
+    final lastDate = DateTime(now.year, now.month + 2, now.day);
+
     showDatePicker(
       context: context,
       firstDate: now,
@@ -58,58 +54,132 @@ class _AppointmentViewState extends State<AppointmentView> {
     );
   }
 
-  List<PracticeOpening> openingDays = [];
+  // String convertTo24HourFormat(String time12) {
+  //   print("time in 12h $time12");
+  //   List<String> parts = time12.split(' ');
+  //   String timePart = parts[0];
+  //   String period = parts[1];
 
-  final List<DaysOfTheWeekForAppointMent> appointmentData = [
-    DaysOfTheWeekForAppointMent(
-      id: 0,
-      day: "Sun",
-      isActive: false,
-      isSelected: false,
-    ),
-    DaysOfTheWeekForAppointMent(
-      id: 1,
-      day: "Mon",
-      isActive: false,
-      isSelected: false,
-    ),
-    DaysOfTheWeekForAppointMent(
-      id: 2,
-      day: "Tue",
-      isActive: false,
-      isSelected: false,
-    ),
-    DaysOfTheWeekForAppointMent(
-      id: 3,
-      day: "Wed",
-      isActive: false,
-      isSelected: false,
-    ),
-    DaysOfTheWeekForAppointMent(
-      id: 4,
-      day: "Thu",
-      isActive: false,
-      isSelected: false,
-    ),
-    DaysOfTheWeekForAppointMent(
-      id: 5,
-      day: "Fri",
-      isActive: false,
-      isSelected: false,
-    ),
-    DaysOfTheWeekForAppointMent(
-      id: 6,
-      day: "Sat",
-      isActive: false,
-      isSelected: false,
-    ),
-  ];
+  //   List<String> timeParts = timePart.split(':');
+  //   int hours = int.parse(timeParts[0]);
+  //   String minutes = timeParts[1];
+
+  //   if (period == 'PM' && hours != 12) {
+  //     hours += 12;
+  //   } else if (period == 'AM' && hours == 12) {
+  //     hours = 0;
+  //   }
+
+  //   String hours24 = hours.toString().padLeft(2, '0');
+
+  //   return '$hours24:$minutes';
+  // }
+
+  void _payForAppointmentModal() {
+    CreateAppointmentDto appointment = CreateAppointmentDto(
+      date: selectedDay!.date,
+      time: selectedTime!.startTime,
+      practiceId: widget.practice.id,
+      physicianId: selectedPhysician!.id,
+      serviceId: selectedService!.id,
+    );
+
+    showDialog(
+      context: context,
+      barrierColor: Colors.black.withOpacity(0.5),
+      builder: (ctx) => PaymentForAppointmentDialog(
+        service: selectedService!,
+        appointment: appointment,
+      ),
+    );
+  }
+
+  DateTime getNextWeekdayDate(String dayOfWeek) {
+    final Map<String, int> weekdays = {
+      'Monday': DateTime.monday,
+      'Tuesday': DateTime.tuesday,
+      'Wednesday': DateTime.wednesday,
+      'Thursday': DateTime.thursday,
+      'Friday': DateTime.friday,
+      'Saturday': DateTime.saturday,
+      'Sunday': DateTime.sunday,
+    };
+
+    DateTime today = DateTime.now();
+    int? selectedDay = weekdays[dayOfWeek];
+
+    if (selectedDay == null) {
+      throw ArgumentError("Invalid day of the week: $dayOfWeek");
+    }
+
+    int daysUntilSelectedDay = (selectedDay - today.weekday + 7) % 7;
+    if (daysUntilSelectedDay == 0) {
+      daysUntilSelectedDay = 7;
+    }
+
+    return today.add(Duration(days: daysUntilSelectedDay));
+  }
+
+  List<PracticeOpening> openingDays = [];
+  List<DaysOfTheWeekForAppointMent> appointmentData = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     openingDays = widget.practice.openingHours;
+
+    appointmentData = [
+      DaysOfTheWeekForAppointMent(
+        id: 0,
+        day: "Sun",
+        isActive: false,
+        isSelected: false,
+        date: getNextWeekdayDate("Sunday"),
+      ),
+      DaysOfTheWeekForAppointMent(
+        id: 1,
+        day: "Mon",
+        isActive: false,
+        isSelected: false,
+        date: getNextWeekdayDate("Monday"),
+      ),
+      DaysOfTheWeekForAppointMent(
+        id: 2,
+        day: "Tue",
+        isActive: false,
+        isSelected: false,
+        date: getNextWeekdayDate("Tuesday"),
+      ),
+      DaysOfTheWeekForAppointMent(
+        id: 3,
+        day: "Wed",
+        isActive: false,
+        isSelected: false,
+        date: getNextWeekdayDate("Wednesday"),
+      ),
+      DaysOfTheWeekForAppointMent(
+        id: 4,
+        day: "Thu",
+        isActive: false,
+        isSelected: false,
+        date: getNextWeekdayDate("Thursday"),
+      ),
+      DaysOfTheWeekForAppointMent(
+        id: 5,
+        day: "Fri",
+        isActive: false,
+        isSelected: false,
+        date: getNextWeekdayDate("Friday"),
+      ),
+      DaysOfTheWeekForAppointMent(
+        id: 6,
+        day: "Sat",
+        isActive: false,
+        isSelected: false,
+        date: getNextWeekdayDate("Saturday"),
+      ),
+    ];
+
     setAppointmentDayBalls();
   }
 
@@ -224,51 +294,44 @@ class _AppointmentViewState extends State<AppointmentView> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       alignment: Alignment.centerRight,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          DropdownButton(
-                            dropdownColor: Colors.black,
-                            hint: Text(
-                              "Select service",
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: TColor.textGray,
-                              ),
-                            ),
-                            underline: Container(),
-                            // icon: Icon(Icons.keyboard_arrow_down),
-                            iconEnabledColor: TColor.btnBg,
-                            iconDisabledColor: TColor.btnBg,
-                            value: selectedService,
-                            items: widget.practice.services
-                                .map((service) => DropdownMenuItem(
-                                      // alignment: AlignmentDirectional(10, 10/),
-                                      value: service,
-                                      child: Text(
-                                        service.serviceName,
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                          color: TColor.btnText,
-                                        ),
-                                      ),
-                                    ))
-                                .toList(),
-                            onChanged: (value) {
-                              if (value == null) return;
-                              setState(() {
-                                selectedService = value;
-                              });
-                            },
+                      child: DropdownButton(
+                        dropdownColor: Colors.black,
+                        hint: Text(
+                          "Select service",
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: TColor.textGray,
                           ),
-                          Icon(
-                            Icons.keyboard_arrow_down_sharp,
-                            size: 18,
-                            color: TColor.inputGray,
-                          )
-                        ],
+                        ),
+                        isExpanded: true,
+                        underline: Container(),
+                        icon: const Icon(Icons.keyboard_arrow_down_sharp),
+                        iconEnabledColor: TColor.inputGray,
+                        iconDisabledColor: TColor.inputGray,
+                        // iconEnabledColor: TColor.btnBg,
+                        // iconDisabledColor: TColor.btnBg,
+                        value: selectedService,
+                        items: widget.practice.services
+                            .map((service) => DropdownMenuItem(
+                                  // alignment: AlignmentDirectional(10, 10/),
+                                  value: service,
+                                  child: Text(
+                                    service.serviceName,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: TColor.btnText,
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                        onChanged: (value) {
+                          if (value == null) return;
+                          setState(() {
+                            selectedService = value;
+                          });
+                        },
                       ),
                     ),
                     const SizedBox(
@@ -461,7 +524,8 @@ class _AppointmentViewState extends State<AppointmentView> {
                                         data.isSelected = true;
                                       }
                                       selectedDay = data;
-                                      for (var time in widget.practice.hourlySlots) {
+                                      for (var time
+                                          in widget.practice.hourlySlots) {
                                         if (time.day == data.id) {
                                           oneTime.add(time);
                                         }
@@ -607,20 +671,7 @@ class _AppointmentViewState extends State<AppointmentView> {
                         MaterialButton(
                           onPressed: isLoading || !isFormValid
                               ? () {}
-                              : () {
-                                  // if (practice != null) {
-                                  //   Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (context) => AppointmentView(
-                                  //         practice: practice!,
-                                  //       ),
-                                  //     ),
-                                  //   );
-                                  // } else {
-                                  //   return;
-                                  // }
-                                },
+                              : _payForAppointmentModal,
                           color:
                               isFormValid ? TColor.primary : TColor.inactiveBtn,
                           shape: RoundedRectangleBorder(

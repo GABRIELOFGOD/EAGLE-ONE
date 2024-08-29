@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/common/custom_dashboard_card.dart';
+import 'package:youdoc/common_widget/messages/error_dialog.dart';
+import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/model/transaction.dart';
 import 'package:youdoc/view/dashboard/components/appointment_card.dart';
 import 'package:youdoc/view/payment/components/payment_page.dart';
+import 'package:intl/intl.dart';
 
 class PaymentView extends StatefulWidget {
   const PaymentView({super.key});
@@ -13,6 +16,89 @@ class PaymentView extends StatefulWidget {
 }
 
 class _PaymentViewState extends State<PaymentView> {
+  double balance = 0;
+  String email = "";
+
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    _getUerProfile();
+    super.initState();
+  }
+
+  void _showMessageDialog(
+    String message,
+    VoidCallback closeFunction,
+    String title,
+    String sub,
+    String closeText,
+    Color btnColor,
+  ) {
+    showDialog(
+      context: context,
+      barrierColor: Colors.black.withOpacity(0.5),
+      builder: (context) {
+        return CustomDialog(
+          message: message,
+          onClose: closeFunction,
+          title: title,
+          sub: sub,
+          closeText: closeText,
+          btnColor: btnColor,
+        );
+      },
+    );
+  }
+
+  void _getUerProfile() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      BaseRequest baseRequest = BaseRequest();
+      var response = await baseRequest.profile();
+
+      String message = response.message;
+      String error = response.error;
+      dynamic data = response.data;
+
+      if (error == '') {
+        setState(() {
+          balance = double.parse(data['balance'].toString());
+          email = data['email'];
+        });
+      } else {
+        _showMessageDialog(
+          message,
+          () {
+            Navigator.of(context).pop();
+          },
+          "Error",
+          "Something went wrong",
+          "close",
+          Colors.red,
+        );
+      }
+    } catch (e) {
+      _showMessageDialog(
+        e.toString(),
+        () {
+          Navigator.of(context).pop();
+          _getUerProfile();
+        },
+        "Error",
+        "Something went wrong",
+        "Retry",
+        Colors.red,
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   final List<Payment> payments = [
     // Chat(
     //   chatOn: true,
@@ -125,8 +211,13 @@ class _PaymentViewState extends State<PaymentView> {
     showModalBottomSheet(
       useSafeArea: true,
       context: context,
-      builder: (ctx) => PaymentPage(),
+      builder: (ctx) => const PaymentPage(),
     );
+  }
+
+  String formatToCurrency(double value) {
+    final formatter = NumberFormat('#,##0', 'en_US');
+    return formatter.format(value);
   }
 
   @override
@@ -206,7 +297,7 @@ class _PaymentViewState extends State<PaymentView> {
                           width: 20,
                         ),
                         cardName: "Account balance",
-                        value: "₦5000",
+                        value: "₦${formatToCurrency(balance)}",
                       ),
                       const SizedBox(
                         height: 5,

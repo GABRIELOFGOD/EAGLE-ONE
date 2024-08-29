@@ -76,10 +76,10 @@ class CustomDialog extends StatelessWidget {
                           color: TColor.inputBg,
                         ),
                         padding: const EdgeInsets.all(6),
-                        child: const Icon(
+                        child: Icon(
                           Icons.close,
-                          size: 18,
-                          color: Colors.white,
+                          size: 12,
+                          color: TColor.btnText,
                         ),
                       ),
                     ),

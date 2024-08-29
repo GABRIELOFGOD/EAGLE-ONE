@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:youdoc/components/static.dart';
 import 'package:youdoc/model/payment.dart';
 import 'package:youdoc/model/practices.dart';
+import 'package:youdoc/model/transaction.dart';
 import 'package:youdoc/model/user.dart';
 
 const String baseUrl = 'http://192.168.0.104:3002';
@@ -93,10 +94,11 @@ class BaseRequest {
     }
   }
 
-  Future<ProfileResponse> profile(String token) async {
-    Uri url = Uri.parse("$baseUrl/patient/profile?token=$token");
+  Future<ProfileResponse> profile() async {
+    Uri url = Uri.parse("$baseUrl/patient/profile");
 
-    final response = await http.get(url);
+    final response =
+        await http.get(url, headers: {'authorization': 'Bearer $userToken'});
 
     if (response.statusCode == 200 ||
         response.statusCode == 201 ||
@@ -183,6 +185,53 @@ class BaseRequest {
         response.statusCode == 401 ||
         response.statusCode == 409) {
       return DepositInitResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Request Failed');
+    }
+  }
+
+  Future<ConfrimDepositResponse> confirmDeposit(String reference) async {
+    Uri url = Uri.parse("$baseUrl/payment/confirm");
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer $userToken'
+      },
+      body: json.encode({'reference': reference}),
+    );
+
+    if (response.statusCode == 200 ||
+        response.statusCode == 201 ||
+        response.statusCode == 400 ||
+        response.statusCode == 401 ||
+        response.statusCode == 409) {
+      return ConfrimDepositResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Request Failed');
+    }
+  }
+
+  Future<AppointmentResponse> bookAppointment(
+      CreateAppointmentDto appointment) async {
+    Uri url = Uri.parse("$baseUrl/appointment");
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer $userToken'
+      },
+      body: jsonEncode(appointment.toJson()),
+    );
+
+    if (response.statusCode == 200 ||
+        response.statusCode == 201 ||
+        response.statusCode == 400 ||
+        response.statusCode == 401 ||
+        response.statusCode == 409) {
+      return AppointmentResponse.fromJson(json.decode(response.body));
     } else {
       throw Exception('Request Failed');
     }

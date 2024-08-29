@@ -46,6 +46,7 @@ dependencies:
   local_auth: ^2.2.0
   flutter_paystack_max: ^1.0.4
   webview_flutter: ^4.9.0
+  intl: ^0.18.0
 
 
 dev_dependencies:

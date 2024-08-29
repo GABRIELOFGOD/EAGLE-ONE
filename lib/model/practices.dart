@@ -62,12 +62,14 @@ class DaysOfTheWeekForAppointMent {
   bool isActive;
   bool isSelected;
   int id;
+  DateTime date;
 
   DaysOfTheWeekForAppointMent({
     required this.id,
     required this.day,
     required this.isActive,
     required this.isSelected,
+    required this.date,
   });
 }
 
@@ -94,7 +96,9 @@ class Physician {
   String firstName;
   String lastName;
   String middleName;
-  bool leadPhysician;
+  String employeeId;
+  bool isDeleted;
+  // bool leadPhysician;
   PhysicianRole role;
 
   Physician({
@@ -102,8 +106,9 @@ class Physician {
     required this.physicianPhoto,
     required this.firstName,
     required this.lastName,
-    required this.leadPhysician,
+    required this.employeeId,
     required this.middleName,
+    required this.isDeleted,
     required this.role,
   });
 
@@ -116,8 +121,9 @@ class Physician {
       physicianPhoto: json["physicianPhoto"] ?? "",
       firstName: json["firstName"] ?? "",
       lastName: json["lastName"] ?? "",
-      leadPhysician: json["leadPhysician"] ?? "",
+      employeeId: json["employeeId"] ?? "",
       middleName: json["middleName"] ?? "",
+      isDeleted: json["isDeleted"] ?? false,
       role: physicianRole,
     );
   }

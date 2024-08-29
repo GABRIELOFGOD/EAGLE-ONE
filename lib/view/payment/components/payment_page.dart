@@ -68,12 +68,13 @@ class _PaymentPageState extends State<PaymentPage> {
       String message = response.message;
       String error = response.error;
       String link = response.link;
+      String reference = response.reference;
 
       if (error == "") {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (ctx) => PaymentWebview(link: link),
+            builder: (ctx) => PaymentWebview(link: link, reference: reference,),
           ),
         );
       } else {
@@ -174,7 +175,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
-                      )),
+                      ),),
           )
         ],
       ),

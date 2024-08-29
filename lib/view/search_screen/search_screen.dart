@@ -224,7 +224,8 @@ class _SearchScreenState extends State<SearchScreen> {
       });
     } catch (e) {
       _showMessageDialog(
-        "Failed to load, please check your internet connection and try again",
+        // "Failed to load, please check your internet connection and try again",
+        e.toString(),
         () {
           widget.closeSearch();
         },
