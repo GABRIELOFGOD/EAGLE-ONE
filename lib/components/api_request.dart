@@ -236,4 +236,16 @@ class BaseRequest {
       throw Exception('Request Failed');
     }
   }
+
+  Future<List<GetAllTransactions>> allAppointment() async {
+    Uri url = Uri.parse("$baseUrl/appointment");
+
+    final response = await http.get(url);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      List<dynamic> body = json.decode(response.body);
+      return GetAllTransactions.fromJsonList(body);
+    } else {
+      throw Exception("Request Failed with status: ${response.statusCode}");
+    }
+  }
 }

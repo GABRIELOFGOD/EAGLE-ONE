@@ -8,9 +8,11 @@ class PaymentWebview extends StatefulWidget {
     super.key,
     required this.link,
     required this.reference,
+    required this.backTo,
   });
   final String link;
   final String reference;
+  final Widget backTo;
 
   @override
   State<PaymentWebview> createState() => _PaymentWebviewState();
@@ -42,7 +44,7 @@ class _PaymentWebviewState extends State<PaymentWebview> {
                 context,
                 MaterialPageRoute(
                   builder: (ctx) =>
-                      PaymentConfirmation(reference: widget.reference),
+                      PaymentConfirmation(reference: widget.reference, backTo: widget.backTo,),
                 ),
                 (route) => false,
               );
@@ -51,7 +53,7 @@ class _PaymentWebviewState extends State<PaymentWebview> {
                 context,
                 MaterialPageRoute(
                   builder: (ctx) =>
-                      PaymentConfirmation(reference: widget.reference),
+                      PaymentConfirmation(reference: widget.reference, backTo: widget.backTo,),
                 ),
                 (route) => false,
               );

@@ -1,22 +1,59 @@
 import "package:flutter/material.dart";
+import "package:youdoc/common_widget/messages/error_dialog.dart";
+import "package:youdoc/components/api_request.dart";
+import "package:youdoc/view/dashboard/components/appointment_card.dart";
 import "package:youdoc/view/dashboard/components/no_appointment.dart";
 import "package:youdoc/view/dashboard/components/some_appointments.dart";
+import "package:youdoc/model/transaction.dart";
 
 class AppointmentView extends StatefulWidget {
-  const AppointmentView({super.key, required this.appointments});
-  final String appointments;
+  const AppointmentView({super.key});
 
   @override
   State<AppointmentView> createState() => _AppointmentViewState();
 }
 
 class _AppointmentViewState extends State<AppointmentView> {
+  bool isLoading = false;
+  late List<GetAllTransactions> allAppointments = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getAppointments();
+  }
+
+  Future<void> getAppointments() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      BaseRequest baseRequest = BaseRequest();
+      var response = await baseRequest.allAppointment();
+      setState(() {
+        allAppointments = response;
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "Appointments",
           textAlign: TextAlign.left,
           style: TextStyle(
@@ -27,10 +64,30 @@ class _AppointmentViewState extends State<AppointmentView> {
         ),
         Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 18.0,
             ),
-            SomeAppointmentView()
+            isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 5,
+                    ),
+                  )
+                : allAppointments.isEmpty
+                    ? const NoAppointmentCard()
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemCount: allAppointments.length,
+                        itemBuilder: (context, index) {
+                          final appointment = allAppointments[index];
+                          return AppointmentCard(
+                            mainLabel: appointment.status ?? "waiting",
+                            rightLabel: appointment.time,
+                            subLabel: appointment.date.toIso8601String(),
+                          );
+                        }),
           ],
         ),
       ],

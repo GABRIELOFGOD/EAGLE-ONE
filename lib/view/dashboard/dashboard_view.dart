@@ -137,7 +137,7 @@ class _DashboardViewState extends State<DashboardView> {
                       const SizedBox(
                         height: 42,
                       ),
-                      const AppointmentView(appointments: "0"),
+                      const AppointmentView(),
                     ],
                   ),
                 ),

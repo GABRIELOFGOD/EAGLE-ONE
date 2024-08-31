@@ -1,9 +1,5 @@
-// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
-import 'package:youdoc/common/anchor_click.dart';
 import 'package:youdoc/common/color_extention.dart';
-// import 'package:youdoc/common/custom_button.dart';
 import 'package:youdoc/common/loader_overlay.dart';
 import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
@@ -25,17 +21,15 @@ class SinglePracticeView extends StatefulWidget {
 class _SinglePracticeViewState extends State<SinglePracticeView> {
   bool isLoading = false;
   Practice? practice;
-  // = Practice(
-  //   id: 0,
-  //   practiceEmail: "",
-  //   practiceAboutText: "",
-  //   practiceAddress: "",
-  //   practiceImage: "",
-  //   practiceName: "",
-  //   specialty: "",
-  // );
 
-  // dynamic pract
+  String convertTo12HourFormat(String time24) {
+    List<String> parts = time24.split(':');
+    int hours = int.parse(parts[0]);
+    String period = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    if (hours == 0) hours = 12;
+    return '$hours$period';
+  }
 
   Future<void> getSinglePractice() async {
     setState(() {
@@ -374,11 +368,21 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                                   // const SizedBox(
                                   //   width: 5,
                                   // ),
-                                  CustomAnchor(
-                                    text: "${practice!.city}, ${practice!.practiceAddress}",
-                                    clicked: () {},
-                                    myFontSize: 14.0,
-                                    textColor: TColor.primary,
+                                  // CustomAnchor(
+                                  //   text: "${practice!.city}, ${practice!.practiceAddress}",
+                                  //   clicked: () {},
+                                  //   myFontSize: 14.0,
+                                  //   textColor: TColor.primary,
+                                  // )
+                                  InkWell(
+                                    onTap: () {},
+                                    child: Text(
+                                        "${practice!.city}, ${practice!.practiceAddress}",
+                                        style: TextStyle(
+                                          color: TColor.primary,
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w500,
+                                        )),
                                   )
                                 ],
                               ),
@@ -415,8 +419,8 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                               Row(
                                 children: [
                                   Text(
-                                    practice!
-                                        .userOpeningTimes[0].openingTime,
+                                    convertTo12HourFormat(practice!
+                                        .userOpeningTimes[0].openingTime),
                                     style: TextStyle(
                                       color: TColor.btnText,
                                       fontSize: 14,
@@ -432,8 +436,8 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                                     ),
                                   ),
                                   Text(
-                                    practice!
-                                        .userOpeningTimes[0].closingTime,
+                                    convertTo12HourFormat(practice!
+                                        .userOpeningTimes[0].closingTime),
                                     style: TextStyle(
                                       color: TColor.btnText,
                                       fontSize: 14,
@@ -474,7 +478,8 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                               ),
                               Row(
                                 children: [
-                                  Text("Mondays",
+                                  Text(
+                                    "Mondays",
                                     style: TextStyle(
                                       color: TColor.btnText,
                                       fontSize: 14,
@@ -489,7 +494,8 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  Text("Fridays",
+                                  Text(
+                                    "Fridays",
                                     style: TextStyle(
                                       color: TColor.btnText,
                                       fontSize: 14,

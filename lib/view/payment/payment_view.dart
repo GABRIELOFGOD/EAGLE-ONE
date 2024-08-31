@@ -5,6 +5,7 @@ import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/model/transaction.dart';
 import 'package:youdoc/view/dashboard/components/appointment_card.dart';
+import 'package:youdoc/view/home/home_navigator.dart';
 import 'package:youdoc/view/payment/components/payment_page.dart';
 import 'package:intl/intl.dart';
 
@@ -23,7 +24,7 @@ class _PaymentViewState extends State<PaymentView> {
 
   @override
   void initState() {
-    _getUerProfile();
+    _getUerProfile(context);
     super.initState();
   }
 
@@ -34,6 +35,7 @@ class _PaymentViewState extends State<PaymentView> {
     String sub,
     String closeText,
     Color btnColor,
+    BuildContext context,
   ) {
     showDialog(
       context: context,
@@ -51,7 +53,7 @@ class _PaymentViewState extends State<PaymentView> {
     );
   }
 
-  void _getUerProfile() async {
+  void _getUerProfile(BuildContext context) async {
     setState(() {
       isLoading = true;
     });
@@ -78,6 +80,7 @@ class _PaymentViewState extends State<PaymentView> {
           "Something went wrong",
           "close",
           Colors.red,
+          context,
         );
       }
     } catch (e) {
@@ -85,12 +88,13 @@ class _PaymentViewState extends State<PaymentView> {
         e.toString(),
         () {
           Navigator.of(context).pop();
-          _getUerProfile();
+          // _getUerProfile();
         },
         "Error",
         "Something went wrong",
         "Retry",
         Colors.red,
+        context
       );
     } finally {
       setState(() {
@@ -211,7 +215,7 @@ class _PaymentViewState extends State<PaymentView> {
     showModalBottomSheet(
       useSafeArea: true,
       context: context,
-      builder: (ctx) => const PaymentPage(),
+      builder: (ctx) => const PaymentPage(backTo: HomeNavigator(),),
     );
   }
 

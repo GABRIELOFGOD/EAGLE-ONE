@@ -5,7 +5,9 @@ import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/view/payment/components/payment_webview.dart';
 
 class PaymentPage extends StatefulWidget {
-  const PaymentPage({super.key});
+  const PaymentPage({super.key, required this.backTo});
+
+  final Widget backTo;
 
   @override
   State<PaymentPage> createState() => _PaymentPageState();
@@ -71,11 +73,16 @@ class _PaymentPageState extends State<PaymentPage> {
       String reference = response.reference;
 
       if (error == "") {
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (ctx) => PaymentWebview(link: link, reference: reference,),
+            builder: (ctx) => PaymentWebview(
+              link: link,
+              reference: reference,
+              backTo: widget.backTo,
+            ),
           ),
+          (route) => false,
         );
       } else {
         _showMessageDialog(
@@ -118,6 +125,17 @@ class _PaymentPageState extends State<PaymentPage> {
       color: TColor.primaryBg,
       child: Column(
         children: [
+          Center(
+            child: Text(
+              "Deposit",
+              style: TextStyle(
+                color: TColor.inputGray,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          const SizedBox(height: 36),
           Container(
             height: 43.0,
             decoration: BoxDecoration(
@@ -161,21 +179,22 @@ class _PaymentPageState extends State<PaymentPage> {
             minWidth: double.infinity,
             height: 45.0,
             child: Center(
-                child: isLoading
-                    ? const CircularProgressIndicator(
-                        color: Colors.white,
-                        strokeWidth: 4,
-                      )
-                    : Text(
-                        "Proceed to pay",
-                        style: TextStyle(
-                          color: _amountController.text.isEmpty
-                              ? TColor.bottomBar
-                              : Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),),
+              child: isLoading
+                  ? const CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 4,
+                    )
+                  : Text(
+                      "Proceed to pay",
+                      style: TextStyle(
+                        color: _amountController.text.isEmpty
+                            ? TColor.bottomBar
+                            : Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+            ),
           )
         ],
       ),

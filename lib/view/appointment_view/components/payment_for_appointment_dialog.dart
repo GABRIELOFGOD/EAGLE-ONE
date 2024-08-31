@@ -6,14 +6,17 @@ import 'package:youdoc/common_widget/messages/pop_up.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/model/practices.dart';
 import 'package:youdoc/model/transaction.dart';
+import 'package:youdoc/view/appointment_view/appointment_view.dart';
 import 'package:youdoc/view/home/home_navigator.dart';
+import 'package:youdoc/view/payment/components/payment_page.dart';
 
 class PaymentForAppointmentDialog extends StatefulWidget {
   PaymentForAppointmentDialog(
-      {super.key, required this.service, required this.appointment});
+      {super.key, required this.service, required this.appointment, required this.practice,});
 
   Service service;
-  CreateAppointmentDto appointment;
+  PaymentPayload appointment;
+  Practice practice;
 
   @override
   State<PaymentForAppointmentDialog> createState() =>
@@ -131,12 +134,21 @@ class _PaymentForAppointmentDialogState
       _bookLoading = true;
     });
     try {
+      CreateAppointmentDto bodyAppointment = CreateAppointmentDto(
+        date: widget.appointment.date,
+        time: widget.appointment.time,
+        practiceId: widget.appointment.practiceId,
+        physicianId: widget.appointment.physicianId,
+        serviceId: widget.appointment.serviceId,
+        type: _selectedPay!.abbr,
+      );
+
       BaseRequest baseRequest = BaseRequest();
-      var response = await baseRequest.bookAppointment(widget.appointment);
+      var response = await baseRequest.bookAppointment(bodyAppointment);
 
       String message = response.message;
       String error = response.error;
-      dynamic data = response.data;
+      // dynamic data = response.data;
 
       if (error == "") {
         showDialog(
@@ -325,7 +337,7 @@ class _PaymentForAppointmentDialogState
                         ),
                       ),
                       const SizedBox(
-                        height: 36,
+                        height: 30,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -358,7 +370,7 @@ class _PaymentForAppointmentDialogState
                         ],
                       ),
                       const SizedBox(
-                        height: 36,
+                        height: 30,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -385,7 +397,50 @@ class _PaymentForAppointmentDialogState
                         ],
                       ),
                       const SizedBox(
-                        height: 36,
+                        height: 10,
+                      ),
+                      amountToPay != null && balance! < amountToPay!
+                          ? Center(
+                              child: Wrap(
+                                children: [
+                                  Text(
+                                    "You don't have sufficient balance to perform this transaction",
+                                    style: TextStyle(
+                                      color: TColor.bottomBar,
+                                      fontSize: 10,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        useSafeArea: true,
+                                        context: context,
+                                        builder: (ctx) => PaymentPage(
+                                          backTo: AppointmentView(
+                                              practice: widget.practice),
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      "Top up fund",
+                                      style: TextStyle(
+                                        color: TColor.primary,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Container(),
+                      const SizedBox(
+                        height: 30,
                       ),
                       MaterialButton(
                         onPressed: _bookLoading || !isBookValid

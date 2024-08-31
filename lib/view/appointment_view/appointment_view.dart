@@ -34,7 +34,7 @@ class _AppointmentViewState extends State<AppointmentView> {
   String convertTo12HourFormat(String time24) {
     List<String> parts = time24.split(':');
     int hours = int.parse(parts[0]);
-    String period = hours >= 12 ? 'PM' : 'AM';
+    String period = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     if (hours == 0) hours = 12;
     return '$hours$period';
@@ -54,29 +54,8 @@ class _AppointmentViewState extends State<AppointmentView> {
     );
   }
 
-  // String convertTo24HourFormat(String time12) {
-  //   print("time in 12h $time12");
-  //   List<String> parts = time12.split(' ');
-  //   String timePart = parts[0];
-  //   String period = parts[1];
-
-  //   List<String> timeParts = timePart.split(':');
-  //   int hours = int.parse(timeParts[0]);
-  //   String minutes = timeParts[1];
-
-  //   if (period == 'PM' && hours != 12) {
-  //     hours += 12;
-  //   } else if (period == 'AM' && hours == 12) {
-  //     hours = 0;
-  //   }
-
-  //   String hours24 = hours.toString().padLeft(2, '0');
-
-  //   return '$hours24:$minutes';
-  // }
-
   void _payForAppointmentModal() {
-    CreateAppointmentDto appointment = CreateAppointmentDto(
+    PaymentPayload appointment = PaymentPayload(
       date: selectedDay!.date,
       time: selectedTime!.startTime,
       practiceId: widget.practice.id,
@@ -90,6 +69,7 @@ class _AppointmentViewState extends State<AppointmentView> {
       builder: (ctx) => PaymentForAppointmentDialog(
         service: selectedService!,
         appointment: appointment,
+        practice: widget.practice,
       ),
     );
   }
@@ -194,10 +174,6 @@ class _AppointmentViewState extends State<AppointmentView> {
       }
     });
   }
-
-  void _submitForm() {}
-
-  // void setSelectedDay(DaysOfTheWeekForAppointMent day) {}
 
   @override
   Widget build(BuildContext context) {
@@ -580,8 +556,8 @@ class _AppointmentViewState extends State<AppointmentView> {
                                 ),
                               )
                             : Wrap(
-                                spacing: 10,
-                                runSpacing: 10,
+                                spacing: 12,
+                                runSpacing: 12,
                                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: openingTimes
                                     .map(

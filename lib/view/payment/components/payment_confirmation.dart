@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/components/api_request.dart';
+import 'package:youdoc/view/home/home_navigator.dart';
 import 'package:youdoc/view/payment/payment_view.dart';
 
 class PaymentConfirmation extends StatefulWidget {
-  const PaymentConfirmation({super.key, required this.reference});
+  const PaymentConfirmation({super.key, required this.reference, required this.backTo});
 
   final String reference;
+  final Widget backTo;
 
   @override
   State<PaymentConfirmation> createState() => _PaymentConfirmationState();
@@ -104,7 +106,8 @@ class _PaymentConfirmationState extends State<PaymentConfirmation> {
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (ctx) => const PaymentView()),
+                            builder: (ctx) => widget.backTo,
+                          ),
                           (route) => false,
                         );
                       },
