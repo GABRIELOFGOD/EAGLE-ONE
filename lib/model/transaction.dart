@@ -97,29 +97,38 @@ class AppointmentResponse {
 
 class GetAllTransactions {
   final int id;
-  final dynamic status;
-  final DateTime date;
+  // final dynamic status;
+  // final DateTime date;
   final String time;
   final int practiceId;
   final int physicianId;
   final int serviceId;
+  final String error;
+  final String message;
 
   GetAllTransactions({
     required this.id,
-    required this.status,
-    required this.date,
+    // required this.status,
+    // required this.date,
     required this.time,
     required this.practiceId,
     required this.physicianId,
     required this.serviceId,
+    required this.error,
+    required this.message,
   });
 
   factory GetAllTransactions.fromJson(Map<String, dynamic> json) {
     return GetAllTransactions(
       id: json['id'] ?? 0,
-      status: json['status'],
-      date: json['date'] ?? "",
+      // status: json['status'],
+      // date: json['date'] ?? "",
       time: json['time'] ?? "",
+      error: json['error'] ?? "",
+      message:
+            json['message'].runtimeType != String && json['message'] != null
+                ? json['message'][0]
+                : json['message'] ?? '',
       practiceId: json['practice_id'] ?? 0,
       physicianId: json['physician_id'] ?? 0,
       serviceId: json["service_id"] ?? 0,

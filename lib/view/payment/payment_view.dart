@@ -65,7 +65,7 @@ class _PaymentViewState extends State<PaymentView> {
       String error = response.error;
       dynamic data = response.data;
 
-      if (error == '') {
+      if (error.isEmpty) {
         setState(() {
           balance = double.parse(data['balance'].toString());
           email = data['email'];
@@ -84,18 +84,10 @@ class _PaymentViewState extends State<PaymentView> {
         );
       }
     } catch (e) {
-      _showMessageDialog(
-        e.toString(),
-        () {
-          Navigator.of(context).pop();
-          // _getUerProfile();
-        },
-        "Error",
-        "Something went wrong",
-        "Retry",
-        Colors.red,
-        context
-      );
+      _showMessageDialog(e.toString(), () {
+        Navigator.of(context).pop();
+        // _getUerProfile();
+      }, "Error", "Something went wrong", "Retry", Colors.red, context);
     } finally {
       setState(() {
         isLoading = false;
@@ -215,7 +207,11 @@ class _PaymentViewState extends State<PaymentView> {
     showModalBottomSheet(
       useSafeArea: true,
       context: context,
-      builder: (ctx) => const PaymentPage(backTo: HomeNavigator(),),
+      builder: (ctx) => const PaymentPage(
+        backTo: HomeNavigator(
+          displayScreen: 4,
+        ),
+      ),
     );
   }
 

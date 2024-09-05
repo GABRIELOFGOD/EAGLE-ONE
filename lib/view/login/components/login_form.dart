@@ -8,6 +8,7 @@ import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/model/user.dart';
 import 'package:youdoc/view/forgot_password/request_password.dart';
+import 'package:youdoc/common_widget/otp/otp_dialog.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -25,24 +26,7 @@ class _LoginFormState extends State<LoginForm> {
     return email.text.isNotEmpty && password.text.isNotEmpty;
   }
 
-  late SharedPreferences prefs;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    initPreferences();
-  }
-
-  void initPreferences() async {
-    prefs = await SharedPreferences.getInstance();
-  }
-
   bool isLoading = false;
-
-  // void isSuccessfullyLoggedIn(){
-
-  // }
 
   UserLogin userLogin = UserLogin(
     email: "",
@@ -50,6 +34,10 @@ class _LoginFormState extends State<LoginForm> {
   );
 
   Future<void> _submitForm() async {
+    // showDialog(
+    //   context: context,
+    //   builder: (ctx) => const OtpDialog(email: "email"),
+    // );
     setState(() {
       isLoading = true;
     });
@@ -57,27 +45,15 @@ class _LoginFormState extends State<LoginForm> {
       BaseRequest baseRequest = BaseRequest();
       var response = await baseRequest.login(userLogin);
       String message = response.message;
-      String btn = response.error;
-      String token = response.token;
+      String error = response.error;
 
-      if (btn == "") {
-        _showMessageDialog(
-          message,
-          () {
-            Navigator.of(context).pop();
-          },
-          // () {
-          //   Navigator.of(context).push(
-          //     MaterialPageRoute(builder: (context) => OnBoardingView())
-          //   );
-          // },
-          "Link Sent",
-          "Your Youdoc sign-in link has been sent ",
-          "Got it!",
-          TColor.primary,
+      if (error.isEmpty) {
+        showDialog(
+          context: context,
+          builder: (ctx) => OtpDialog(email: email.text),
         );
-        email.text = "";
-        password.text = "";
+        // email.text = "";
+        // password.text = "";
       } else {
         _showMessageDialog(
           message == "Invalid credentials"
@@ -90,8 +66,8 @@ class _LoginFormState extends State<LoginForm> {
           message == "Invalid credentials"
               ? "Invalid credentials"
               : "Something went wrong",
-          btn == "Conflict" ? "Login" : "Close",
-          btn == "Conflict" ? TColor.warning : Colors.red,
+          error == "Conflict" ? "Login" : "Close",
+          error == "Conflict" ? TColor.warning : Colors.red,
         );
       }
     } catch (e) {
@@ -228,7 +204,7 @@ class _LoginFormState extends State<LoginForm> {
                     ),
               title: "Login",
               onpress: isFormValid ? _submitForm : null,
-              enabled: isFormValid,
+              enabled: isFormValid && !isLoading,
             ),
           ),
         ],

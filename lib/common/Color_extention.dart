@@ -15,4 +15,6 @@ class TColor {
   static Color get rating => const Color(0xFFE2E71A);
   static Color get inactiveBtn => const Color(0xFF454545);
   static Color get success => const Color(0xFF4BB543);
+  static Color get error => const Color(0xFFFF3737);
+  static Color get dialog => const Color(0xFF232323);
 }

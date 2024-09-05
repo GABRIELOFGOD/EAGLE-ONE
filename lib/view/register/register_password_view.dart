@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoc/common/Color_extention.dart';
 import 'package:youdoc/common/anchor_click.dart';
 import 'package:youdoc/common/loader_overlay.dart';
-import 'package:youdoc/common_widget/messages/error_dialog.dart';
-import 'package:youdoc/components/api_request.dart';
-import 'package:youdoc/view/home/home_navigator.dart';
 import 'package:youdoc/view/login/login_view.dart';
 import 'package:youdoc/view/register/components/form_input_for_password.dart';
 
 class RegisterPasswordView extends StatefulWidget {
   final String email;
-  final String token;
 
   const RegisterPasswordView({
     super.key,
     required this.email,
-    required this.token,
   });
 
   @override
@@ -27,96 +21,6 @@ class _RegisterPasswordViewState extends State<RegisterPasswordView> {
   bool isLoading = false;
   String userEmail = "";
 
-  Future<void> checkConfirm() async {
-    if (widget.token != "confirm") {
-      // TODO: confirm token function
-      setState(() {
-        isLoading = true;
-      });
-      try {
-        BaseRequest baseRequest = BaseRequest();
-        var response = await baseRequest.confirmToken(widget.token);
-        String message = response.message;
-        String error = response.error;
-        String token = response.token;
-
-        if (error == "") {
-          SharedPreferences sharedPreferences =
-              await SharedPreferences.getInstance();
-          sharedPreferences.setString("token", token);
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const HomeNavigator()),
-            (route) => false,
-          );
-        } else {
-          _showMessageDialog(
-            message,
-            () {
-              setState(() {
-                userEmail = error;
-              });
-              Navigator.of(context).pop();
-              // message == "Sign-in links are only valid for 5 mins. After a link expires, you'll need to request a new one to be sent to your email." ? Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => RegisterView()), (route) => false,) : Navigator,
-            },
-            message ==
-                    "Sign-in links are only valid for 5 mins. After a link expires, you'll need to request a new one to be sent to your email."
-                ? "Link Expired"
-                : "Error",
-            message ==
-                    "Sign-in links are only valid for 5 mins. After a link expires, you'll need to request a new one to be sent to your email."
-                ? "Use a unique link to gain access"
-                : "Something went wrong",
-            message ==
-                    "Sign-in links are only valid for 5 mins. After a link expires, you'll need to request a new one to be sent to your email."
-                ? "Resend"
-                : "Close",
-            TColor.primary,
-          );
-        }
-      } catch (e) {
-        _showMessageDialog(
-          e.toString(),
-          () {
-            Navigator.of(context).pop();
-          },
-          "Error",
-          "Something went wrong",
-          "close",
-          Colors.red,
-        );
-      } finally {
-        setState(() {
-          isLoading = false;
-        });
-      }
-    }
-  }
-
-  void _showMessageDialog(
-    String message,
-    VoidCallback closeFunction,
-    String title,
-    String sub,
-    String closeText,
-    Color btnColor,
-  ) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (context) {
-        return CustomDialog(
-          message: message,
-          onClose: closeFunction,
-          title: title,
-          sub: sub,
-          closeText: closeText,
-          btnColor: btnColor,
-        );
-      },
-    );
-  }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -124,7 +28,6 @@ class _RegisterPasswordViewState extends State<RegisterPasswordView> {
     setState(() {
       userEmail = widget.email;
     });
-    checkConfirm();
   }
 
   @override
@@ -185,9 +88,7 @@ class _RegisterPasswordViewState extends State<RegisterPasswordView> {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => const LoginView(
-                                                token: "confirm",
-                                              ),
+                                              builder: (context) => const LoginView(),
                                             ),
                                           );
                                         },

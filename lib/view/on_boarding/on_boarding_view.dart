@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:youdoc/common/Color_extention.dart';
 import 'package:youdoc/common/anchor_click.dart';
 import 'package:youdoc/common/custom_button.dart';
-import 'package:youdoc/view/home/home_navigator.dart';
+import 'package:youdoc/view/login/login_view.dart';
+import 'package:youdoc/view/register/register_view.dart';
 
 class OnBoardingView extends StatelessWidget {
   OnBoardingView({super.key});
 
-  final gradient = LinearGradient(colors: [
-    TColor.textGrad,
-    TColor.primary
-  ]);
+  final gradient = LinearGradient(colors: [TColor.textGrad, TColor.primary]);
 
   final textStyle = const TextStyle(
     fontSize: 16,
@@ -73,34 +71,30 @@ class OnBoardingView extends StatelessWidget {
                         title: 'Create an account',
                         onpress: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomeNavigator()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const RegisterView(),
+                            ),
+                          );
                         },
-                        //   Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //           builder: (context) => const RegisterView()));
-                        // },
                         // fontSize: 20,
                       ),
                     ),
                     ShaderMask(
                       shaderCallback: (bounds) {
-                        return gradient.createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height));
+                        return gradient.createShader(
+                            Rect.fromLTWH(0, 0, bounds.width, bounds.height));
                       },
                       child: CustomAnchor(
                         text: 'I already have an account',
                         textStyle: textStyle,
                         clicked: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomeNavigator(),));
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const LoginView(token: "confirm",)));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginView(),
+                            ),
+                          );
                         },
                       ),
                     ),

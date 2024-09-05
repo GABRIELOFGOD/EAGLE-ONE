@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/common/loader_overlay.dart';
+import 'package:youdoc/common_widget/auth/auth_dialogue.dart';
 import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
-import 'package:youdoc/components/static.dart';
+import 'package:youdoc/components/reusable_functions.dart';
 import 'package:youdoc/view/dashboard/dashboard_view.dart';
 import 'package:youdoc/view/login/login_view.dart';
 import 'package:youdoc/view/message/message_view.dart';
@@ -13,7 +14,9 @@ import 'package:youdoc/view/on_boarding/on_boarding_view.dart';
 import 'package:youdoc/view/payment/payment_view.dart';
 
 class HomeNavigator extends StatefulWidget {
-  const HomeNavigator({super.key});
+  const HomeNavigator({super.key, this.displayScreen});
+
+  final int? displayScreen;
 
   @override
   State<HomeNavigator> createState() => _HomeNavigatorState();
@@ -35,18 +38,27 @@ class _HomeNavigatorState extends State<HomeNavigator> {
   Future<void> _homePageLoad() async {
     setState(() {
       _isLoading = true;
+      _selectedIndex = widget.displayScreen ?? 0;
     });
 
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      // String? token = prefs.getString('token');
+      var userSettings = await getUserSettings();
+      if (userSettings == null) {
+        showDialog(
+          context: context,
+          builder: (ctx) => const AuthDialogue(),
+        );
+      }
 
-      String token = userToken;
+      String? token = prefs.getString("token");
 
       if (token == null) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => OnBoardingView()),
+          MaterialPageRoute(
+            builder: (context) => OnBoardingView(),
+          ),
         );
         return;
       }
@@ -78,28 +90,23 @@ class _HomeNavigatorState extends State<HomeNavigator> {
           });
         }
       } else {
+        prefs.remove("token");
         _showMessageDialog(
           message,
           () {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                  builder: (context) => const LoginView(token: "confirm")),
+                builder: (context) => const LoginView(),
+              ),
               (route) => false,
             );
-            // Navigator.of(context).pop();
-            // message == "Sign-in links are only valid for 5 mins. After a link expires, you'll need to request a new one to be sent to your email." ? Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => RegisterView()), (route) => false,) : Navigator,
           },
           "Error",
           "Something went wrong",
-          "Close",
-          TColor.primary,
+          "Login",
+          Colors.red,
         );
-        // SnackBar(content: Text(message));
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const LoginView(token: "confirm",)),
-        // );
       }
     } catch (e) {
       _showMessageDialog(
@@ -113,6 +120,13 @@ class _HomeNavigatorState extends State<HomeNavigator> {
         "Retry",
         Colors.red,
       );
+      // Navigator.pushAndRemoveUntil(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => const LoginView(),
+      //   ),
+      //   (route) => false,
+      // );
     } finally {
       setState(() {
         _isLoading = false;

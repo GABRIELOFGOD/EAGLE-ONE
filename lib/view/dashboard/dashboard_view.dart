@@ -18,7 +18,6 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
-  // final TextEditingController search = TextEditingController();
   bool showSearch = false;
 
   void closeSearch() {

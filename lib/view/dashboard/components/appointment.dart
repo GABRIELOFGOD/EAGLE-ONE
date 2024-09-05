@@ -20,16 +20,17 @@ class _AppointmentViewState extends State<AppointmentView> {
   @override
   void initState() {
     super.initState();
-    getAppointments();
+    _getAppointments();
   }
 
-  Future<void> getAppointments() async {
+  Future<void> _getAppointments() async {
     setState(() {
       isLoading = true;
     });
     try {
       BaseRequest baseRequest = BaseRequest();
       var response = await baseRequest.allAppointment();
+      print("Response here fa $response");
       setState(() {
         allAppointments = response;
       });
@@ -83,9 +84,11 @@ class _AppointmentViewState extends State<AppointmentView> {
                         itemBuilder: (context, index) {
                           final appointment = allAppointments[index];
                           return AppointmentCard(
-                            mainLabel: appointment.status ?? "waiting",
+                            // mainLabel: appointment.status ?? "waiting",
+                            mainLabel: "ahh",
                             rightLabel: appointment.time,
-                            subLabel: appointment.date.toIso8601String(),
+                            subLabel: "Hey",
+                            // subLabel: appointment.date.toIso8601String(),
                           );
                         }),
           ],

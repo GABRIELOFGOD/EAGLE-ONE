@@ -39,17 +39,6 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
     dob: "",
   );
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    initPreferences();
-  }
-
-  void initPreferences() async {
-    prefs = await SharedPreferences.getInstance();
-  }
-
   bool get isFormValid {
     return firstNameText.text.isNotEmpty &&
         lastName.text.isNotEmpty &&
@@ -84,16 +73,15 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
       BaseRequest baseRequest = BaseRequest();
       var response = await baseRequest.register(userRegister);
       String message = response.message;
-      String btn = response.error;
+      String error = response.error;
       String email = response.email;
 
-      if (btn == "") {
+      if (error == "") {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => RegisterPasswordView(
               email: email,
-              token: "confirm",
             ),
           ),
         );
@@ -101,26 +89,24 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
         _showMessageDialog(
           message,
           () {
-            if (btn == "Conflict") {
+            if (error == "Conflict") {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const LoginView(
-                    token: "confirm",
-                  ),
+                  builder: (context) => const LoginView(),
                 ),
               );
             } else {
               Navigator.of(context).pop();
             }
           },
-          btn == "Conflict" ? "Uh-oh!" : "Error",
-          btn == "Conflict"
+          error == "Conflict" ? "Uh-oh!" : "Error",
+          error == "Conflict"
               ? "Unable to proceed with account registration"
               : "Something went wrong",
-          btn == "Conflict" ? "Login" : "Close",
-          btn == "Conflict" ? TColor.warning : Colors.red,
-          btn == "Conflict" ? Colors.black : Colors.white,
+          error == "Conflict" ? "Login" : "Close",
+          error == "Conflict" ? TColor.warning : Colors.red,
+          error == "Conflict" ? Colors.black : Colors.white,
         );
       }
     } catch (e) {
@@ -177,7 +163,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
           placeholder: 'Enter first name',
           onChanged: (value) => setState(() {
             userRegister.firstName = value;
-        }),
+          }),
         ),
         const SizedBox(height: 15),
         CustomTextField(
@@ -244,15 +230,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
                   ),
             title: "Continue",
             onpress: isFormValid ? _submitForm : null,
-            // onpress: (){
-            //   Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (context) => const RegisterPasswordView(token: "token",),
-            //     ),
-            //   );
-            // },
-            enabled: isFormValid,
+            enabled: isFormValid && !isLoading,
           ),
         ),
       ],

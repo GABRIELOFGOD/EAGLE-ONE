@@ -65,7 +65,7 @@ class _RegisterViewState extends State<RegisterView> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const LoginView(token: "confirm",),
+                                        builder: (context) => const LoginView(),
                                       ),
                                     );
                                   },

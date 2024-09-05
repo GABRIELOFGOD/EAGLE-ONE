@@ -37,7 +37,7 @@ class _PaymentConfirmationState extends State<PaymentConfirmation> {
       bool status = response.status;
       num confirmationId = response.confirmationId;
 
-      if (error == '' && status == true) {
+      if (error.isEmpty && status == true) {
         setState(() {
           confirmationCode = 0;
           displayMessage = message;

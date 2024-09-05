@@ -31,13 +31,12 @@ class Patient {
   final String sex;
   final String dob;
 
-  Patient({
-    required this.dob,
-    required this.email,
-    required this.firstName,
-    required this.lastName,
-    required this.sex
-  });
+  Patient(
+      {required this.dob,
+      required this.email,
+      required this.firstName,
+      required this.lastName,
+      required this.sex});
 }
 
 class UserRegistrationComplete {
@@ -67,6 +66,20 @@ class UserLogin {
     return {
       "email": email.trim(),
       "password": password.trim(),
+    };
+  }
+}
+
+class OtpRequest {
+  String email;
+  int code;
+
+  OtpRequest({required this.email, required this.code});
+
+  Map<String, dynamic> toJson() {
+    return {
+      "email": email.trim(),
+      "code": code,
     };
   }
 }
@@ -216,3 +229,35 @@ class FindEmailResponse {
     );
   }
 }
+
+// enum AuthMethod { email, auth }
+
+// class UserSettings {
+//   final String name;
+//   final String email;
+//   final AuthMethod authMethod;
+
+//   UserSettings({
+//     required this.name,
+//     required this.email,
+//     required this.authMethod,
+//   });
+
+//   // Convert to JSON-like Map
+//   Map<String, dynamic> toJson() {
+//     return {
+//       'name': name,
+//       'email': email,
+//       'authMethod': authMethod.index, // Save index for enum
+//     };
+//   }
+
+//   // Create object from JSON-like Map
+//   factory UserSettings.fromJson(Map<String, dynamic> json) {
+//     return UserSettings(
+//       name: json['name'],
+//       email: json['email'],
+//       authMethod: AuthMethod.values[json['authMethod']],
+//     );
+//   }
+// }
