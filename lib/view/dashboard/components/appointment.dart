@@ -1,9 +1,7 @@
 import "package:flutter/material.dart";
-import "package:youdoc/common_widget/messages/error_dialog.dart";
 import "package:youdoc/components/api_request.dart";
 import "package:youdoc/view/dashboard/components/appointment_card.dart";
 import "package:youdoc/view/dashboard/components/no_appointment.dart";
-import "package:youdoc/view/dashboard/components/some_appointments.dart";
 import "package:youdoc/model/transaction.dart";
 
 class AppointmentView extends StatefulWidget {

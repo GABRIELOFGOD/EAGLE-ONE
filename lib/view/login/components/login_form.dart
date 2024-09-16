@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/common/anchor_click.dart';
 import 'package:youdoc/common/custom_button.dart';

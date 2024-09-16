@@ -24,11 +24,13 @@ class DateOfBirthInput extends StatelessWidget {
           controller: dateController,
           readOnly: true,
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             hintText: 'Date of Birth',
             hintStyle: const TextStyle(
               color: Colors.white70,
               fontSize: 14.0,
+              fontWeight: FontWeight.w500,
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: TColor.inputBg),

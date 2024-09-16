@@ -7,7 +7,8 @@ import 'package:youdoc/model/transaction.dart';
 import 'package:youdoc/model/user.dart';
 
 // const String baseUrl = 'http://192.168.0.104:3002';
-const String baseUrl = 'http://lambda.youdoc.co';
+const String baseUrl = 'http://192.168.55.133:3002';
+// const String baseUrl = 'http://lambda.youdoc.co';
 const String webUrl = "http://api.youdoc.co/api";
 
 class BaseRequest {
@@ -296,4 +297,31 @@ class BaseRequest {
       throw Exception("Request Failed with status: ${response.statusCode}");
     }
   }
+
+  // Future<String> checkUserExists(
+  //     CreateAppointmentDto appointment) async {
+  //   Uri url = Uri.parse("$baseUrl/email-exist");
+  //   await _initializeSharedPreferences();
+  //   String? userToken = prefs.getString('token');
+
+  //   final response = await http.post(
+  //     url,
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'authorization': 'Bearer $userToken'
+  //     },
+  //     body: jsonEncode(appointment.toJson()),
+  //   );
+
+  //   if (response.statusCode == 200 ||
+  //       response.statusCode == 201 ||
+  //       response.statusCode == 400 ||
+  //       response.statusCode == 401 ||
+  //       response.statusCode == 404 ||
+  //       response.statusCode == 409) {
+  //     return AppointmentResponse.fromJson(json.decode(response.body));
+  //   } else {
+  //     throw Exception('Request Failed');
+  //   }
+  // }
 }

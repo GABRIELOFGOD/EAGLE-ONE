@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/components/reusable_functions.dart';
-import 'package:youdoc/view/auth_screen/auth_screen.dart';
 import 'package:youdoc/view/home/home_navigator.dart';
+import 'package:youdoc/view/login/login_view.dart';
 
 class AuthDialogue extends StatefulWidget {
   const AuthDialogue({super.key});
@@ -23,17 +23,18 @@ class _AuthDialogueState extends State<AuthDialogue> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (ctx) => const AuthScreen(),
+          builder: (ctx) => const LoginView(),
         ),
       );
     } else {
       UserSettings userSettings = UserSettings(authMethod: AuthMethod.email);
-     await saveUserSettings(userSettings);
-      Navigator.push(
+      await saveUserSettings(userSettings);
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (ctx) => const HomeNavigator(),
         ),
+        (route) => false,
       );
     }
   }
@@ -88,8 +89,7 @@ class _AuthDialogueState extends State<AuthDialogue> {
                             fontWeight: FontWeight.w500,
                           ),
                           softWrap: true,
-                          overflow: TextOverflow
-                              .visible, // or TextOverflow.clip if you prefer clipping
+                          overflow: TextOverflow.visible,
                         ),
                       ],
                     ),
@@ -145,20 +145,16 @@ class _AuthDialogueState extends State<AuthDialogue> {
                                         "assets/icons/face_id.png",
                                         width: 20,
                                         height: 20,
-                                        color: authMethod == AuthMethod.auth
-                                            ? TColor.btnText
-                                            : TColor.bottomBar,
+                                        color: TColor.btnText,
                                       ),
                                     ),
                                     const SizedBox(
                                       height: 6,
                                     ),
-                                    Text(
+                                    const Text(
                                       "Face ID",
                                       style: TextStyle(
-                                        color: authMethod == AuthMethod.auth
-                                            ? Colors.white
-                                            : TColor.bottomBar,
+                                        color: Colors.white,
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -178,20 +174,16 @@ class _AuthDialogueState extends State<AuthDialogue> {
                                         "assets/icons/biometric.png",
                                         width: 20,
                                         height: 20,
-                                        color: authMethod == AuthMethod.auth
-                                            ? TColor.btnText
-                                            : TColor.bottomBar,
+                                        color: TColor.btnText,
                                       ),
                                     ),
                                     const SizedBox(
                                       height: 6,
                                     ),
-                                    Text(
+                                    const Text(
                                       "Biometric",
                                       style: TextStyle(
-                                        color: authMethod == AuthMethod.auth
-                                            ? Colors.white
-                                            : TColor.bottomBar,
+                                        color: Colors.white,
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -228,20 +220,16 @@ class _AuthDialogueState extends State<AuthDialogue> {
                                   "assets/icons/email.png",
                                   width: 20,
                                   height: 20,
-                                  color: authMethod == AuthMethod.email
-                                      ? TColor.btnText
-                                      : TColor.bottomBar,
+                                  color: TColor.btnText,
                                 ),
                               ),
                               const SizedBox(
                                 height: 6,
                               ),
-                              Text(
+                              const Text(
                                 "Email",
                                 style: TextStyle(
-                                  color: authMethod == AuthMethod.email
-                                      ? Colors.white
-                                      : TColor.bottomBar,
+                                  color: Colors.white,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
                                 ),

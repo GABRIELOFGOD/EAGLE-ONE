@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:youdoc/view/dashboard/components/appointment_card.dart';
 
 class SomeAppointmentView extends StatefulWidget {
   const SomeAppointmentView({super.key});

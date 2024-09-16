@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/components/api_request.dart';
-import 'package:youdoc/view/home/home_navigator.dart';
-import 'package:youdoc/view/payment/payment_view.dart';
 
 class PaymentConfirmation extends StatefulWidget {
   const PaymentConfirmation({super.key, required this.reference, required this.backTo});

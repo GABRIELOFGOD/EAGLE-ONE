@@ -8,7 +8,6 @@ import 'package:youdoc/common/line_text_field.dart';
 import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/model/user.dart';
-import 'package:youdoc/view/login/login_view.dart';
 import 'package:youdoc/view/register/register_password_view.dart';
 
 class RegisterFormInputs extends StatefulWidget {
@@ -28,6 +27,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
   final List<String> sexOptions = ['Male', 'Female'];
 
   bool isLoading = false;
+  bool _emailExists = false;
 
   late SharedPreferences prefs;
 
@@ -65,6 +65,37 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
     }
   }
 
+  Future<void> _checkMailExists(String email) async {
+    try {
+      BaseRequest baseRequest = BaseRequest();
+      var response = await baseRequest.findUserEmail(email);
+      if (response.error.isEmpty) {
+        setState(() {
+          _emailExists = true;
+        });
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     content: Text(
+        //       response.message,
+        //     ),
+        //   ),
+        // );
+      } else {
+        setState(() {
+          _emailExists = false;
+        });
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
+      );
+    }
+  }
+
   Future<void> _submitForm() async {
     setState(() {
       isLoading = true;
@@ -89,24 +120,13 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
         _showMessageDialog(
           message,
           () {
-            if (error == "Conflict") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginView(),
-                ),
-              );
-            } else {
-              Navigator.of(context).pop();
-            }
+            Navigator.of(context).pop();
           },
-          error == "Conflict" ? "Uh-oh!" : "Error",
-          error == "Conflict"
-              ? "Unable to proceed with account registration"
-              : "Something went wrong",
-          error == "Conflict" ? "Login" : "Close",
-          error == "Conflict" ? TColor.warning : Colors.red,
-          error == "Conflict" ? Colors.black : Colors.white,
+          "Error",
+          "Something went wrong",
+          "Close",
+          Colors.red,
+          Colors.white,
         );
       }
     } catch (e) {
@@ -157,6 +177,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomTextField(
           textController: firstNameText,
@@ -174,13 +195,62 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
           }),
         ),
         const SizedBox(height: 15),
-        CustomTextField(
-          textController: email,
-          placeholder: 'Enter email',
-          onChanged: (value) => setState(() {
-            userRegister.email = value;
-          }),
+        Container(
+          height: 43.0,
+          decoration: BoxDecoration(
+              color: TColor.inputBg,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: _emailExists ? TColor.error : TColor.inputBg,
+                width: 2.0,
+              )),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: TextField(
+            controller: email,
+            onChanged: (value) => setState(() {
+              _checkMailExists(value);
+              userRegister.email = value;
+            }),
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
+              hintText: 'Enter email address',
+              border: InputBorder.none,
+              hintStyle: TextStyle(
+                color: TColor.inputGray,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+              suffixIcon: Icon(
+                Icons.warning_amber_outlined,
+                color: _emailExists ? Colors.red : TColor.inputBg,
+              ),
+            ),
+            style: const TextStyle(
+              color: Colors.white70,
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+            ),
+          ),
         ),
+        _emailExists
+            ? Text(
+                "This email already exists",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: TColor.error,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              )
+            : Container(),
+        // CustomTextField(
+        //   textController: email,
+        //   placeholder: 'Enter email',
+        //   onChanged: (value) => setState(() {
+        //     _checkMailExists(value);
+        //     userRegister.email = value;
+        //   }),
+        // ),
         const SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -230,7 +300,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
                   ),
             title: "Continue",
             onpress: isFormValid ? _submitForm : null,
-            enabled: isFormValid && !isLoading,
+            enabled: isFormValid && !isLoading && !_emailExists,
           ),
         ),
       ],

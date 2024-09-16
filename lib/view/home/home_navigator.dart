@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/common/loader_overlay.dart';
-import 'package:youdoc/common_widget/auth/auth_dialogue.dart';
 import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/components/reusable_functions.dart';
@@ -45,9 +44,12 @@ class _HomeNavigatorState extends State<HomeNavigator> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var userSettings = await getUserSettings();
       if (userSettings == null) {
-        showDialog(
-          context: context,
-          builder: (ctx) => const AuthDialogue(),
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (ctx) => const LoginView(),
+          ),
+          (route) => false,
         );
       }
 

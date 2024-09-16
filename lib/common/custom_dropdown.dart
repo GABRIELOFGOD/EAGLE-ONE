@@ -73,6 +73,7 @@ class _DropDownInputState extends State<DropDownInput> {
                       style: const TextStyle(
                         color: Colors.white70,
                         fontWeight: FontWeight.w500,
+                        fontSize: 14,
                       ),
                     ),
                     onTap: () {
@@ -115,8 +116,8 @@ class _DropDownInputState extends State<DropDownInput> {
                 widget.selectedOption ?? 'Sex',
                 style: const TextStyle(
                   color: Colors.white70,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               const Icon(Icons.keyboard_arrow_down, color: Colors.white70),

@@ -42,7 +42,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
         });
       },
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(5),

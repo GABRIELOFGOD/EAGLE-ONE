@@ -176,9 +176,9 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
         Text(
           text,
           style: TextStyle(
-              color: TColor.inputGray,
+              color: isValid ? Colors.greenAccent : TColor.inputGray,
               fontSize: 14,
-              fontWeight: FontWeight.w400),
+              fontWeight: FontWeight.w400,),
         ),
       ],
     );
@@ -237,7 +237,7 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
         Container(
           alignment: Alignment.centerLeft,
           child: Text(
-            "Password must have",
+            "Password requirements",
             style: TextStyle(
                 color: TColor.inputGray,
                 fontSize: 16,

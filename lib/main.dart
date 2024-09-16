@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:youdoc/common_widget/auth/auth_dialogue.dart';
-import 'package:youdoc/components/reusable_functions.dart';
-import 'package:youdoc/view/auth_screen/auth_screen.dart';
 import 'package:youdoc/view/login/login_view.dart';
 // import 'package:app';
 import 'dart:async';
@@ -34,26 +31,26 @@ class _MyAppState extends State<MyApp> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     if (token != null) {
-      var userSettings = await getUserSettings();
-      if (userSettings == null) {
-        setState(() {
-          _initialPage = const AuthDialogue();
-        });
-      } else {
-        if (userSettings.authMethod == AuthMethod.auth) {
-          setState(() {
-            _initialPage = const AuthScreen();
-          });
-        } else {
-          prefs.remove("token");
-          setState(() {
-            _initialPage = const LoginView();
-          });
-        }
-      }
-      // setState(() {
-      //   _initialPage = const HomeNavigator();
-      // });
+      setState(() {
+        _initialPage = const LoginView();
+      });
+      // var userSettings = await getUserSettings();
+      // if (userSettings == null) {
+      //   setState(() {
+      //     _initialPage = const AuthDialogue();
+      //   });
+      // } else {
+      //   if (userSettings.authMethod == AuthMethod.auth) {
+      //     setState(() {
+      //       _initialPage = const AuthScreen();
+      //     });
+      //   } else {
+      //     prefs.remove("token");
+      //     setState(() {
+      //       _initialPage = const LoginView();
+      //     });
+      //   }
+      // }
     } else {
       setState(() {
         _initialPage = OnBoardingView();
