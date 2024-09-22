@@ -27,13 +27,14 @@ class PhysicianCard extends StatelessWidget {
               border: Border.all(width: 1, color: Colors.white),
               borderRadius: BorderRadius.circular(100),
             ),
-            child: image == ""
-                ? Image.asset(
+            child:
+            //  image == "" ? 
+            Image.asset(
                     "assets/icons/user.png",
                     width: 36,
                     height: 36,
                   )
-                : Image.network(image),
+                // : Image.network(image),
           ),
           const SizedBox(
             width: 5,

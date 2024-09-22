@@ -7,8 +7,8 @@ import 'package:youdoc/model/transaction.dart';
 import 'package:youdoc/model/user.dart';
 
 // const String baseUrl = 'http://192.168.0.104:3002';
-const String baseUrl = 'http://192.168.55.133:3002';
-// const String baseUrl = 'http://lambda.youdoc.co';
+// const String baseUrl = 'http://192.168.0.104:3002';
+const String baseUrl = 'http://lambda.youdoc.co';
 const String webUrl = "http://api.youdoc.co/api";
 
 class BaseRequest {
@@ -164,13 +164,21 @@ class BaseRequest {
   Future<List<Practice>> getAllPractices() async {
     Uri url = Uri.parse("$webUrl/users");
 
-    final response = await http.get(url);
+    try {
+      final response = await http.get(url);
+      print(
+          'Response: ${response.body}'); // Print the raw response for debugging
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      List<dynamic> body = json.decode(response.body);
-      return Practice.fromJsonList(body);
-    } else {
-      throw Exception("Request Failed with status: ${response.statusCode}");
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        List<dynamic> body = json.decode(response.body);
+        return Practice.fromJsonList(body);
+      } else {
+        print("Failed with status code: ${response.statusCode}");
+        throw Exception("Request Failed with status: ${response.body}");
+      }
+    } catch (e) {
+      print("Error caught: $e"); // This will help log the error
+      rethrow; // Rethrow to ensure it's caught in the calling function
     }
   }
 

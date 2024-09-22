@@ -5,6 +5,7 @@ import 'package:youdoc/model/transaction.dart';
 import 'package:youdoc/view/appointment_view/components/appointment_day_ball.dart';
 import 'package:youdoc/view/appointment_view/components/payment_for_appointment_dialog.dart';
 import 'package:youdoc/view/appointment_view/components/physician.dart';
+import 'package:intl/intl.dart';
 
 class AppointmentView extends StatefulWidget {
   const AppointmentView({super.key, required this.practice});
@@ -63,15 +64,25 @@ class _AppointmentViewState extends State<AppointmentView> {
       serviceId: selectedService!.id,
     );
 
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (ctx) => PaymentForAppointmentDialog(
-        service: selectedService!,
-        appointment: appointment,
-        practice: widget.practice,
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) => PaymentForAppointmentDialog(
+            service: selectedService!,
+            appointment: appointment,
+            practice: widget.practice),
       ),
     );
+
+    // showDialog(
+    //   context: context,
+    //   barrierColor: Colors.black.withOpacity(0.5),
+    //   builder: (ctx) => PaymentForAppointmentDialog(
+    //     service: selectedService!,
+    //     appointment: appointment,
+    //     practice: widget.practice,
+    //   ),
+    // );
   }
 
   DateTime getNextWeekdayDate(String dayOfWeek) {
@@ -202,7 +213,7 @@ class _AppointmentViewState extends State<AppointmentView> {
       body: Column(
         children: [
           SizedBox(
-            height: 54,
+            height: 99,
             child: Container(
               color: TColor.btnBg,
               child: Padding(
@@ -234,6 +245,7 @@ class _AppointmentViewState extends State<AppointmentView> {
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
+                            SizedBox(height: 10),
                             Text(
                               "Any change or cancellation made within 48hrs of an appointment will result in a 50% refund",
                               style: TextStyle(
@@ -463,65 +475,97 @@ class _AppointmentViewState extends State<AppointmentView> {
                         const SizedBox(
                           height: 18,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: appointmentData
-                              .map(
-                                (data) => GestureDetector(
-                                  // onTap: () {
-                                  //   setState(() {
-                                  //     List<PracticeOpening> oneTime = [];
-                                  //     for (var item in appointmentData) {
-                                  //       item.isSelected = false;
-                                  //     }
-                                  //     if (!data.isActive) {
-                                  //       // selectedDay = selectedDay;
-                                  //       data.isSelected = false;
-                                  //     } else {
-                                  //       data.isSelected = true;
-                                  //     }
-                                  //     selectedDay = data;
-                                  //     widget.practice.openingHours.map((time) => {
-                                  //           if (time.day == data.id)
-                                  //             {oneTime.add(time)}
-                                  //         });
-                                  //     openingTimes = oneTime;
-                                  //   });
-                                  // },
-                                  onTap: () {
-                                    setState(() {
-                                      List<PracticeHourlySlots> oneTime = [];
-                                      for (var item in appointmentData) {
-                                        item.isSelected = false;
-                                      }
-                                      if (!data.isActive) {
-                                        data.isSelected = false;
-                                      } else {
-                                        data.isSelected = true;
-                                      }
-                                      selectedDay = data;
-                                      for (var time
-                                          in widget.practice.hourlySlots) {
-                                        if (time.day == data.id) {
-                                          oneTime.add(time);
-                                        }
-                                      }
-
-                                      // Set the new openingTimes list
-                                      openingTimes = oneTime;
-                                    });
-                                  },
-                                  child: SizedBox(
-                                    width: 36,
-                                    child: AppointmentBall(
-                                      day: data.day,
-                                      isActive: data.isActive,
-                                      isSelected: data.isSelected,
+                        // SingleChildScrollView(
+                        //   scrollDirection: Axis.horizontal,
+                        //   child: Row(
+                        //     children: appointmentData
+                        //         .map(
+                        //           (data) => Padding(
+                        //             padding: const EdgeInsets.only(
+                        //               right: 12,
+                        //             ), // 12px gap between items
+                        //             child: GestureDetector(
+                        //               onTap: () {
+                        //                 setState(() {
+                        //                   List<PracticeHourlySlots> oneTime =
+                        //                       [];
+                        //                   for (var item in appointmentData) {
+                        //                     item.isSelected = false;
+                        //                   }
+                        //                   if (!data.isActive) {
+                        //                     data.isSelected = false;
+                        //                   } else {
+                        //                     data.isSelected = true;
+                        //                   }
+                        //                   selectedDay = data;
+                        //                   for (var time
+                        //                       in widget.practice.hourlySlots) {
+                        //                     if (time.day == data.id) {
+                        //                       oneTime.add(time);
+                        //                     }
+                        //                   }
+                        //                   openingTimes = oneTime;
+                        //                 });
+                        //               },
+                        //               child: SizedBox(
+                        //                 width: ,
+                        //                 child: AppointmentBall(
+                        //                   day: data.day,
+                        //                   isActive: data.isActive,
+                        //                   isSelected: data.isSelected,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         )
+                        //         .toList(),
+                        //   ),
+                        // ),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: appointmentData
+                                .map(
+                                  (data) => Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 12), // 12px gap between items
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          List<PracticeHourlySlots> oneTime =
+                                              [];
+                                          for (var item in appointmentData) {
+                                            item.isSelected = false;
+                                          }
+                                          if (!data.isActive) {
+                                            data.isSelected = false;
+                                          } else {
+                                            data.isSelected = true;
+                                          }
+                                          selectedDay = data;
+                                          for (var time
+                                              in widget.practice.hourlySlots) {
+                                            if (time.day == data.id) {
+                                              oneTime.add(time);
+                                            }
+                                          }
+                                          openingTimes = oneTime;
+                                        });
+                                      },
+                                      child: AppointmentBall(
+                                        formattedDate: DateFormat('EEE, d MMM')
+                                            .format(data
+                                                .date), // Pass formatted date
+                                        isActive: data.isActive,
+                                        isSelected: data.isSelected,
+                                        pad: 2,
+                                        padd: 12,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              )
-                              .toList(),
+                                )
+                                .toList(),
+                          ),
                         ),
 
                         // const AppointmentBall(
@@ -570,8 +614,9 @@ class _AppointmentViewState extends State<AppointmentView> {
                                         child: SizedBox(
                                           width: 36,
                                           child: AppointmentBall(
-                                            day: convertTo12HourFormat(
-                                                data.startTime),
+                                            formattedDate:
+                                                convertTo12HourFormat(
+                                                    data.startTime),
                                             isActive: true,
                                             isSelected: selectedTime != null &&
                                                     selectedTime!.id == data.id
@@ -632,7 +677,7 @@ class _AppointmentViewState extends State<AppointmentView> {
                                                 "${physician.firstName} ${physician.lastName} ${physician.middleName}",
                                             practice: widget
                                                 .practice.practiceName,
-                                            role: physician.role.name,
+                                            role: physician.role.roleName,
                                             isSelected:
                                                 selectedPhysician != null &&
                                                     selectedPhysician!.id ==
@@ -664,7 +709,7 @@ class _AppointmentViewState extends State<AppointmentView> {
                                   ),
                                 )
                               : Text(
-                                  "Pay for appointment",
+                                  "Continue",
                                   style: TextStyle(
                                     color: isFormValid
                                         ? Colors.white

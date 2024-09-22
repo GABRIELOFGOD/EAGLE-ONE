@@ -40,15 +40,16 @@ class _SingleSearchClinicState extends State<SingleSearchClinic> {
           children: [
             Row(
               children: [
-                widget.image == ""
-                    ? Image.asset("assets/images/practice_logo.png")
-                    : ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Image.network(
-                          widget.image,
-                          width: 24.0,
-                          height: 24.0,
-                        )),
+                // widget.image == ""
+                //     ? 
+                    Image.asset("assets/images/practice_logo.png"),
+                    // : ClipRRect(
+                    //     borderRadius: BorderRadius.circular(8.0),
+                    //     child: Image.network(
+                    //       widget.image,
+                    //       width: 24.0,
+                    //       height: 24.0,
+                    //     )),
                 const SizedBox(
                   width: 9,
                 ),

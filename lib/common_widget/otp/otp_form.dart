@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,6 +6,7 @@ import 'package:youdoc/common_widget/auth/auth_dialogue.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/components/reusable_functions.dart';
 import 'package:youdoc/model/user.dart';
+import 'package:youdoc/view/home/home_navigator.dart';
 
 class OtpForm extends StatefulWidget {
   const OtpForm({
@@ -69,13 +69,13 @@ class _OtpFormState extends State<OtpForm> {
           );
         }
         sharedPreferences.setString("token", token);
-        // Navigator.pushAndRemoveUntil(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (ctx) => const HomeNavigator(),
-        //   ),
-        //   (route) => false,
-        // );
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (ctx) => const HomeNavigator(),
+          ),
+          (route) => false,
+        );
       } else {
         widget.onOtpError(message);
       }

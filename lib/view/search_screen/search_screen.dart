@@ -56,15 +56,20 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       isLoading = true;
     });
+
     try {
       BaseRequest baseRequest = BaseRequest();
       var response = await baseRequest.getAllPractices();
+      print("Response from API: $response");
+
       setState(() {
         clinicResult = response;
       });
-    } catch (e) {
+    } catch (e, stackTrace) {
+      print('Error: $e');
+      print('StackTrace: $stackTrace');
+
       _showMessageDialog(
-        // "Failed to load, please check your internet connection and try again",
         e.toString(),
         () {
           widget.closeSearch();

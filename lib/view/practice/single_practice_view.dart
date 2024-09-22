@@ -139,16 +139,17 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
                           color: TColor.btnBg,
                           borderRadius: BorderRadius.circular(100),
                         ),
-                        child: practice!.practiceImage == ""
-                            ? Image.asset(
-                                "assets/images/practice_logo_big.png",
-                                width: 27,
-                                height: 27,
-                              )
-                            : ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: Image.network(practice!.practiceImage),
-                              ),
+                        child:
+                            // practice!.practiceImage == "" ?
+                            Image.asset(
+                          "assets/images/practice_logo_big.png",
+                          width: 27,
+                          height: 27,
+                        ),
+                        // : ClipRRect(
+                        //     borderRadius: BorderRadius.circular(100),
+                        //     child: Image.network(practice!.practiceImage),
+                        //   ),
                       ),
                       const SizedBox(
                         height: 20,
