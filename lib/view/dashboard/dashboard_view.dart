@@ -19,6 +19,13 @@ class DashboardView extends StatefulWidget {
 
 class _DashboardViewState extends State<DashboardView> {
   bool showSearch = false;
+  num appointments = 0;
+
+  void _getAllAppointmentsTotal(int allAppointments) {
+    setState(() {
+      appointments = allAppointments;
+    });
+  }
 
   void closeSearch() {
     setState(() {
@@ -131,12 +138,12 @@ class _DashboardViewState extends State<DashboardView> {
                           width: 20,
                         ),
                         cardName: "Appointments",
-                        value: "0",
+                        value: appointments,
                       ),
                       const SizedBox(
                         height: 42,
                       ),
-                      const AppointmentView(),
+                      AppointmentView(onTotalAppointments: _getAllAppointmentsTotal,),
                     ],
                   ),
                 ),

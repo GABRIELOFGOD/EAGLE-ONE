@@ -69,13 +69,13 @@ class _OtpFormState extends State<OtpForm> {
           );
         }
         sharedPreferences.setString("token", token);
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (ctx) => const HomeNavigator(),
-          ),
-          (route) => false,
-        );
+        // Navigator.pushAndRemoveUntil(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (ctx) => const HomeNavigator(),
+        //   ),
+        //   (route) => false,
+        // );
       } else {
         widget.onOtpError(message);
       }
@@ -276,8 +276,8 @@ class _OtpFormState extends State<OtpForm> {
           height: 36,
         ),
         MaterialButton(
-          onPressed: otpCode.length == 5 ? _submitOtp : () {},
-          color: otpCode.length == 5 ? TColor.primary : TColor.inactiveBtn,
+          onPressed: otpCode.length == 5 && !_isLoading ? _submitOtp : () {},
+          color: otpCode.length == 5 && !_isLoading ? TColor.primary : TColor.inactiveBtn,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(4),
           ),
@@ -297,7 +297,7 @@ class _OtpFormState extends State<OtpForm> {
                   : Text(
                       "Verify OTP",
                       style: TextStyle(
-                        color: otpCode.length == 5
+                        color: otpCode.length == 5 && !_isLoading
                             ? Colors.white
                             : TColor.bottomBar,
                         fontSize: 16,

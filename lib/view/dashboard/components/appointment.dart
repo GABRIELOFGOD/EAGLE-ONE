@@ -1,11 +1,14 @@
 import "package:flutter/material.dart";
+import "package:youdoc/common/color_extention.dart";
 import "package:youdoc/components/api_request.dart";
 import "package:youdoc/view/dashboard/components/appointment_card.dart";
 import "package:youdoc/view/dashboard/components/no_appointment.dart";
 import "package:youdoc/model/transaction.dart";
 
 class AppointmentView extends StatefulWidget {
-  const AppointmentView({super.key});
+  const AppointmentView({super.key, required this.onTotalAppointments});
+
+  final Function(int) onTotalAppointments;
 
   @override
   State<AppointmentView> createState() => _AppointmentViewState();
@@ -28,10 +31,10 @@ class _AppointmentViewState extends State<AppointmentView> {
     try {
       BaseRequest baseRequest = BaseRequest();
       var response = await baseRequest.allAppointment();
-      print("Response here fa $response");
       setState(() {
         allAppointments = response;
       });
+      widget.onTotalAppointments(response.length);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -52,14 +55,30 @@ class _AppointmentViewState extends State<AppointmentView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Appointments",
-          textAlign: TextAlign.left,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Appointments",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: Text(
+                "View all",
+                style: TextStyle(
+                  color: TColor.primary,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                ),
+              ),
+            )
+          ],
         ),
         Column(
           children: [
@@ -78,17 +97,16 @@ class _AppointmentViewState extends State<AppointmentView> {
                     : ListView.builder(
                         shrinkWrap: true,
                         physics: const ClampingScrollPhysics(),
-                        itemCount: allAppointments.length,
+                        itemCount: allAppointments.reversed.take(5).length,
                         itemBuilder: (context, index) {
                           final appointment = allAppointments[index];
                           return AppointmentCard(
-                            // mainLabel: appointment.status ?? "waiting",
-                            mainLabel: "ahh",
-                            rightLabel: appointment.time,
-                            subLabel: "Hey",
-                            // subLabel: appointment.date.toIso8601String(),
+                            practiceId: appointment.practiceId,
+                            serviceId: appointment.serviceId,
+                            appointmentId: appointment.id,
                           );
-                        }),
+                        },
+                      ),
           ],
         ),
       ],

@@ -34,17 +34,27 @@ class _PaymentWebviewState extends State<PaymentWebview> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Payment', style: TextStyle(color: Colors.white,),),
+        title: const Text(
+          'Payment',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
         backgroundColor: TColor.primaryBg,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white,),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () async {
             if (await controller.canGoBack()) {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (ctx) =>
-                      PaymentConfirmation(reference: widget.reference, backTo: widget.backTo,),
+                  builder: (ctx) => PaymentConfirmation(
+                    reference: widget.reference,
+                    backTo: widget.backTo,
+                  ),
                 ),
                 (route) => false,
               );
@@ -52,8 +62,10 @@ class _PaymentWebviewState extends State<PaymentWebview> {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (ctx) =>
-                      PaymentConfirmation(reference: widget.reference, backTo: widget.backTo,),
+                  builder: (ctx) => PaymentConfirmation(
+                    reference: widget.reference,
+                    backTo: widget.backTo,
+                  ),
                 ),
                 (route) => false,
               );
@@ -62,8 +74,24 @@ class _PaymentWebviewState extends State<PaymentWebview> {
         ),
       ),
       backgroundColor: TColor.primaryBg,
-      body: WebViewWidget(
-        controller: controller,
+      body: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (bool didPop, dynamic result) {
+          if (didPop) return;
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (ctx) => PaymentConfirmation(
+                reference: widget.reference,
+                backTo: widget.backTo,
+              ),
+            ),
+            (route) => false,
+          );
+        },
+        child: WebViewWidget(
+          controller: controller,
+        ),
       ),
     );
   }

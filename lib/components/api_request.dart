@@ -166,19 +166,15 @@ class BaseRequest {
 
     try {
       final response = await http.get(url);
-      print(
-          'Response: ${response.body}'); // Print the raw response for debugging
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         List<dynamic> body = json.decode(response.body);
         return Practice.fromJsonList(body);
       } else {
-        print("Failed with status code: ${response.statusCode}");
         throw Exception("Request Failed with status: ${response.body}");
       }
     } catch (e) {
-      print("Error caught: $e"); // This will help log the error
-      rethrow; // Rethrow to ensure it's caught in the calling function
+      print("Error caught: $e");
+      rethrow;
     }
   }
 
@@ -274,8 +270,16 @@ class BaseRequest {
 
   Future<List<GetAllTransactions>> allAppointment() async {
     Uri url = Uri.parse("$baseUrl/appointment");
+    await _initializeSharedPreferences();
+    String? userToken = prefs.getString('token');
 
-    final response = await http.get(url);
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer $userToken'
+      },
+    );
 
     if (response.statusCode == 200 ||
         response.statusCode == 201 ||
@@ -283,19 +287,13 @@ class BaseRequest {
         response.statusCode == 401 ||
         response.statusCode == 404 ||
         response.statusCode == 409) {
-      // Decode the response body
       var body = jsonDecode(response.body);
-      print("body here $body");
-      // Check if the decoded body is a list or a map
       if (body is List) {
-        // If it's already a list, we can parse it directly
         return GetAllTransactions.fromJsonList(body);
       } else if (body is Map) {
-        // If it's a map, try to extract the list from the appropriate key
         if (body.containsKey('data')) {
           return GetAllTransactions.fromJsonList(body['data']);
         } else {
-          // Handle other cases if the list is nested under another key or format
           throw Exception("Unexpected response format");
         }
       } else {

@@ -60,8 +60,6 @@ class _SearchScreenState extends State<SearchScreen> {
     try {
       BaseRequest baseRequest = BaseRequest();
       var response = await baseRequest.getAllPractices();
-      print("Response from API: $response");
-
       setState(() {
         clinicResult = response;
       });

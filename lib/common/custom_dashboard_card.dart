@@ -60,7 +60,7 @@ class _CustomCardState extends State<CustomCard> {
               //   height: 40,
               // ),
               Text(
-                widget.value,
+                widget.value.toString(),
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 24,

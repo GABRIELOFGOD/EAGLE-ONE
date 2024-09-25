@@ -28,6 +28,8 @@ class _HomeNavigatorState extends State<HomeNavigator> {
   String username = "";
   String useremail = "";
 
+  num appointments = 0;
+
   @override
   void initState() {
     super.initState();
@@ -84,8 +86,10 @@ class _HomeNavigatorState extends State<HomeNavigator> {
           setState(() {
             isAddress = true;
             useremail = data['email'];
+            appointments = data['appointments'].length;
             // balance = double.parse(data['balance'].toString());
           });
+          print("appointments data ${data['appointments']}");
         } else {
           setState(() {
             isAddress = false;
@@ -169,9 +173,15 @@ class _HomeNavigatorState extends State<HomeNavigator> {
   Widget _buildCurrentWidget() {
     switch (_selectedIndex) {
       case 0:
-        return DashboardView(noAddress: isAddress, name: username);
+        return DashboardView(
+          noAddress: isAddress,
+          name: username,
+        );
       case 1:
-        return DashboardView(noAddress: isAddress, name: username);
+        return DashboardView(
+          noAddress: isAddress,
+          name: username,
+        );
       case 2:
         return const LogoutScreen();
       case 3:

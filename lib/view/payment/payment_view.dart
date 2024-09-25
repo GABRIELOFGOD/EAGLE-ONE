@@ -4,8 +4,8 @@ import 'package:youdoc/common/custom_dashboard_card.dart';
 import 'package:youdoc/common_widget/messages/error_dialog.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/model/transaction.dart';
-import 'package:youdoc/view/dashboard/components/appointment_card.dart';
 import 'package:youdoc/view/home/home_navigator.dart';
+import 'package:youdoc/view/payment/components/payment_card.dart';
 import 'package:youdoc/view/payment/components/payment_page.dart';
 import 'package:intl/intl.dart';
 
@@ -204,8 +204,7 @@ class _PaymentViewState extends State<PaymentView> {
   }
 
   void _openDepositBottomSheet() {
-    showModalBottomSheet(
-      useSafeArea: true,
+    showDialog(
       context: context,
       builder: (ctx) => const PaymentPage(
         backTo: HomeNavigator(
@@ -213,6 +212,15 @@ class _PaymentViewState extends State<PaymentView> {
         ),
       ),
     );
+    // showModalBottomSheet(
+    //   useSafeArea: true,
+    //   context: context,
+    //   builder: (ctx) => const PaymentPage(
+    //     backTo: HomeNavigator(
+    //       displayScreen: 4,
+    //     ),
+    //   ),
+    // );
   }
 
   String formatToCurrency(double value) {
@@ -389,7 +397,7 @@ class _PaymentViewState extends State<PaymentView> {
                       : Column(
                           children: payments
                               .map(
-                                (Payment payment) => AppointmentCard(
+                                (Payment payment) => PaymentCard(
                                   mainLabel: payment.amount.toString(),
                                   rightLabel: payment.practiceName,
                                   subLabel: payment.service,

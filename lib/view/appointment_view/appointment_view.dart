@@ -543,6 +543,7 @@ class _AppointmentViewState extends State<AppointmentView> {
                                             data.isSelected = true;
                                           }
                                           selectedDay = data;
+                                          print(selectedDay!.isSelected);
                                           for (var time
                                               in widget.practice.hourlySlots) {
                                             if (time.day == data.id) {
@@ -553,11 +554,15 @@ class _AppointmentViewState extends State<AppointmentView> {
                                         });
                                       },
                                       child: AppointmentBall(
+                                        key: ValueKey(data
+                                            .id), // Add a unique key based on `data.id`
                                         formattedDate: DateFormat('EEE, d MMM')
-                                            .format(data
-                                                .date), // Pass formatted date
+                                            .format(data.date),
                                         isActive: data.isActive,
-                                        isSelected: data.isSelected,
+                                        isSelected: selectedDay != null &&
+                                                selectedDay == data
+                                            ? selectedDay!.isSelected
+                                            : false,
                                         pad: 2,
                                         padd: 12,
                                       ),
@@ -590,7 +595,7 @@ class _AppointmentViewState extends State<AppointmentView> {
                         const SizedBox(
                           height: 18,
                         ),
-                        selectedDay == null
+                        selectedDay == null || openingTimes.isEmpty
                             ? Text(
                                 "Select a date to reveal",
                                 style: TextStyle(
