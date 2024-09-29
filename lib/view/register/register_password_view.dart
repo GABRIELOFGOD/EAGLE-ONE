@@ -88,7 +88,8 @@ class _RegisterPasswordViewState extends State<RegisterPasswordView> {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => const LoginView(),
+                                              builder: (context) =>
+                                                  const LoginView(),
                                             ),
                                           );
                                         },
@@ -113,46 +114,46 @@ class _RegisterPasswordViewState extends State<RegisterPasswordView> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 30),
+                              const SizedBox(height: 48),
                               PasswordRegisterForm(email: userEmail),
-                              Expanded(child: Container()),
-                              Container(
-                                alignment: Alignment.center,
-                                child: Wrap(
-                                  alignment: WrapAlignment.center,
-                                  children: [
-                                    const Text(
-                                      "By signing up you agree to our ",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    CustomAnchor(
-                                      text: "Terms of use ",
-                                      clicked: () {},
-                                      textColor: TColor.primary,
-                                      myFontSize: 14,
-                                    ),
-                                    const Text(
-                                      "and our ",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    CustomAnchor(
-                                      text: "Privacy Policy",
-                                      clicked: () {},
-                                      textColor: TColor.primary,
-                                      myFontSize: 14,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              // LoadingOverlay(isLoading: isLoading),
+                              // Expanded(child: Container()),
+                              // Container(
+                              //   alignment: Alignment.center,
+                              //   child: Wrap(
+                              //     alignment: WrapAlignment.center,
+                              //     children: [
+                              //       const Text(
+                              //         "By signing up you agree to our ",
+                              //         style: TextStyle(
+                              //           fontSize: 14,
+                              //           color: Colors.white,
+                              //           fontWeight: FontWeight.w400,
+                              //         ),
+                              //       ),
+                              //       CustomAnchor(
+                              //         text: "Terms of use ",
+                              //         clicked: () {},
+                              //         textColor: TColor.primary,
+                              //         myFontSize: 14,
+                              //       ),
+                              //       const Text(
+                              //         "and our ",
+                              //         style: TextStyle(
+                              //           fontSize: 14,
+                              //           color: Colors.white,
+                              //           fontWeight: FontWeight.w400,
+                              //         ),
+                              //       ),
+                              //       CustomAnchor(
+                              //         text: "Privacy Policy",
+                              //         clicked: () {},
+                              //         textColor: TColor.primary,
+                              //         myFontSize: 14,
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
+                              // // LoadingOverlay(isLoading: isLoading),
                             ],
                           ),
                         ),

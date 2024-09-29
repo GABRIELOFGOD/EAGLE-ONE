@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/Color_extention.dart';
 import 'package:youdoc/common/anchor_click.dart';
+import 'package:youdoc/common_widget/pops/ring_emergency.dart';
 import 'package:youdoc/view/login/login_view.dart';
 import 'package:youdoc/view/register/components/FormInputs.dart';
 
@@ -28,9 +29,11 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
                 child: IntrinsicHeight(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 30.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const Padding(
                           padding: EdgeInsets.symmetric(vertical: 10.0),
@@ -45,9 +48,11 @@ class _RegisterViewState extends State<RegisterView> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 const Text(
                                   "Have an account?",
@@ -58,10 +63,8 @@ class _RegisterViewState extends State<RegisterView> {
                                   ),
                                 ),
                                 const SizedBox(width: 10),
-                                CustomAnchor(
-                                  text: "Login",
-                                  textColor: TColor.primary,
-                                  clicked: () {
+                                GestureDetector(
+                                  onTap: () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -69,6 +72,17 @@ class _RegisterViewState extends State<RegisterView> {
                                       ),
                                     );
                                   },
+                                  child: Text(
+                                    "Login",
+                                    style: TextStyle(
+                                      color: TColor.primary,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: TColor.primary,
+                                      decorationThickness: 2,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -89,7 +103,7 @@ class _RegisterViewState extends State<RegisterView> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 48),
                         const RegisterFormInputs(),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,46 +117,11 @@ class _RegisterViewState extends State<RegisterView> {
                             ),
                             CustomAnchor(
                               text: "Ring an emergency hotline",
-                              clicked: () {},
+                              clicked: () {
+                                showDialog(context: context, builder: (ctx) => const RingEmergency(),);
+                              },
                             )
                           ],
-                        ),
-                        const Spacer(),
-                        Container(
-                          alignment: Alignment.center,
-                          child: Wrap(
-                            alignment: WrapAlignment.center,
-                            children: [
-                              const Text(
-                                "By signing up you agree to our ",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              CustomAnchor(
-                                text: "Terms of use ",
-                                clicked: () {},
-                                textColor: TColor.primary,
-                                myFontSize: 14,
-                              ),
-                              const Text(
-                                "and our ",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              CustomAnchor(
-                                text: "Privacy Policy",
-                                clicked: () {},
-                                textColor: TColor.primary,
-                                myFontSize: 14,
-                              ),
-                            ],
-                          ),
                         ),
                       ],
                     ),

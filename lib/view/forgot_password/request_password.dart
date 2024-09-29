@@ -7,7 +7,8 @@ class RequestForgetPasswordLink extends StatefulWidget {
   const RequestForgetPasswordLink({super.key});
 
   @override
-  State<RequestForgetPasswordLink> createState() => _RequestForgetPasswordLinkState();
+  State<RequestForgetPasswordLink> createState() =>
+      _RequestForgetPasswordLinkState();
 }
 
 class _RequestForgetPasswordLinkState extends State<RequestForgetPasswordLink> {
@@ -24,68 +25,67 @@ class _RequestForgetPasswordLinkState extends State<RequestForgetPasswordLink> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      textTitle,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        textTitle,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                    Text(
-                      "Provide the email address used during sign up",
-                      style: TextStyle(
-                        color: TColor.inputGray,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                      Text(
+                        "Provide the email address used during sign up",
+                        style: TextStyle(
+                          color: TColor.inputGray,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              ),
+                    ],
+                  )),
               const SizedBox(height: 30),
               const ForgotFormForEmail(),
-              Expanded(child: Container()),
-              Container(
-                alignment: Alignment.center,
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  children: [
-                    const Text(
-                      "By signing up you agree to our ",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    CustomAnchor(
-                      text: "Terms of use ",
-                      clicked: () {},
-                      textColor: TColor.primary,
-                      myFontSize: 14,
-                    ),
-                    const Text(
-                      "and our ",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    CustomAnchor(
-                      text: "Privacy Policy",
-                      clicked: () {},
-                      textColor: TColor.primary,
-                      myFontSize: 14,
-                    ),
-                  ],
-                ),
-              ),
+              // Expanded(child: Container()),
+              // Container(
+              //   alignment: Alignment.center,
+              //   child: Wrap(
+              //     alignment: WrapAlignment.center,
+              //     children: [
+              //       const Text(
+              //         "By signing up you agree to our ",
+              //         style: TextStyle(
+              //           fontSize: 14,
+              //           color: Colors.white,
+              //           fontWeight: FontWeight.w400,
+              //         ),
+              //       ),
+              //       CustomAnchor(
+              //         text: "Terms of use ",
+              //         clicked: () {},
+              //         textColor: TColor.primary,
+              //         myFontSize: 14,
+              //       ),
+              //       const Text(
+              //         "and our ",
+              //         style: TextStyle(
+              //           fontSize: 14,
+              //           color: Colors.white,
+              //           fontWeight: FontWeight.w400,
+              //         ),
+              //       ),
+              //       CustomAnchor(
+              //         text: "Privacy Policy",
+              //         clicked: () {},
+              //         textColor: TColor.primary,
+              //         myFontSize: 14,
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),

@@ -3,6 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoc/common/Color_extention.dart';
 import 'package:youdoc/common/anchor_click.dart';
 import 'package:youdoc/common_widget/auth/auth_dialogue.dart';
+import 'package:youdoc/common_widget/pops/otp_exceeds.dart';
+import 'package:youdoc/common_widget/pops/ring_emergency.dart';
 import 'package:youdoc/components/reusable_functions.dart';
 import 'package:youdoc/view/home/home_navigator.dart';
 import 'package:youdoc/view/login/components/login_form.dart';
@@ -113,6 +115,12 @@ class _LoginViewState extends State<LoginView> {
     setState(() {
       _prefs = prefs;
     });
+    var countDown = prefs.getInt("otp_exceeds_time");
+    if (countDown != null) {
+      if (countDown > 0) {
+        showDialog(context: context, builder: (ctx) => const OtpExceeds());
+      }
+    }
     String? token = prefs.getString('token');
     if (token != null) {
       _authenticator();
@@ -204,7 +212,12 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   CustomAnchor(
                     text: "Ring an emergency hotline",
-                    clicked: () {},
+                    clicked: () {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => const RingEmergency(),
+                      );
+                    },
                   )
                 ],
               ),

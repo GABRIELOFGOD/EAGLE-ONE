@@ -63,28 +63,42 @@ class _PaymentForAppointmentDialogState
           balance = double.parse(data['balance'].toString());
         });
       } else {
-        _showMessageDialog(
-          message,
-          () {
-            Navigator.of(context).pop();
-          },
-          "Error",
-          "Something went wrong",
-          "close",
-          Colors.red,
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              message,
+            ),
+          ),
         );
+        // _showMessageDialog(
+        //   message,
+        //   () {
+        //     Navigator.of(context).pop();
+        //   },
+        //   "Error",
+        //   "Something went wrong",
+        //   "close",
+        //   Colors.red,
+        // );
       }
     } catch (e) {
-      _showMessageDialog(
-        e.toString(),
-        () {
-          Navigator.of(context).pop();
-        },
-        "Error",
-        "Something went wrong",
-        "Retry",
-        Colors.red,
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
       );
+      // _showMessageDialog(
+      //   e.toString(),
+      //   () {
+      //     Navigator.of(context).pop();
+      //   },
+      //   "Error",
+      //   "Something went wrong",
+      //   "Retry",
+      //   Colors.red,
+      // );
     } finally {
       setState(() {
         _isLoading = false;
@@ -92,29 +106,29 @@ class _PaymentForAppointmentDialogState
     }
   }
 
-  void _showMessageDialog(
-    String message,
-    VoidCallback closeFunction,
-    String title,
-    String sub,
-    String closeText,
-    Color btnColor,
-  ) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (context) {
-        return CustomDialog(
-          message: message,
-          onClose: closeFunction,
-          title: title,
-          sub: sub,
-          closeText: closeText,
-          btnColor: btnColor,
-        );
-      },
-    );
-  }
+  // void _showMessageDialog(
+  //   String message,
+  //   VoidCallback closeFunction,
+  //   String title,
+  //   String sub,
+  //   String closeText,
+  //   Color btnColor,
+  // ) {
+  //   showDialog(
+  //     context: context,
+  //     barrierColor: Colors.black.withOpacity(0.5),
+  //     builder: (context) {
+  //       return CustomDialog(
+  //         message: message,
+  //         onClose: closeFunction,
+  //         title: title,
+  //         sub: sub,
+  //         closeText: closeText,
+  //         btnColor: btnColor,
+  //       );
+  //     },
+  //   );
+  // }
 
   String formatToCurrency(double value) {
     final formatter = NumberFormat('#,##0', 'en_US');
@@ -160,28 +174,42 @@ class _PaymentForAppointmentDialogState
           ),
         );
       } else {
-        _showMessageDialog(
-          message,
-          () {
-            Navigator.of(context).pop();
-          },
-          "Error",
-          "Something went wrong",
-          "close",
-          Colors.red,
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              message,
+            ),
+          ),
         );
+        // _showMessageDialog(
+        //   message,
+        //   () {
+        //     Navigator.of(context).pop();
+        //   },
+        //   "Error",
+        //   "Something went wrong",
+        //   "close",
+        //   Colors.red,
+        // );
       }
     } catch (e) {
-      _showMessageDialog(
-        e.toString(),
-        () {
-          Navigator.of(context).pop();
-        },
-        "Error",
-        "Something went wrong",
-        "Retry",
-        Colors.red,
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
       );
+      // _showMessageDialog(
+      //   e.toString(),
+      //   () {
+      //     Navigator.of(context).pop();
+      //   },
+      //   "Error",
+      //   "Something went wrong",
+      //   "Retry",
+      //   Colors.red,
+      // );
     } finally {
       setState(() {
         _bookLoading = false;

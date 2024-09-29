@@ -42,6 +42,9 @@ class OnBoardingView extends StatelessWidget {
                       width: media.width * 0.1,
                       fit: BoxFit.fill,
                     ),
+                    const SizedBox(
+                      height: 48.0,
+                    ),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 90.0),
                       child: Text(

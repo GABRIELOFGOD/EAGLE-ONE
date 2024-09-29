@@ -97,35 +97,49 @@ class _HomeNavigatorState extends State<HomeNavigator> {
         }
       } else {
         prefs.remove("token");
-        _showMessageDialog(
-          message,
-          () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const LoginView(),
-              ),
-              (route) => false,
-            );
-          },
-          "Error",
-          "Something went wrong",
-          "Login",
-          Colors.red,
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LoginView(),
+          ),
+          (route) => false,
         );
+        // _showMessageDialog(
+        //   message,
+        //   () {
+        //     Navigator.pushAndRemoveUntil(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (context) => const LoginView(),
+        //       ),
+        //       (route) => false,
+        //     );
+        //   },
+        //   "Error",
+        //   "Something went wrong",
+        //   "Login",
+        //   Colors.red,
+        // );
       }
     } catch (e) {
-      _showMessageDialog(
-        e.toString(),
-        () {
-          Navigator.of(context).pop();
-          _homePageLoad();
-        },
-        "Error",
-        "Something went wrong",
-        "Retry",
-        Colors.red,
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
       );
+      // _showMessageDialog(
+      //   e.toString(),
+      //   () {
+      //     Navigator.of(context).pop();
+      //     _homePageLoad();
+      //   },
+      //   "Error",
+      //   "Something went wrong",
+      //   "Retry",
+      //   Colors.red,
+      // );
       // Navigator.pushAndRemoveUntil(
       //   context,
       //   MaterialPageRoute(
@@ -140,29 +154,29 @@ class _HomeNavigatorState extends State<HomeNavigator> {
     }
   }
 
-  void _showMessageDialog(
-    String message,
-    VoidCallback closeFunction,
-    String title,
-    String sub,
-    String closeText,
-    Color btnColor,
-  ) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (context) {
-        return CustomDialog(
-          message: message,
-          onClose: closeFunction,
-          title: title,
-          sub: sub,
-          closeText: closeText,
-          btnColor: btnColor,
-        );
-      },
-    );
-  }
+  // void _showMessageDialog(
+  //   String message,
+  //   VoidCallback closeFunction,
+  //   String title,
+  //   String sub,
+  //   String closeText,
+  //   Color btnColor,
+  // ) {
+  //   showDialog(
+  //     context: context,
+  //     barrierColor: Colors.black.withOpacity(0.5),
+  //     builder: (context) {
+  //       return CustomDialog(
+  //         message: message,
+  //         onClose: closeFunction,
+  //         title: title,
+  //         sub: sub,
+  //         closeText: closeText,
+  //         btnColor: btnColor,
+  //       );
+  //     },
+  //   );
+  // }
 
   void _onItemTapped(int index) {
     setState(() {

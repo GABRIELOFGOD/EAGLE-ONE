@@ -33,8 +33,7 @@ class _AppointmentCardState extends State<AppointmentCard> {
     showDialog(
       context: context,
       builder: (ctx) => AppointmentDetailsDialog(
-        practice: practice!,
-        service: service!,
+        appointmentId: appointmentId!,
       ),
     );
   }

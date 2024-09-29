@@ -54,33 +54,43 @@ class _LoginFormState extends State<LoginForm> {
         // email.text = "";
         // password.text = "";
       } else {
-        _showMessageDialog(
-          message == "Invalid credentials"
-              ? "Check your email and password as the information entered is not correct"
-              : message,
-          () {
-            Navigator.of(context).pop();
-          },
-          "Error",
-          message == "Invalid credentials"
-              ? "Invalid credentials"
-              : "Something went wrong",
-          error == "Conflict" ? "Login" : "Close",
-          error == "Conflict" ? TColor.warning : Colors.red,
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(message),
+            backgroundColor: Colors.red,
+          ),
         );
+        // _showMessageDialog(
+        //   message == "Invalid credentials"
+        //       ? "Check your email and password as the information entered is not correct"
+        //       : message,
+        //   () => Navigator.pop(context),
+        //   "Error",
+        //   message == "Invalid credentials"
+        //       ? "Invalid credentials"
+        //       : "Something went wrong",
+        //   error == "Conflict" ? "Login" : "Close",
+        //   error == "Conflict" ? TColor.warning : Colors.red,
+        // );
       }
     } catch (e) {
-      _showMessageDialog(
-        e.toString(),
-        () {
-          _submitForm();
-          Navigator.of(context).pop();
-        },
-        "Error",
-        "Something went wrong",
-        "Retry",
-        Colors.red,
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+          backgroundColor: Colors.red,
+        ),
       );
+      // _showMessageDialog(
+      //   e.toString(),
+      //   () {
+      //     _submitForm();
+      //     // Navigator.of(context).pop();
+      //   },
+      //   "Error",
+      //   "Something went wrong",
+      //   "Retry",
+      //   Colors.red,
+      // );
     } finally {
       setState(() {
         isLoading = false;
@@ -88,28 +98,28 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
-  void _showMessageDialog(
-    String message,
-    void closeFunction,
-    String title,
-    String sub,
-    String closeText,
-    Color btnColor,
-  ) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (context) {
-        return CustomDialog(
-            message: message,
-            onClose: () => closeFunction,
-            title: title,
-            sub: sub,
-            closeText: closeText,
-            btnColor: btnColor);
-      },
-    );
-  }
+  // void _showMessageDialog(
+  //   String message,
+  //   void closeFunction,
+  //   String title,
+  //   String sub,
+  //   String closeText,
+  //   Color btnColor,
+  // ) {
+  //   showDialog(
+  //     context: context,
+  //     barrierColor: Colors.black.withOpacity(0.5),
+  //     builder: (context) {
+  //       return CustomDialog(
+  //           message: message,
+  //           onClose: () => closeFunction,
+  //           title: title,
+  //           sub: sub,
+  //           closeText: closeText,
+  //           btnColor: btnColor);
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

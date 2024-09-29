@@ -27,7 +27,7 @@ class CustomAnchor extends StatelessWidget {
               color: textColor ?? Colors.white,
               decoration: TextDecoration.underline,
               decorationColor: textColor ?? Colors.white,
-              decorationThickness: 3,
+              decorationThickness: 1.5,
               decorationStyle: TextDecorationStyle.solid,
               fontSize: myFontSize ?? 16,
               fontWeight: FontWeight.w600,

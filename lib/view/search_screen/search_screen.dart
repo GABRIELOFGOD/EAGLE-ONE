@@ -6,11 +6,13 @@ import "package:youdoc/common/custom_checkbox.dart";
 import "package:youdoc/components/api_request.dart";
 import "package:youdoc/model/practices.dart";
 import "package:youdoc/view/search_screen/components/single_clinic_list.dart";
+import 'dart:math' as math;
+import 'package:geolocator/geolocator.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key, required this.closeSearch});
+  const SearchScreen({super.key});
 
-  final VoidCallback closeSearch;
+  // final VoidCallback closeSearch;
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -24,6 +26,94 @@ class _SearchScreenState extends State<SearchScreen> {
   double distance = 1;
 
   List tempSearchList = [];
+
+  // Future<void> _determinePosition() async {
+  //   bool serviceEnabled;
+  //   LocationPermission permission;
+
+  //   // Step 1: Check if location services are enabled
+  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //   if (!serviceEnabled) {
+  //     return Future.error('Location services are disabled.');
+  //   }
+
+  //   // Step 2: Check for location permissions
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       return Future.error('Location permissions are denied');
+  //     }
+  //   }
+
+  //   if (permission == LocationPermission.deniedForever) {
+  //     return Future.error(
+  //         'Location permissions are permanently denied, we cannot request permissions.');
+  //   }
+
+  //   // Step 3: Get user's current location
+  //   Position userPosition = await Geolocator.getCurrentPosition();
+  //   double userLat = userPosition.latitude;
+  //   double userLon = userPosition.longitude;
+
+  //   // Step 4: Haversine function to calculate the distance
+  //   double calculateDistance(
+  //       double lat1, double lon1, double lat2, double lon2) {
+  //     const earthRadiusKm = 6371;
+
+  //     double dLat = degToRad(lat2 - lat1);
+  //     double dLon = degToRad(lon2 - lon1);
+
+  //     double a = math.sin(dLat / 2) * math.sin(dLat / 2) +
+  //         math.cos(degToRad(lat1)) *
+  //             math.cos(degToRad(lat2)) *
+  //             math.sin(dLon / 2) *
+  //             math.sin(dLon / 2);
+
+  //     double c = 2 * math.asin(math.sqrt(a));
+  //     return earthRadiusKm * c;
+  //   }
+
+  //   double degToRad(double deg) {
+  //     return deg * (math.pi / 180);
+  //   }
+
+  //   // Step 5: Filter practices within the specified distance (distanceInKm)
+  //   double distanceInKm =
+  //       5; // Change to your desired distance or pass it as a parameter
+
+  //   List<Practice> nearbyPractices = clinicResult.where((practice) {
+  //     double distance = calculateDistance(
+  //         userLat, userLon, practice.latitude, practice.longitude);
+  //     return distance <= distanceInKm;
+  //   }).toList();
+
+  //   // Step 6: Update the UI with the filtered list
+  //   setState(() {
+  //     tempSearchList = nearbyPractices;
+  //   });
+  // }
+
+  // void filterByDistance({double maxDistanceInKm = 10}) async {
+  //   Position position = await _determinePosition();
+  //   double userLatitude = position.latitude;
+  //   double userLongitude = position.longitude;
+
+  //   List<Practice> filteredClinics = clinicResult.where((clinic) {
+  //     double distanceInMeters = Geolocator.distanceBetween(
+  //       userLatitude,
+  //       userLongitude,
+  //       clinic.latitude,
+  //       clinic.longitude,
+  //     );
+  //     double distanceInKm = distanceInMeters / 1000;
+  //     return distanceInKm <= maxDistanceInKm;
+  //   }).toList();
+
+  //   setState(() {
+  //     tempSearchList = filteredClinics;
+  //   });
+  // }
 
   // void gettingClinics() {
   //   setState(() {
@@ -64,23 +154,25 @@ class _SearchScreenState extends State<SearchScreen> {
         clinicResult = response;
       });
     } catch (e, stackTrace) {
-      print('Error: $e');
-      print('StackTrace: $stackTrace');
-
-      _showMessageDialog(
-        e.toString(),
-        () {
-          widget.closeSearch();
-        },
-        "Error",
-        "Something went wrong",
-        "Go back home",
-        Colors.red,
-      );
+      if (mounted) {
+        SnackBar snackBar = SnackBar(
+          content: Text("Error: $e"),
+          action: SnackBarAction(
+            label: "Close",
+            onPressed: () {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            },
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        Navigator.pop(context);
+      }
     } finally {
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -171,28 +263,28 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
-  void _showMessageDialog(
-    String message,
-    void closeFunction,
-    String title,
-    String sub,
-    String closeText,
-    Color btnColor,
-  ) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (context) {
-        return CustomDialog(
-            message: message,
-            onClose: () => closeFunction,
-            title: title,
-            sub: sub,
-            closeText: closeText,
-            btnColor: btnColor);
-      },
-    );
-  }
+  // void _showMessageDialog(
+  //   String message,
+  //   void closeFunction,
+  //   String title,
+  //   String sub,
+  //   String closeText,
+  //   Color btnColor,
+  // ) {
+  //   showDialog(
+  //     context: context,
+  //     barrierColor: Colors.black.withOpacity(0.5),
+  //     builder: (context) {
+  //       return CustomDialog(
+  //           message: message,
+  //           onClose: () => closeFunction,
+  //           title: title,
+  //           sub: sub,
+  //           closeText: closeText,
+  //           btnColor: btnColor);
+  //     },
+  //   );
+  // }
 
   // ======== FILTER ======= //
   bool? primary = false;
@@ -211,6 +303,7 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
     gettingAllUsers();
     isFiltered();
+    // _determinePosition();
   }
 
   bool filtered = false;
@@ -312,7 +405,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               tempSearchList = [];
                             });
                           } else {
-                            widget.closeSearch();
+                            Navigator.pop(context);
                           }
                         },
                         child: const Icon(
@@ -528,7 +621,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                             ).createShader(bounds);
                                           },
                                           child: Slider(
-                                            value: distance,
+                                            value: 5,
                                             min: 1,
                                             max: 10,
                                             divisions: 10,

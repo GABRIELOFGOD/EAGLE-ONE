@@ -117,31 +117,45 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
           ),
         );
       } else {
-        _showMessageDialog(
-          message,
-          () {
-            Navigator.of(context).pop();
-          },
-          "Error",
-          "Something went wrong",
-          "Close",
-          Colors.red,
-          Colors.white,
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              message,
+            ),
+          ),
         );
+        // _showMessageDialog(
+        //   message,
+        //   () {
+        //     Navigator.of(context).pop();
+        //   },
+        //   "Error",
+        //   "Something went wrong",
+        //   "Close",
+        //   Colors.red,
+        //   Colors.white,
+        // );
       }
     } catch (e) {
-      _showMessageDialog(
-        e.toString(),
-        () {
-          _submitForm();
-          Navigator.of(context).pop();
-        },
-        "Error",
-        "Something went wrong",
-        "Retry",
-        Colors.red,
-        Colors.white,
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
       );
+      // _showMessageDialog(
+      //   e.toString(),
+      //   () {
+      //     _submitForm();
+      //     Navigator.of(context).pop();
+      //   },
+      //   "Error",
+      //   "Something went wrong",
+      //   "Retry",
+      //   Colors.red,
+      //   Colors.white,
+      // );
     } finally {
       setState(() {
         isLoading = false;
@@ -149,30 +163,30 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
     }
   }
 
-  void _showMessageDialog(
-      String message,
-      VoidCallback closeFunction,
-      String title,
-      String sub,
-      String closeText,
-      Color btnColor,
-      Color? textColor) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (context) {
-        return CustomDialog(
-          message: message,
-          onClose: closeFunction,
-          title: title,
-          sub: sub,
-          closeText: closeText,
-          btnColor: btnColor,
-          btnTextColor: textColor,
-        );
-      },
-    );
-  }
+  // void _showMessageDialog(
+  //     String message,
+  //     VoidCallback closeFunction,
+  //     String title,
+  //     String sub,
+  //     String closeText,
+  //     Color btnColor,
+  //     Color? textColor) {
+  //   showDialog(
+  //     context: context,
+  //     barrierColor: Colors.black.withOpacity(0.5),
+  //     builder: (context) {
+  //       return CustomDialog(
+  //         message: message,
+  //         onClose: closeFunction,
+  //         title: title,
+  //         sub: sub,
+  //         closeText: closeText,
+  //         btnColor: btnColor,
+  //         btnTextColor: textColor,
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +200,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
             userRegister.firstName = value;
           }),
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 18),
         CustomTextField(
           textController: lastName,
           placeholder: 'Enter last name',
@@ -194,7 +208,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
             userRegister.lastName = value;
           }),
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 18),
         Container(
           height: 43.0,
           decoration: BoxDecoration(
@@ -251,7 +265,7 @@ class _RegisterFormInputsState extends State<RegisterFormInputs> {
         //     userRegister.email = value;
         //   }),
         // ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 18),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

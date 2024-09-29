@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/Color_extention.dart';
 import 'package:youdoc/common/custom_button.dart';
+import 'package:youdoc/common_widget/otp/otp_dialog.dart';
+import 'package:youdoc/components/api_request.dart';
+import 'package:youdoc/model/transaction.dart';
 
 class NewPasswordForm extends StatefulWidget {
   const NewPasswordForm({super.key, required this.email});
@@ -71,14 +74,14 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
       children: [
         Icon(
           Icons.check,
-          color: isValid ? Colors.greenAccent : Colors.grey,
+          color: isValid ? TColor.success : Colors.grey,
           size: 14,
         ),
         const SizedBox(width: 10),
         Text(
           text,
           style: TextStyle(
-              color: TColor.inputGray,
+              color: isValid ? TColor.success : TColor.inputGray,
               fontSize: 14,
               fontWeight: FontWeight.w400),
         ),
@@ -104,6 +107,41 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
     setState(() {
       isLoading = true;
     });
+    try {
+      ChangePasswordRequest changePasswordRequest = ChangePasswordRequest(
+        email: widget.email,
+        password: password.text,
+      );
+
+      BaseRequest baseRequest = BaseRequest();
+      var response = await baseRequest.changePassword(changePasswordRequest);
+      if (response.error.isEmpty) {
+        showDialog(
+          context: context,
+          builder: (ctx) => OtpDialog(
+            email: changePasswordRequest.email,
+          ),
+        );
+      } else {
+        SnackBar snackBar = SnackBar(
+          content: Text(
+            response.message,
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+    } catch (e) {
+      SnackBar snackBar = SnackBar(
+        content: Text(
+          e.toString(),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -140,17 +178,19 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
                       strokeWidth: 4.0,
                     ),
                   )
-                : const Text(
+                : Text(
                     "Reset password",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: isFormValid && !isLoading
+                          ? Colors.white
+                          : TColor.inputGray,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
             title: "Reset password",
-            onpress: isFormValid ? _submitForm : null,
-            enabled: isFormValid,
+            onpress: isFormValid && !isLoading ? _submitForm : () {},
+            enabled: isFormValid && !isLoading,
           ),
         ),
         const SizedBox(height: 15),

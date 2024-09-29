@@ -14,16 +14,26 @@ class LoadingOverlay extends StatelessWidget {
     return Stack(
       children: [
         const Opacity(
-          opacity: 0.5,
+          opacity: 1,
           child: ModalBarrier(dismissible: false, color: Colors.black),
         ),
         Center(
-          child: CircularProgressIndicator(
-            color: TColor.primary,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                "assets/images/logo-y.png",
+                width: 100,
+                height: 100,
+              ),
+              const SizedBox(height: 20),
+              CircularProgressIndicator(
+                color: TColor.primary,
+              ),
+            ],
           ),
         ),
       ],
     );
   }
 }
-

@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youdoc/common/color_extention.dart';
 import 'package:youdoc/common_widget/auth/auth_dialogue.dart';
+import 'package:youdoc/common_widget/pops/otp_exceeds.dart';
 import 'package:youdoc/components/api_request.dart';
 import 'package:youdoc/components/reusable_functions.dart';
 import 'package:youdoc/model/user.dart';
-import 'package:youdoc/view/home/home_navigator.dart';
 
 class OtpForm extends StatefulWidget {
   const OtpForm({
@@ -25,6 +25,8 @@ class OtpForm extends StatefulWidget {
 class _OtpFormState extends State<OtpForm> {
   String otpCode = "";
   bool _isLoading = false;
+
+  int _counter = 0;
 
   // Controllers for each TextFormField
   final TextEditingController _controller1 = TextEditingController();
@@ -77,6 +79,24 @@ class _OtpFormState extends State<OtpForm> {
         //   (route) => false,
         // );
       } else {
+        setState(() {
+          _counter++;
+        });
+        if (_counter >= 5) {
+          SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          sharedPreferences.remove("token");
+          sharedPreferences.setInt("otp_exceeds_time", 1800);
+          showDialog(
+            context: context,
+            builder: (ctx) => const OtpExceeds(),
+          );
+          var blocker = await baseRequest.temporarilyBlockUser(widget.email);
+          if (blocker.error.isNotEmpty) {
+            widget.onOtpError(blocker.error);
+          }
+          return;
+        }
         widget.onOtpError(message);
       }
     } catch (e) {
@@ -277,7 +297,9 @@ class _OtpFormState extends State<OtpForm> {
         ),
         MaterialButton(
           onPressed: otpCode.length == 5 && !_isLoading ? _submitOtp : () {},
-          color: otpCode.length == 5 && !_isLoading ? TColor.primary : TColor.inactiveBtn,
+          color: otpCode.length == 5 && !_isLoading
+              ? TColor.primary
+              : TColor.inactiveBtn,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(4),
           ),

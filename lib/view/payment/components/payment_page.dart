@@ -35,29 +35,29 @@ class _PaymentPageState extends State<PaymentPage> {
 
   String? paymentCode;
 
-  void _showMessageDialog(
-    String message,
-    VoidCallback closeFunction,
-    String title,
-    String sub,
-    String closeText,
-    Color btnColor,
-  ) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (context) {
-        return CustomDialog(
-          message: message,
-          onClose: closeFunction,
-          title: title,
-          sub: sub,
-          closeText: closeText,
-          btnColor: btnColor,
-        );
-      },
-    );
-  }
+  // void _showMessageDialog(
+  //   String message,
+  //   VoidCallback closeFunction,
+  //   String title,
+  //   String sub,
+  //   String closeText,
+  //   Color btnColor,
+  // ) {
+  //   showDialog(
+  //     context: context,
+  //     barrierColor: Colors.black.withOpacity(0.5),
+  //     builder: (context) {
+  //       return CustomDialog(
+  //         message: message,
+  //         onClose: closeFunction,
+  //         title: title,
+  //         sub: sub,
+  //         closeText: closeText,
+  //         btnColor: btnColor,
+  //       );
+  //     },
+  //   );
+  // }
 
   void _initializePayment(BuildContext context) async {
     setState(() {
@@ -85,29 +85,43 @@ class _PaymentPageState extends State<PaymentPage> {
           (route) => false,
         );
       } else {
-        _showMessageDialog(
-          message,
-          () {
-            Navigator.of(context).pop();
-          },
-          "Error",
-          "Something went wrong!",
-          "Close",
-          Colors.red,
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              message,
+            ),
+          ),
         );
+        // _showMessageDialog(
+        //   message,
+        //   () {
+        //     Navigator.of(context).pop();
+        //   },
+        //   "Error",
+        //   "Something went wrong!",
+        //   "Close",
+        //   Colors.red,
+        // );
       }
     } catch (e) {
-      print(e);
-      _showMessageDialog(
-        e.toString(),
-        () {
-          Navigator.of(context).pop();
-        },
-        "Error",
-        "Something went wrong",
-        "Close",
-        Colors.red,
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
       );
+      // print(e);
+      // _showMessageDialog(
+      //   e.toString(),
+      //   () {
+      //     Navigator.of(context).pop();
+      //   },
+      //   "Error",
+      //   "Something went wrong",
+      //   "Close",
+      //   Colors.red,
+      // );
     } finally {
       setState(() {
         isLoading = false;

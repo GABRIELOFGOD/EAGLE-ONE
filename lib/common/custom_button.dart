@@ -24,7 +24,7 @@ class CustomButton extends StatelessWidget {
       child: MaterialButton(
         onPressed: enabled ? onpress : () {},
         color: enabled ? TColor.primary : TColor.inactiveBtn,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         minWidth: double.infinity,
         height: 45.0,
         child: loader ??

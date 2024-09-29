@@ -42,16 +42,21 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
         practice = practicer;
       });
     } catch (e) {
-      _showMessageDialog(
-        "Failed to load, please check your internet connection and try again",
-        () {
-          Navigator.pop(context);
-        },
-        "Error",
-        "Something went wrong",
-        "Go back",
-        Colors.red,
+      SnackBar snackBar = const SnackBar(
+        content: Text("Failed to load, please check your internet connection and try again"),
+        backgroundColor: Colors.red,
       );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // _showMessageDialog(
+      //   "Failed to load, please check your internet connection and try again",
+      //   () {
+      //     Navigator.pop(context);
+      //   },
+      //   "Error",
+      //   "Something went wrong",
+      //   "Go back",
+      //   Colors.red,
+      // );
     } finally {
       setState(() {
         isLoading = false;
@@ -66,28 +71,28 @@ class _SinglePracticeViewState extends State<SinglePracticeView> {
     getSinglePractice();
   }
 
-  void _showMessageDialog(
-    String message,
-    void closeFunction,
-    String title,
-    String sub,
-    String closeText,
-    Color btnColor,
-  ) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (context) {
-        return CustomDialog(
-            message: message,
-            onClose: () => closeFunction,
-            title: title,
-            sub: sub,
-            closeText: closeText,
-            btnColor: btnColor);
-      },
-    );
-  }
+  // void _showMessageDialog(
+  //   String message,
+  //   void closeFunction,
+  //   String title,
+  //   String sub,
+  //   String closeText,
+  //   Color btnColor,
+  // ) {
+  //   showDialog(
+  //     context: context,
+  //     barrierColor: Colors.black.withOpacity(0.5),
+  //     builder: (context) {
+  //       return CustomDialog(
+  //           message: message,
+  //           onClose: () => closeFunction,
+  //           title: title,
+  //           sub: sub,
+  //           closeText: closeText,
+  //           btnColor: btnColor);
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -20,34 +20,44 @@ class DateOfBirthInput extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Center(
-        child: TextField(
-          controller: dateController,
-          readOnly: true,
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-            hintText: 'Date of Birth',
-            hintStyle: const TextStyle(
-              color: Colors.white70,
-              fontSize: 14.0,
-              fontWeight: FontWeight.w500,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: TColor.inputBg),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: TColor.inputBg,
               borderRadius: BorderRadius.circular(8.0),
             ),
-            fillColor: TColor.inputBg,
-            filled: true,
-            suffixIcon: GestureDetector(
-              onTap: onTap,
-              child: const Icon(
-                Icons.calendar_today,
-                color: Colors.white70,
+            child: TextField(
+              controller: dateController,
+              readOnly: true,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: const EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 10.0),
+                hintText: 'Date of birth',
+                hintStyle: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w500,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: TColor.inputBg),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                fillColor: TColor.inputBg,
+                filled: true,
+                suffixIcon: GestureDetector(
+                  onTap: onTap,
+                  child: const Icon(
+                    Icons.calendar_today,
+                    color: Colors.white70,
+                  ),
+                ),
               ),
+              style: const TextStyle(color: Colors.white70),
+              onTap: onTap,
             ),
           ),
-          style: const TextStyle(color: Colors.white70),
-          onTap: onTap,
         ),
       ),
     );

@@ -44,10 +44,18 @@ class _DashboardViewState extends State<DashboardView> {
             children: [
               GestureDetector(
                 onTap: () {
-                  setState(() {
-                    showSearch = true;
-                  });
+                  // setState(() {
+                  //   showSearch = true;
+                  // });
                   // print('TextField tapped');
+
+// =========================== USE BOTTOM SHEET TO SHOW SEARCH SCREEN =========================== //
+                  showModalBottomSheet(
+                    useSafeArea: true,
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => const SearchScreen(),
+                  );
                 },
                 child: SizedBox(
                   height: 42,
@@ -143,7 +151,9 @@ class _DashboardViewState extends State<DashboardView> {
                       const SizedBox(
                         height: 42,
                       ),
-                      AppointmentView(onTotalAppointments: _getAllAppointmentsTotal,),
+                      AppointmentView(
+                        onTotalAppointments: _getAllAppointmentsTotal,
+                      ),
                     ],
                   ),
                 ),
@@ -152,7 +162,7 @@ class _DashboardViewState extends State<DashboardView> {
           ),
         ),
         // if (!widget.noAddress) const NoAddressOverlay(),
-        if (showSearch) SearchScreen(closeSearch: closeSearch),
+        // if (showSearch) SearchScreen(closeSearch: closeSearch),
       ],
     );
   }

@@ -210,6 +210,8 @@ class Practice {
   List<PracticeOpening> openingHours;
   List<Physician> physicians;
   List<PracticeHourlySlots> hourlySlots;
+  double latitude;
+  double longitude;
 
   Practice({
     required this.id,
@@ -225,6 +227,8 @@ class Practice {
     required this.openingHours,
     required this.physicians,
     required this.hourlySlots,
+    required this.latitude,
+    required this.longitude,
   });
 
   factory Practice.fromJson(Map<String, dynamic> json) {
@@ -235,6 +239,8 @@ class Practice {
       practiceEmail: json['practiceEmail'] ?? "",
       practiceAddress: json['practiceAddress'] ?? "",
       practiceImage: json['practiceImage'] ?? "",
+      latitude: json['latitude'] ?? 0.0,
+      longitude: json['longitude'] ?? 0.0,
       specialty: Specialty.fromJson(json['specialty'] ?? {}),
       city: json['city'] ?? "",
       services: Service.fromJsonList(json['services'] as List<dynamic>? ?? []),

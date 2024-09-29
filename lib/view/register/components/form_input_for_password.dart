@@ -71,28 +71,40 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
           builder: (ctx) => OtpDialog(email: widget.email),
         );
       } else {
-        _showMessageDialog(
-          message,
-          () {
-            Navigator.of(context).pop();
-          },
-          "Error",
-          "Check your inputs",
-          "Retry",
-          Colors.red,
+        SnackBar snackBar = SnackBar(
+          content: Text(
+            message,
+          ),
         );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        // _showMessageDialog(
+        //   message,
+        //   () {
+        //     Navigator.of(context).pop();
+        //   },
+        //   "Error",
+        //   "Check your inputs",
+        //   "Retry",
+        //   Colors.red,
+        // );
       }
     } catch (e) {
-      _showMessageDialog(
-        e.toString(),
-        () {
-          Navigator.of(context).pop();
-        },
-        "Error",
-        "Something went wrong",
-        "Close",
-        Colors.red,
+      SnackBar snackBar = SnackBar(
+        content: Text(
+          e.toString(),
+        ),
       );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // _showMessageDialog(
+      //   e.toString(),
+      //   () {
+      //     Navigator.of(context).pop();
+      //   },
+      //   "Error",
+      //   "Something went wrong",
+      //   "Close",
+      //   Colors.red,
+      // );
     } finally {
       setState(() {
         isLoading = false;
@@ -100,29 +112,29 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
     }
   }
 
-  void _showMessageDialog(
-    String message,
-    VoidCallback closeFunction,
-    String title,
-    String sub,
-    String closeText,
-    Color btnColor,
-  ) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (context) {
-        return CustomDialog(
-          message: message,
-          onClose: closeFunction,
-          title: title,
-          sub: sub,
-          closeText: closeText,
-          btnColor: btnColor,
-        );
-      },
-    );
-  }
+  // void _showMessageDialog(
+  //   String message,
+  //   VoidCallback closeFunction,
+  //   String title,
+  //   String sub,
+  //   String closeText,
+  //   Color btnColor,
+  // ) {
+  //   showDialog(
+  //     context: context,
+  //     barrierColor: Colors.black.withOpacity(0.5),
+  //     builder: (context) {
+  //       return CustomDialog(
+  //         message: message,
+  //         onClose: closeFunction,
+  //         title: title,
+  //         sub: sub,
+  //         closeText: closeText,
+  //         btnColor: btnColor,
+  //       );
+  //     },
+  //   );
+  // }
 
   Widget buildPasswordField(TextEditingController controller,
       String placeholder, bool isVisible, void Function() toggleVisibility) {
@@ -169,16 +181,17 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
       children: [
         Icon(
           Icons.check,
-          color: isValid ? Colors.greenAccent : Colors.grey,
+          color: isValid ? TColor.success : Colors.grey,
           size: 14,
         ),
         const SizedBox(width: 10),
         Text(
           text,
           style: TextStyle(
-              color: isValid ? Colors.greenAccent : TColor.inputGray,
-              fontSize: 14,
-              fontWeight: FontWeight.w400,),
+            color: isValid ? TColor.success : TColor.inputGray,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+          ),
         ),
       ],
     );
@@ -261,4 +274,3 @@ class _PasswordRegisterFormState extends State<PasswordRegisterForm> {
     );
   }
 }
-

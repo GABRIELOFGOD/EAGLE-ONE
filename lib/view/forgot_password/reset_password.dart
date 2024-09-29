@@ -57,43 +57,43 @@ class _ResetPasswordState extends State<ResetPassword> {
               NewPasswordForm(
                 email: widget.email,
               ),
-              Expanded(child: Container()),
-              Container(
-                alignment: Alignment.center,
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  children: [
-                    const Text(
-                      "By signing up you agree to our ",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    CustomAnchor(
-                      text: "Terms of use ",
-                      clicked: () {},
-                      textColor: TColor.primary,
-                      myFontSize: 14,
-                    ),
-                    const Text(
-                      "and our ",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    CustomAnchor(
-                      text: "Privacy Policy",
-                      clicked: () {},
-                      textColor: TColor.primary,
-                      myFontSize: 14,
-                    ),
-                  ],
-                ),
-              ),
+              // Expanded(child: Container()),
+              // Container(
+              //   alignment: Alignment.center,
+              //   child: Wrap(
+              //     alignment: WrapAlignment.center,
+              //     children: [
+              //       const Text(
+              //         "By signing up you agree to our ",
+              //         style: TextStyle(
+              //           fontSize: 14,
+              //           color: Colors.white,
+              //           fontWeight: FontWeight.w400,
+              //         ),
+              //       ),
+              //       CustomAnchor(
+              //         text: "Terms of use ",
+              //         clicked: () {},
+              //         textColor: TColor.primary,
+              //         myFontSize: 14,
+              //       ),
+              //       const Text(
+              //         "and our ",
+              //         style: TextStyle(
+              //           fontSize: 14,
+              //           color: Colors.white,
+              //           fontWeight: FontWeight.w400,
+              //         ),
+              //       ),
+              //       CustomAnchor(
+              //         text: "Privacy Policy",
+              //         clicked: () {},
+              //         textColor: TColor.primary,
+              //         myFontSize: 14,
+              //       ),
+              //     ],
+              //   ),
+              // ),
               // Text(
               //   'Received token: ${widget.token}', // Display the token
               //   style: const TextStyle(color: Colors.white),

@@ -44,15 +44,59 @@ class _AppointmentViewState extends State<AppointmentView> {
   Service? selectedService;
   DaysOfTheWeekForAppointMent? selectedDay;
 
-  void _openDateSelector() {
+  void _openDateSelector() async {
     final now = DateTime.now();
     final lastDate = DateTime(now.year, now.month + 2, now.day);
 
-    showDatePicker(
+    final pickedDate = await showDatePicker(
       context: context,
+      initialDate: now,
       firstDate: now,
       lastDate: lastDate,
     );
+
+    if (pickedDate != null) {
+      setState(() {
+        if (selectedDay != null) {
+          selectedDay!.date = pickedDate;
+        } else {
+          for (var open in openingDays) {
+            if (open.day == pickedDate.weekday) {
+              selectedDay = DaysOfTheWeekForAppointMent(
+                id: 0,
+                day: DateFormat('EEE').format(pickedDate),
+                isActive: true,
+                isSelected: true,
+                date: pickedDate,
+              );
+            }
+          }
+
+          // ==================== SETTING OPENING HOURS ==================== //
+          for (var open in openingDays) {
+            if (open.day == pickedDate.weekday) {
+              List<PracticeHourlySlots> oneTime = [];
+              for (var time in widget.practice.hourlySlots) {
+                if (time.day == open.day) {
+                  oneTime.add(time);
+                }
+              }
+              openingTimes = oneTime;
+            }
+          }
+
+          // DateFormat formatter = DateFormat('EEE');
+          // String formatted = formatter.format(pickedDate);
+          // selectedDay = DaysOfTheWeekForAppointMent(
+          //   id: 0,
+          //   day: formatted,
+          //   isActive: true,
+          //   isSelected: true,
+          //   date: pickedDate,
+          // );
+        }
+      });
+    }
   }
 
   void _payForAppointmentModal() {
@@ -543,7 +587,6 @@ class _AppointmentViewState extends State<AppointmentView> {
                                             data.isSelected = true;
                                           }
                                           selectedDay = data;
-                                          print(selectedDay!.isSelected);
                                           for (var time
                                               in widget.practice.hourlySlots) {
                                             if (time.day == data.id) {
@@ -554,15 +597,11 @@ class _AppointmentViewState extends State<AppointmentView> {
                                         });
                                       },
                                       child: AppointmentBall(
-                                        key: ValueKey(data
-                                            .id), // Add a unique key based on `data.id`
+                                        key: ValueKey(data.id),
                                         formattedDate: DateFormat('EEE, d MMM')
                                             .format(data.date),
                                         isActive: data.isActive,
-                                        isSelected: selectedDay != null &&
-                                                selectedDay == data
-                                            ? selectedDay!.isSelected
-                                            : false,
+                                        isSelected: data.isSelected,
                                         pad: 2,
                                         padd: 12,
                                       ),
@@ -595,7 +634,7 @@ class _AppointmentViewState extends State<AppointmentView> {
                         const SizedBox(
                           height: 18,
                         ),
-                        selectedDay == null || openingTimes.isEmpty
+                        selectedDay == null
                             ? Text(
                                 "Select a date to reveal",
                                 style: TextStyle(
@@ -604,35 +643,46 @@ class _AppointmentViewState extends State<AppointmentView> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               )
-                            : Wrap(
-                                spacing: 12,
-                                runSpacing: 12,
-                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: openingTimes
-                                    .map(
-                                      (data) => GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            selectedTime = data;
-                                          });
-                                        },
-                                        child: SizedBox(
-                                          width: 36,
-                                          child: AppointmentBall(
-                                            formattedDate:
-                                                convertTo12HourFormat(
-                                                    data.startTime),
-                                            isActive: true,
-                                            isSelected: selectedTime != null &&
-                                                    selectedTime!.id == data.id
-                                                ? true
-                                                : false,
+                            : openingTimes.isEmpty
+                                ? Text(
+                                    "The practice is yet to set opening hours for this day",
+                                    style: TextStyle(
+                                      color: TColor.textGray,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  )
+                                : Wrap(
+                                    spacing: 12,
+                                    runSpacing: 12,
+                                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: openingTimes
+                                        .map(
+                                          (data) => GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedTime = data;
+                                              });
+                                            },
+                                            child: SizedBox(
+                                              width: 36,
+                                              child: AppointmentBall(
+                                                formattedDate:
+                                                    convertTo12HourFormat(
+                                                        data.startTime),
+                                                isActive: true,
+                                                isSelected:
+                                                    selectedTime != null &&
+                                                            selectedTime!.id ==
+                                                                data.id
+                                                        ? true
+                                                        : false,
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
+                                        )
+                                        .toList(),
+                                  ),
 
                         // const AppointmentBall(
                         //   day: "Mon",

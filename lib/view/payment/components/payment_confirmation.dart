@@ -47,7 +47,10 @@ class _PaymentConfirmationState extends State<PaymentConfirmation> {
         });
       }
     } catch (e) {
-      displayMessage = e.toString();
+      setState(() {
+        displayMessage = e.toString();
+        confirmationCode = 9;
+      });
     } finally {
       setState(() {
         isLoading = false;

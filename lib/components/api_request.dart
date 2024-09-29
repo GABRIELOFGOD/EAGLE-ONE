@@ -7,7 +7,6 @@ import 'package:youdoc/model/transaction.dart';
 import 'package:youdoc/model/user.dart';
 
 // const String baseUrl = 'http://192.168.0.104:3002';
-// const String baseUrl = 'http://192.168.0.104:3002';
 const String baseUrl = 'http://lambda.youdoc.co';
 const String webUrl = "http://api.youdoc.co/api";
 
@@ -268,6 +267,31 @@ class BaseRequest {
     }
   }
 
+  Future<GetAllTransactions> getAppointment(int id) async {
+    Uri url = Uri.parse("$baseUrl/appointment/$id");
+    await _initializeSharedPreferences();
+    String? userToken = prefs.getString('token');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': 'Bearer $userToken'
+      },
+    );
+
+    if (response.statusCode == 200 ||
+        response.statusCode == 201 ||
+        response.statusCode == 400 ||
+        response.statusCode == 401 ||
+        response.statusCode == 404 ||
+        response.statusCode == 409) {
+      return GetAllTransactions.fromJson(json.decode(response.body));
+    } else {
+      throw Exception("Request Failed with status: ${response.statusCode}");
+    }
+  }
+
   Future<List<GetAllTransactions>> allAppointment() async {
     Uri url = Uri.parse("$baseUrl/appointment");
     await _initializeSharedPreferences();
@@ -301,6 +325,53 @@ class BaseRequest {
       }
     } else {
       throw Exception("Request Failed with status: ${response.statusCode}");
+    }
+  }
+
+  // =============== CHANGE PASSWORD =============== //
+  Future<ChangePasswordResponse> changePassword(
+      ChangePasswordRequest changePasswordRequest) async {
+    Uri url = Uri.parse("$baseUrl/patient/reset-password?email=${changePasswordRequest.email}");
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({'password': changePasswordRequest.password}),
+    );
+
+    if (response.statusCode == 200 ||
+        response.statusCode == 201 ||
+        response.statusCode == 400 ||
+        response.statusCode == 401 ||
+        response.statusCode == 404 ||
+        response.statusCode == 409) {
+      return ChangePasswordResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Request Failed');
+    }
+  }
+
+  Future<ChangePasswordResponse> temporarilyBlockUser(String email) async {
+    Uri url = Uri.parse("$baseUrl/patient/temp-blocked?email=$email");
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200 ||
+        response.statusCode == 201 ||
+        response.statusCode == 400 ||
+        response.statusCode == 401 ||
+        response.statusCode == 404 ||
+        response.statusCode == 409) {
+      return ChangePasswordResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Request Failed, check your internet connection');
     }
   }
 

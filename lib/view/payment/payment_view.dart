@@ -28,30 +28,30 @@ class _PaymentViewState extends State<PaymentView> {
     super.initState();
   }
 
-  void _showMessageDialog(
-    String message,
-    VoidCallback closeFunction,
-    String title,
-    String sub,
-    String closeText,
-    Color btnColor,
-    BuildContext context,
-  ) {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.5),
-      builder: (context) {
-        return CustomDialog(
-          message: message,
-          onClose: closeFunction,
-          title: title,
-          sub: sub,
-          closeText: closeText,
-          btnColor: btnColor,
-        );
-      },
-    );
-  }
+  // void _showMessageDialog(
+  //   String message,
+  //   VoidCallback closeFunction,
+  //   String title,
+  //   String sub,
+  //   String closeText,
+  //   Color btnColor,
+  //   BuildContext context,
+  // ) {
+  //   showDialog(
+  //     context: context,
+  //     barrierColor: Colors.black.withOpacity(0.5),
+  //     builder: (context) {
+  //       return CustomDialog(
+  //         message: message,
+  //         onClose: closeFunction,
+  //         title: title,
+  //         sub: sub,
+  //         closeText: closeText,
+  //         btnColor: btnColor,
+  //       );
+  //     },
+  //   );
+  // }
 
   void _getUerProfile(BuildContext context) async {
     setState(() {
@@ -71,23 +71,33 @@ class _PaymentViewState extends State<PaymentView> {
           email = data['email'];
         });
       } else {
-        _showMessageDialog(
-          message,
-          () {
-            Navigator.of(context).pop();
-          },
-          "Error",
-          "Something went wrong",
-          "close",
-          Colors.red,
-          context,
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              message,
+            ),
+          ),
         );
+        // _showMessageDialog(
+        //   message,
+        //   () {
+        //     Navigator.of(context).pop();
+        //   },
+        //   "Error",
+        //   "Something went wrong",
+        //   "close",
+        //   Colors.red,
+        //   context,
+        // );
       }
     } catch (e) {
-      _showMessageDialog(e.toString(), () {
-        Navigator.of(context).pop();
-        // _getUerProfile();
-      }, "Error", "Something went wrong", "Retry", Colors.red, context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.toString(),
+          ),
+        ),
+      );
     } finally {
       setState(() {
         isLoading = false;
@@ -295,43 +305,46 @@ class _PaymentViewState extends State<PaymentView> {
               ),
               SizedBox(
                 height: 115,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      CustomCard(
-                        carIcon: Image.asset(
-                          "assets/icons/money_icon.png",
-                          color: Colors.white,
-                          width: 20,
+                child: Scrollbar(
+                  thumbVisibility: true,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        CustomCard(
+                          carIcon: Image.asset(
+                            "assets/icons/money_icon.png",
+                            color: Colors.white,
+                            width: 20,
+                          ),
+                          cardName: "Account balance",
+                          value: "₦${formatToCurrency(balance)}",
                         ),
-                        cardName: "Account balance",
-                        value: "₦${formatToCurrency(balance)}",
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      CustomCard(
-                        carIcon: Image.asset(
-                          "assets/icons/card_minus.png",
-                          color: Colors.white,
-                          width: 20,
+                        const SizedBox(
+                          height: 5,
                         ),
-                        cardName: "Outstanding payments",
-                        value: "₦0",
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      CustomCard(
-                        carIcon: Image.asset(
-                          "assets/icons/money_icon.png",
-                          color: Colors.white,
-                          width: 20,
+                        CustomCard(
+                          carIcon: Image.asset(
+                            "assets/icons/card_minus.png",
+                            color: Colors.white,
+                            width: 20,
+                          ),
+                          cardName: "Outstanding payments",
+                          value: "₦0",
                         ),
-                        cardName: "Total payments",
-                        value: "₦0",
-                      ),
-                    ],
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        CustomCard(
+                          carIcon: Image.asset(
+                            "assets/icons/money_icon.png",
+                            color: Colors.white,
+                            width: 20,
+                          ),
+                          cardName: "Total payments",
+                          value: "₦0",
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

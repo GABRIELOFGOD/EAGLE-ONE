@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youdoc/common/color_extention.dart';
+import 'package:youdoc/view/search_screen/search_screen.dart';
 
 class NoAppointmentCard extends StatefulWidget {
   const NoAppointmentCard({super.key});
@@ -36,14 +37,24 @@ class _NoAppointmentCardState extends State<NoAppointmentCard> {
                     return gradient.createShader(
                         Rect.fromLTWH(0, 0, bounds.width, bounds.height));
                   },
-                  child: const Text(
-                    "Book your first appointment",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                  child: TextButton(
+                    onPressed: () {
+                      showModalBottomSheet(
+                        useSafeArea: true,
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) => const SearchScreen(),
+                      );
+                    },
+                    child: const Text(
+                      "Book your first appointment",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  )),
+                  ),),
             ],
           ),
         ),

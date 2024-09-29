@@ -95,6 +95,42 @@ class AppointmentResponse {
   }
 }
 
+class ChangePasswordResponse {
+  final String message;
+  final String error;
+
+  ChangePasswordResponse({
+    required this.message,
+    required this.error,
+  });
+
+  factory ChangePasswordResponse.fromJson(Map<String, dynamic> json) {
+    return ChangePasswordResponse(
+        message:
+            json['message'].runtimeType != String && json['message'] != null
+                ? json['message'][0]
+                : json['message'] ?? '',
+        error: json['error'] ?? "");
+  }
+}
+
+class ChangePasswordRequest {
+  final String email;
+  final String password;
+
+  ChangePasswordRequest({
+    required this.email,
+    required this.password,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'email': email,
+      'password': password,
+    };
+  }
+}
+
 class GetAllTransactions {
   final int id;
   // final dynamic status;
